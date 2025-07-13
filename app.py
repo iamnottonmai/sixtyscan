@@ -94,15 +94,6 @@ if "question_answers" not in st.session_state:
 if "final_result" not in st.session_state:
     st.session_state.final_result = None
 
-# Initialize audio keys
-for sound in vowel_sounds:
-    st.session_state.setdefault(f"vowel_{sound}", None)
-st.session_state.setdefault("pataka_audio", None)
-st.session_state.setdefault("sentence_audio", None)
-st.session_state.setdefault("uploaded_vowels", None)
-st.session_state.setdefault("uploaded_pataka", None)
-st.session_state.setdefault("uploaded_sentence", None)
-
 # =============================
 # Load Model
 # =============================
@@ -167,9 +158,9 @@ st.markdown("""
 
 vowel_paths = []
 
-for sound in vowel_sounds:
+for idx, sound in enumerate(vowel_sounds):
     st.markdown(f"<p class='pronounce'>ออกเสียง \"{sound}\"</p>", unsafe_allow_html=True)
-    audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}", key=f"vowel_{sound}")
+    audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}", key=f"vowel_{idx}")
     if audio_bytes:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
             tmp.write(audio_bytes.read())
@@ -255,9 +246,7 @@ if predict_btn:
         all_probs = predict_from_model(vowel_paths, pataka_path, sentence_path)
         final_prob = np.mean(all_probs)
         percent = int(final_prob * 100)
-
-        # Result rendering omitted for brevity (same as your original)
-
+        st.success(f"โอกาสการเกิดพาร์กินสัน: {percent}%", icon="📊")
     else:
         st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 พยัญชนะ พยางค์ และประโยค", icon="⚠️")
 
@@ -265,8 +254,8 @@ if predict_btn:
 # Clear Button Logic
 # =============================
 if clear_btn:
-    for sound in vowel_sounds:
-        st.session_state[f"vowel_{sound}"] = None
+    for idx in range(len(vowel_sounds)):
+        st.session_state[f"vowel_{idx}"] = None
     for key in ["pataka_audio", "sentence_audio", "uploaded_vowels", "uploaded_pataka", "uploaded_sentence"]:
         st.session_state[key] = None
     st.session_state.uploaded_files = []
