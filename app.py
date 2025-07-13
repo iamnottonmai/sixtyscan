@@ -11,6 +11,7 @@ from PIL import Image
 import io
 import tempfile
 import os
+import gdown
 
 # =============================
 # Page Config & Font Styles
@@ -96,12 +97,15 @@ if "final_result" not in st.session_state:
 # =============================
 @st.cache_resource
 def load_model():
+    model_path = "best_resnet18.pth"
+    if not os.path.exists(model_path):
+        # Replace this URL with your actual Google Drive direct download link
+        gdown.download("https://drive.google.com/uc?id=1_oHE9B-2PgSqpTQCC9HrG7yO0rsnZtqs", model_path, quiet=False)
+
     model = ResNet18Classifier()
-    model.load_state_dict(torch.load("best_resnet18.pth", map_location=torch.device("cpu")))
+    model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
     model.eval()
     return model
-
-model = load_model()
 
 # =============================
 # Audio Preprocessing
