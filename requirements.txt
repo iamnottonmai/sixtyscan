@@ -13,3 +13,4 @@ pandas==2.2.2
 streamlit-webrtc==0.62.4
 ffmpeg-python==0.2.0
 pip install streamlit==1.46.0
+gdown
