@@ -14,12 +14,15 @@ import os
 import gdown
 
 # =============================
-# Download Model from Google Drive
+# Download model from Google Drive
 # =============================
 MODEL_PATH = "best_resnet18.pth"
 if not os.path.exists(MODEL_PATH):
-    url = "https://drive.google.com/uc?id=1_oHE9B-2PgSqpTQCC9HrG7yO0rsnZtqs"
-    gdown.download(url, MODEL_PATH, quiet=False)
+    gdown.download(
+        "https://drive.google.com/uc?id=1_oHE9B-2PgSqpTQCC9HrG7yO0rsnZtqs",
+        MODEL_PATH,
+        quiet=False
+    )
 
 # =============================
 # Page Config & Font Styles
@@ -105,7 +108,7 @@ if "final_result" not in st.session_state:
 @st.cache_resource
 def load_model():
     model = ResNet18Classifier()
-    model.load_state_dict(torch.load("best_resnet18.pth", map_location=torch.device("cpu")))
+    model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device("cpu")))
     model.eval()
     return model
 
@@ -118,18 +121,23 @@ def audio_to_mel_tensor(file_path):
     y, sr = librosa.load(file_path, sr=22050)
     mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
     mel_db = librosa.power_to_db(mel, ref=np.max)
-    fig = plt.figure(figsize=(2.24, 2.24), dpi=100)
-    plt.axis('off')
-    librosa.display.specshow(mel_db, sr=sr)
+    
+    fig, ax = plt.subplots(figsize=(2.24, 2.24), dpi=100)
+    ax.axis('off')
+    librosa.display.specshow(mel_db, sr=sr, ax=ax)
+    
     buf = io.BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
     plt.close(fig)
+    
     buf.seek(0)
     image = Image.open(buf).convert('RGB')
+    
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor()
     ])
+    
     return transform(image).unsqueeze(0)
 
 # =============================
