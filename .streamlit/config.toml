@@ -1,7 +1,13 @@
 [theme]
 base="light"
+font = "Noto Sans Thai"
 # optionally override colors:
 # primaryColor = "#1f77b4"
 # backgroundColor = "#FFFFFF"
 # secondaryBackgroundColor = "#F0F2F6"
 # textColor = "#000000"
+[[theme.fontFaces]]
+family = "Noto Sans Thai"
+url = "static/fonts/NotoSansThai-Regular.woff2"
+style = "normal"
+weight = 400
