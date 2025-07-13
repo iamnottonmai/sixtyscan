@@ -32,7 +32,7 @@ st.markdown("""
     <style>
         html, body {
             background-color: #f2f4f8;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Noto Sans Thai', sans-serif;
         }
         h1.title {
             text-align: center;
