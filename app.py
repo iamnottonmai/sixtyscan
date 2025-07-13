@@ -11,6 +11,15 @@ from PIL import Image
 import io
 import tempfile
 import os
+import gdown
+
+# =============================
+# Download Model from Google Drive
+# =============================
+MODEL_PATH = "best_resnet18.pth"
+if not os.path.exists(MODEL_PATH):
+    url = "https://drive.google.com/uc?id=1_oHE9B-2PgSqpTQCC9HrG7yO0rsnZtqs"
+    gdown.download(url, MODEL_PATH, quiet=False)
 
 # =============================
 # Page Config & Font Styles
