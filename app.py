@@ -236,7 +236,7 @@ if uploaded_sentence and not sentence_path:
 # =============================
 # Buttons Layout
 # =============================
-col1, col2 = st.columns([1, 0.1])
+col1, col2 = st.columns([1, 0.4])
 with col1:
     predict_btn = st.button("วิเคราะห์", key="predict", type="primary")
 with col2:
