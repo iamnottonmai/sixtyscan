@@ -28,7 +28,7 @@ if not os.path.exists(MODEL_PATH):
 # Page Config & Font Styles
 # =============================
 st.set_page_config(page_title="SixtyScan", layout="centered")
-st.markdown(\"\"\"
+st.markdown("""
     <style>
         html, body {
             background-color: #f2f4f8;
@@ -78,17 +78,28 @@ st.markdown(\"\"\"
             padding: 1.4em 2.7em;
             border-radius: 14px;
             font-weight: bold;
+            width: 100%;
+            margin-bottom: 16px;
         }
         .predict-btn {
             background-color: #009688;
             color: white;
+            border: none;
+            cursor: pointer;
         }
         .clear-btn {
             background-color: #cfd8dc;
             color: black;
+            border: none;
+            cursor: pointer;
+        }
+        /* Center buttons container */
+        .buttons-container {
+            max-width: 400px;
+            margin: 0 auto 40px auto;
         }
     </style>
-\"\"\", unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # =============================
 # Load Model
@@ -109,23 +120,23 @@ def audio_to_mel_tensor(file_path):
     y, sr = librosa.load(file_path, sr=22050)
     mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
     mel_db = librosa.power_to_db(mel, ref=np.max)
-    
+
     fig, ax = plt.subplots(figsize=(2.24, 2.24), dpi=100)
     ax.axis('off')
     librosa.display.specshow(mel_db, sr=sr, ax=ax)
-    
+
     buf = io.BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
     plt.close(fig)
-    
+
     buf.seek(0)
     image = Image.open(buf).convert('RGB')
-    
+
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor()
     ])
-    
+
     return transform(image).unsqueeze(0)
 
 # =============================
@@ -147,24 +158,24 @@ st.markdown("<p class='subtitle'>ตรวจจับพาร์กินส�
 # =============================
 # Vowel Recordings (7)
 # =============================
-st.markdown(\"\"\"
+st.markdown("""
 <div class='card'>
     <h2>1. พยัญชนะ</h2>
     <p class='instructions'>กรุณาออกเสียงแต่ละพยางค์ 5-8 วินาทีอย่างชัดเจน โดยกดปุ่มบันทึกทีละไฟล์ หรืออัปโหลดไฟล์เสียงด้านล่าง</p>
 </div>
-\"\"\", unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 vowel_sounds = ["อา", "อี", "อือ", "อู", "ไอ", "อำ", "เอา"]
 vowel_paths = []
 
 for sound in vowel_sounds:
-    st.markdown(f"<p class='pronounce'>ออกเสียง \\\"{sound}\\\"</p>", unsafe_allow_html=True)
+    st.markdown(f"<p class='pronounce'>ออกเสียง \"{sound}\"</p>", unsafe_allow_html=True)
     audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}")
     if audio_bytes:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
             tmp.write(audio_bytes.read())
             vowel_paths.append(tmp.name)
-        st.success(f"บันทึกเสียง \\\"{sound}\\\" สำเร็จ", icon="✅")
+        st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
 
 uploaded_vowels = st.file_uploader("หรืออัปโหลดไฟล์เสียงพยัญชนะ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
 if uploaded_vowels and not vowel_paths:
@@ -176,14 +187,14 @@ if uploaded_vowels and not vowel_paths:
 # =============================
 # Pataka Recording
 # =============================
-st.markdown(\"\"\"
+st.markdown("""
 <div class='card'>
     <h2>2. พยางค์</h2>
     <p class='instructions'>กรุณาออกเสียงคำว่า "พา - ทา - คา" ให้จบภายใน 6 วินาที หรืออัปโหลดไฟล์เสียงด้านล่าง</p>
 </div>
-\"\"\", unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
-st.markdown("<p class='pronounce'>ออกเสียง \\\"พา - ทา - คา\\\"</p>", unsafe_allow_html=True)
+st.markdown("<p class='pronounce'>ออกเสียง \"พา - ทา - คา\"</p>", unsafe_allow_html=True)
 
 pataka_path = None
 pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์")
@@ -202,14 +213,14 @@ if uploaded_pataka and not pataka_path:
 # =============================
 # Sentence Recording
 # =============================
-st.markdown(\"\"\"
+st.markdown("""
 <div class='card'>
     <h2>3. ประโยค</h2>
     <p class='instructions'>กรุณาอ่านประโยคอย่างชัดเจน หรืออัปโหลดไฟล์เสียงด้านล่าง</p>
 </div>
-\"\"\", unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
-st.markdown("<p class='pronounce'>อ่านประโยค \\\"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\\\"</p>", unsafe_allow_html=True)
+st.markdown("<p class='pronounce'>อ่านประโยค \"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</p>", unsafe_allow_html=True)
 
 sentence_path = None
 sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค")
@@ -226,12 +237,12 @@ if uploaded_sentence and not sentence_path:
         sentence_path = tmp.name
 
 # =============================
-# Buttons Centered
+# Buttons (Centered)
 # =============================
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    predict_btn = st.button("🔍 วิเคราะห์", type="primary", use_container_width=True)
-    clear_btn = st.button("ล้างข้อมูล", type="secondary", use_container_width=True)
+st.markdown("<div class='buttons-container'>", unsafe_allow_html=True)
+predict_btn = st.button("🔍 วิเคราะห์", key="predict", help="กดเพื่อวิเคราะห์")
+clear_btn = st.button("ล้างข้อมูล", key="clear", help="กดเพื่อรีเซ็ตข้อมูล")
+st.markdown("</div>", unsafe_allow_html=True)
 
 # =============================
 # Prediction Logic
@@ -247,39 +258,39 @@ if predict_btn:
             label = "Non Parkinson"
             diagnosis = "ไม่เป็นพาร์กินสัน"
             box_color = "#e6f9e6"
-            advice = \"\"\"
+            advice = """
             <ul style='font-size:28px;'>
                 <li>ถ้าไม่มีอาการ: ควรตรวจปีละครั้ง(ไม่บังคับ)</li>
                 <li>ถ้ามีอาการเล็กน้อย: ตรวจปีละ 2 ครั้ง</li>
                 <li>ถ้ามีอาการเตือน: ตรวจ 2–4 ครั้งต่อปี</li>
             </ul>
-            \"\"\"
+            """
         elif percent <= 75:
             level = "ปานกลาง (Moderate)"
             label = "Parkinson"
             diagnosis = "เป็นพาร์กินสัน"
             box_color = "#fff7e6"
-            advice = \"\"\"
+            advice = """
             <ul style='font-size:28px;'>
                 <li>พบแพทย์เฉพาะทางระบบประสาท</li>
                 <li>บันทึกอาการประจำวัน</li>
                 <li>หากได้รับยา: บันทึกผลข้างเคียง</li>
             </ul>
-            \"\"\"
+            """
         else:
             level = "สูง (High)"
             label = "Parkinson"
             diagnosis = "เป็นพาร์กินสัน"
             box_color = "#ffe6e6"
-            advice = \"\"\"
+            advice = """
             <ul style='font-size:28px;'>
                 <li>พบแพทย์เฉพาะทางโดยเร็วที่สุด</li>
                 <li>บันทึกอาการทุกวัน</li>
                 <li>หากได้รับยา: ติดตามผลอย่างละเอียด</li>
             </ul>
-            \"\"\"
+            """
 
-        st.markdown(f\"\"\"
+        st.markdown(f"""
             <div style='background-color:{box_color}; padding: 32px; border-radius: 14px; font-size: 30px; color: #000000;'>
                 <div style='text-align: center; font-size: 42px; font-weight: bold; margin-bottom: 20px;'>{label}:</div>
                 <p><b>ระดับความน่าจะเป็น:</b> {level}</p>
@@ -291,7 +302,7 @@ if predict_btn:
                 <p><b>คำแนะนำ</b></p>
                 {advice}
             </div>
-        \"\"\", unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
     else:
         st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 พยัญชนะ พยางค์ และประโยค", icon="⚠️")
 
@@ -299,9 +310,6 @@ if predict_btn:
 # Clear Button Logic
 # =============================
 if clear_btn:
-    st.session_state.clear()
-    st.rerun()
-'''
-
-updated_code[:1000]  # Show a snippet here to confirm it fits.
-
+    for key in st.session_state.keys():
+        del st.session_state[key]
+    st.experimental_rerun()
