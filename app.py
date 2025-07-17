@@ -307,7 +307,6 @@ if predict_btn:
 # Clear Button Logic
 # =============================
 if clear_btn:
-    # Clear all keys in session_state safely
     for key in list(st.session_state.keys()):
         del st.session_state[key]
     st.experimental_rerun()
