@@ -79,7 +79,9 @@ st.markdown("""
             border-radius: 14px;
             font-weight: bold;
             width: 100%;
-            margin-bottom: 16px;
+            max-width: 300px;
+            display: block;
+            margin: 10px auto;
         }
         .predict-btn {
             background-color: #009688;
@@ -92,11 +94,6 @@ st.markdown("""
             color: black;
             border: none;
             cursor: pointer;
-        }
-        /* Center buttons container */
-        .buttons-container {
-            max-width: 400px;
-            margin: 0 auto 40px auto;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -120,23 +117,23 @@ def audio_to_mel_tensor(file_path):
     y, sr = librosa.load(file_path, sr=22050)
     mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
     mel_db = librosa.power_to_db(mel, ref=np.max)
-
+    
     fig, ax = plt.subplots(figsize=(2.24, 2.24), dpi=100)
     ax.axis('off')
     librosa.display.specshow(mel_db, sr=sr, ax=ax)
-
+    
     buf = io.BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
     plt.close(fig)
-
+    
     buf.seek(0)
     image = Image.open(buf).convert('RGB')
-
+    
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor()
     ])
-
+    
     return transform(image).unsqueeze(0)
 
 # =============================
@@ -237,12 +234,12 @@ if uploaded_sentence and not sentence_path:
         sentence_path = tmp.name
 
 # =============================
-# Buttons (Centered)
+# Buttons Centered
 # =============================
-st.markdown("<div class='buttons-container'>", unsafe_allow_html=True)
-predict_btn = st.button("🔍 วิเคราะห์", key="predict", help="กดเพื่อวิเคราะห์")
-clear_btn = st.button("ล้างข้อมูล", key="clear", help="กดเพื่อรีเซ็ตข้อมูล")
-st.markdown("</div>", unsafe_allow_html=True)
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    predict_btn = st.button("🔍 วิเคราะห์", key="predict", type="primary")
+    clear_btn = st.button("ล้างข้อมูล", key="clear", type="secondary")
 
 # =============================
 # Prediction Logic
@@ -310,6 +307,7 @@ if predict_btn:
 # Clear Button Logic
 # =============================
 if clear_btn:
-    for key in st.session_state.keys():
+    # Clear all keys in session_state safely
+    for key in list(st.session_state.keys()):
         del st.session_state[key]
     st.experimental_rerun()
