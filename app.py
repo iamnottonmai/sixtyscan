@@ -1,8 +1,4 @@
-# Let's rewrite the full Streamlit app code with:
-# - Clean reset via "ล้างข้อมูล" button
-# - Centered buttons layout using columns
 
-updated_code = '''
 import streamlit as st
 import numpy as np
 import torch
