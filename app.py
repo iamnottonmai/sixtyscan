@@ -234,12 +234,13 @@ if uploaded_sentence and not sentence_path:
         sentence_path = tmp.name
 
 # =============================
-# Buttons Centered
+# Buttons Layout
 # =============================
-col1, col2, col3 = st.columns([1, 2, 1])
+col1, col2 = st.columns([1, 1])
+with col1:
+    predict_btn = st.button("วิเคราะห์", key="predict", type="primary")
 with col2:
-    predict_btn = st.button("🔍 วิเคราะห์", key="predict", type="primary")
-    clear_btn = st.button("ล้างข้อมูล", key="clear", type="secondary")
+    clear_btn = st.button("ลบข้อมูล", key="clear", type="secondary")
 
 # =============================
 # Prediction Logic
@@ -307,6 +308,4 @@ if predict_btn:
 # Clear Button Logic
 # =============================
 if clear_btn:
-    for key in list(st.session_state.keys()):
-        del st.session_state[key]
-    st.experimental_rerun()
+    st.rerun()
