@@ -236,11 +236,15 @@ if uploaded_sentence and not sentence_path:
 # =============================
 # Buttons Layout
 # =============================
-col1, col2, col3 = st.columns([2, 1, 2])
+col1, col2 = st.columns([1, 1])
 with col1:
     predict_btn = st.button("วิเคราะห์", key="predict", type="primary")
-with col3:
+with col2:
+    st.markdown("""
+        <div style="display: flex; justify-content: flex-end;">
+    """, unsafe_allow_html=True)
     clear_btn = st.button("ลบข้อมูล", key="clear", type="secondary")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # =============================
 # Prediction Logic
@@ -309,12 +313,11 @@ if predict_btn:
 # =============================
 if clear_btn:
     # Clear all session state
-    for key in list(st.session_state.keys()):
-        del st.session_state[key]
-    # Force a full page reload using JavaScript
+    st.session_state.clear()
+    # Force a hard refresh like Ctrl+F5
     st.markdown("""
         <script>
-            window.location.reload();
+            window.location.reload(true);
         </script>
+        <meta http-equiv="refresh" content="0">
     """, unsafe_allow_html=True)
-    st.rerun()
