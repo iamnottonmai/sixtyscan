@@ -238,7 +238,11 @@ if uploaded_sentence and not sentence_path:
 # =============================
 col1, col2 = st.columns([1, 1])
 with col1:
-    predict_btn = st.button("วิเคราะห์", key="predict", type="primary")
+    button_col1, button_col2 = st.columns([1, 1])
+    with button_col1:
+        predict_btn = st.button("วิเคราะห์", key="predict", type="primary")
+    with button_col2:
+        loading_placeholder = st.empty()
 with col2:
     st.markdown("""
         <div style="display: flex; justify-content: flex-end;">
@@ -251,9 +255,26 @@ with col2:
 # =============================
 if predict_btn:
     if len(vowel_paths) == 7 and pataka_path and sentence_path:
+        # Show loading indicator
+        loading_placeholder.markdown("""
+            <div style="display: flex; align-items: center; margin-top: 8px;">
+                <div style="width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #009688; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <span style="margin-left: 10px; font-size: 16px; color: #009688;">กำลังวิเคราะห์...</span>
+            </div>
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
+        """, unsafe_allow_html=True)
+        
         all_probs = predict_from_model(vowel_paths, pataka_path, sentence_path)
         final_prob = np.mean(all_probs)
         percent = int(final_prob * 100)
+        
+        # Clear loading indicator
+        loading_placeholder.empty()
 
         if percent <= 50:
             level = "ระดับต่ำ (Low)"
