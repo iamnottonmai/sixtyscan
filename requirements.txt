@@ -13,3 +13,4 @@ streamlit-webrtc
 ffmpeg-python
 streamlit
 gdown
+ffmpeg
