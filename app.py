@@ -113,27 +113,37 @@ model = load_model()
 # =============================
 # Audio Preprocessing
 # =============================
+from pydub import AudioSegment
+import soundfile as sf
+
 def audio_to_mel_tensor(file_path):
+    # Convert to WAV if necessary
+    if not file_path.lower().endswith(".wav"):
+        audio = AudioSegment.from_file(file_path)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            audio.export(tmp.name, format="wav")
+            file_path = tmp.name
+
     y, sr = librosa.load(file_path, sr=22050)
     mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
     mel_db = librosa.power_to_db(mel, ref=np.max)
-    
+
     fig, ax = plt.subplots(figsize=(2.24, 2.24), dpi=100)
     ax.axis('off')
     librosa.display.specshow(mel_db, sr=sr, ax=ax)
-    
+
     buf = io.BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
     plt.close(fig)
-    
+
     buf.seek(0)
     image = Image.open(buf).convert('RGB')
-    
+
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor()
     ])
-    
+
     return transform(image).unsqueeze(0)
 
 # =============================
