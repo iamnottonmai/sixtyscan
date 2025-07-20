@@ -184,7 +184,7 @@ for sound in vowel_sounds:
             vowel_paths.append(tmp.name)
         st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
 
-uploaded_vowels = st.file_uploader("หรืออัปโหลดไฟล์เสียงพยัญชนะ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
+uploaded_vowels = st.file_uploader("หรืออัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
 if uploaded_vowels and not vowel_paths:
     for file in uploaded_vowels[:7]:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
@@ -337,7 +337,7 @@ if predict_btn:
             </div>
         """, unsafe_allow_html=True)
     else:
-        st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 พยัญชนะ พยางค์ และประโยค", icon="⚠️")
+        st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠️")
 
 # =============================
 # Clear Button Logic
