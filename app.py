@@ -158,6 +158,24 @@ st.markdown("""
             font-family: 'Noto Sans Thai', sans-serif !important;
             font-weight: 400 !important;
         }
+        /* Make bold inside .pronounce, .instructions, .sentence-instruction larger and more visible */
+        .pronounce b, .instructions b, .sentence-instruction b {
+            font-weight: 700 !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Add a custom style for the sentence instruction after the main style block
+st.markdown("""
+    <style>
+        .card .sentence-instruction {
+            font-size: 16px !important;
+            font-weight: 400 !important;
+            color: #333 !important;
+            margin-bottom: 24px !important;
+            font-family: 'Noto Sans Thai', sans-serif !important;
+            display: block !important;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -232,87 +250,6 @@ st.markdown("<p class='subtitle'>ตรวจโรคพาร์กินส�
 st.markdown("""
 <div class='card'>
     <h2>1. สระ</h2>
-    <p class='instructions'>กรุณาออกเสียงแต่ละสระ 5-8 วินาทีอย่างชัดเจน
-</div>
-""", unsafe_allow_html=True)
-
-vowel_sounds = ["อา", "อี", "อือ", "อู", "ไอ", "อำ", "เอา"]
-vowel_paths = []
-
-for sound in vowel_sounds:
-    st.markdown(f"<p class='pronounce'>ออกเสียง \"{sound}\"</p>", unsafe_allow_html=True)
-    audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}")
-    if audio_bytes:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            tmp.write(audio_bytes.read())
-            vowel_paths.append(tmp.name)
-        st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
-
-uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
-if uploaded_vowels and not vowel_paths:
-    for file in uploaded_vowels[:7]:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            tmp.write(file.read())
-            vowel_paths.append(tmp.name)
-
-# =============================
-# Pataka Recording
-# =============================
-st.markdown("""
-<div class='card'>
-    <h2>2. พยางค์</h2>
-    <p class='instructions'>กรุณาออกเสียงคำว่า "พา - ทา - คา" ให้จบภายใน 6 วินาที</p>
-</div>
-""", unsafe_allow_html=True)
-
-# Removed: st.markdown("<p class='pronounce'>ออกเสียง \"พา - ทา - คา\"</p>", unsafe_allow_html=True)
-
-pataka_path = None
-pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์")
-if pataka_bytes:
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        tmp.write(pataka_bytes.read())
-        pataka_path = tmp.name
-    st.success("บันทึกพยางค์สำเร็จ", icon="✅")
-
-uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
-if uploaded_pataka and not pataka_path:
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        tmp.write(uploaded_pataka.read())
-        pataka_path = tmp.name
-
-# =============================
-# Sentence Recording
-# =============================
-
-
-# Removed: st.markdown("<p class='pronounce'>อ่านประโยค \"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</p>", u[...]
-st.markdown("""
-    <style>
-        .card .sentence-instruction {
-            font-size: 16px !important;
-            font-weight: 400 !important;
-            color: #333 !important;
-            margin-bottom: 24px !important;
-            font-family: 'Noto Sans Thai', sans-serif !important;
-            display: block !important;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div class='card'>
-    <h2>3. ประโยค</h2>
-    <p class='sentence-instruction'>กรุณาอ่านประโยค <b>"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</b></p>
-</div>
-""", unsafe_allow_html=True)
-
-# =============================
-# Vowel Recordings (7)
-# =============================
-st.markdown("""
-<div class='card'>
-    <h2>1. สระ</h2>
     <p class='instructions'>กรุณาออกเสียงแต่ละสระ 5-8 วินาทีอย่างชัดเจน โดยกดปุ่มบันทึกทีละสระ</p>
 </div>
 """, unsafe_allow_html=True)
@@ -359,6 +296,30 @@ if uploaded_pataka and not pataka_path:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
         tmp.write(uploaded_pataka.read())
         pataka_path = tmp.name
+
+# =============================
+# Sentence Recording
+# =============================
+st.markdown("""
+<div class='card'>
+    <h2>3. ประโยค</h2>
+    <p class='sentence-instruction'>กรุณาอ่านประโยค <b>"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</b></p>
+</div>
+""", unsafe_allow_html=True)
+
+sentence_path = None
+sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค")
+if sentence_bytes:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+        tmp.write(sentence_bytes.read())
+        sentence_path = tmp.name
+    st.success("บันทึกประโยคสำเร็จ", icon="✅")
+
+uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
+if uploaded_sentence and not sentence_path:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+        tmp.write(uploaded_sentence.read())
+        sentence_path = tmp.name
 
 # =============================
 # Buttons Layout
@@ -469,16 +430,3 @@ if clear_btn:
         </script>
         <meta http-equiv="refresh" content="0">
     """, unsafe_allow_html=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
