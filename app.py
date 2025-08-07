@@ -302,23 +302,62 @@ st.markdown("""
 st.markdown("""
 <div class='card'>
     <h2>3. ประโยค</h2>
-    <p class='sentence-instruction'>กรุณาอ่านประโยค "วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</p>
+    <p class='sentence-instruction'>กรุณาอ่านประโยค <b>"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</b></p>
 </div>
 """, unsafe_allow_html=True)
 
-sentence_path = None
-sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค")
-if sentence_bytes:
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        tmp.write(sentence_bytes.read())
-        sentence_path = tmp.name
-    st.success("บันทึกประโยคสำเร็จ", icon="✅")
+# =============================
+# Vowel Recordings (7)
+# =============================
+st.markdown("""
+<div class='card'>
+    <h2>1. สระ</h2>
+    <p class='instructions'>กรุณาออกเสียงแต่ละสระ 5-8 วินาทีอย่างชัดเจน โดยกดปุ่มบันทึกทีละสระ</p>
+</div>
+""", unsafe_allow_html=True)
 
-uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
-if uploaded_sentence and not sentence_path:
+vowel_sounds = ["อา", "อี", "อือ", "อู", "ไอ", "อำ", "เอา"]
+vowel_paths = []
+
+for sound in vowel_sounds:
+    st.markdown(f"<p class='pronounce'>ออกเสียง <b>\"{sound}\"</b></p>", unsafe_allow_html=True)
+    audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}")
+    if audio_bytes:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            tmp.write(audio_bytes.read())
+            vowel_paths.append(tmp.name)
+        st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
+
+uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
+if uploaded_vowels and not vowel_paths:
+    for file in uploaded_vowels[:7]:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            tmp.write(file.read())
+            vowel_paths.append(tmp.name)
+
+# =============================
+# Pataka Recording
+# =============================
+st.markdown("""
+<div class='card'>
+    <h2>2. พยางค์</h2>
+    <p class='instructions'>กรุณาออกเสียงคำว่า <b>"พา - ทา - คา"</b> ให้จบภายใน 6 วินาที</p>
+</div>
+""", unsafe_allow_html=True)
+
+pataka_path = None
+pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์")
+if pataka_bytes:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        tmp.write(uploaded_sentence.read())
-        sentence_path = tmp.name
+        tmp.write(pataka_bytes.read())
+        pataka_path = tmp.name
+    st.success("บันทึกพยางค์สำเร็จ", icon="✅")
+
+uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
+if uploaded_pataka and not pataka_path:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+        tmp.write(uploaded_pataka.read())
+        pataka_path = tmp.name
 
 # =============================
 # Buttons Layout
@@ -429,6 +468,7 @@ if clear_btn:
         </script>
         <meta http-equiv="refresh" content="0">
     """, unsafe_allow_html=True)
+
 
 
 
