@@ -92,7 +92,7 @@ st.markdown("""
             text-align: center;
             font-family: 'Noto Sans Thai', sans-serif;
             font-weight: 400;
-            font-size: 42px;
+            font-size: 32px;
             color: #333;
             margin-bottom: 56px;
         }
@@ -114,18 +114,20 @@ st.markdown("""
         }
         /* Instructions text */
         .instructions {
-            font-size: 34px !important;
+            font-size: 28px !important;
             color: #333;
             margin-bottom: 24px;
             font-weight: 400;
+            font-family: 'Noto Sans Thai', sans-serif;
         }
         /* Pronunciation display */
         .pronounce {
-            font-size: 36px !important;
+            font-size: 24px !important;
             color: #000;
             font-weight: 400;
             margin-top: 0;
             margin-bottom: 24px;
+            font-family: 'Noto Sans Thai', sans-serif;
         }
         /* Buttons */
         .predict-btn, .clear-btn {
@@ -216,7 +218,7 @@ def predict_from_model(vowel_paths, pataka_path, sentence_path):
 # =============================
 display_logo()
 st.markdown("<h1 class='title'>SixtyScan</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>ตรวจจับพาร์กินสันผ่านการวิเคราะห์เสียง</p>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>ตรวจโรคพาร์กินสันจากเสียง</p>", unsafe_allow_html=True)
 
 # =============================
 # Vowel Recordings (7)
