@@ -169,7 +169,7 @@ st.markdown("""
 st.markdown("""
     <style>
         .card .sentence-instruction {
-            font-size: 16px !important;
+            font-size: 24px !important;
             font-weight: 400 !important;
             color: #333 !important;
             margin-bottom: 24px !important;
@@ -430,3 +430,4 @@ if clear_btn:
         </script>
         <meta http-equiv="refresh" content="0">
     """, unsafe_allow_html=True)
+
