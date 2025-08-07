@@ -232,7 +232,7 @@ st.markdown("<p class='subtitle'>ตรวจโรคพาร์กินส�
 st.markdown("""
 <div class='card'>
     <h2>1. สระ</h2>
-    <p class='instructions'>กรุณาออกเสียงแต่ละสระ 5-8 วินาทีอย่างชัดเจน โดยกดปุ่มบันทึกทีละไฟล์ หรืออัปโหลดไฟล์เสียงด้านล่าง</p>
+    <p class='instructions'>กรุณาออกเสียงแต่ละสระ 5-8 วินาทีอย่างชัดเจน โดยกดปุ่มบันทึกทีละไฟล์</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -248,7 +248,7 @@ for sound in vowel_sounds:
             vowel_paths.append(tmp.name)
         st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
 
-uploaded_vowels = st.file_uploader("หรืออัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
+uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
 if uploaded_vowels and not vowel_paths:
     for file in uploaded_vowels[:7]:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
@@ -261,7 +261,7 @@ if uploaded_vowels and not vowel_paths:
 st.markdown("""
 <div class='card'>
     <h2>2. พยางค์</h2>
-    <p class='instructions'>กรุณาออกเสียงคำว่า "พา - ทา - คา" ให้จบภายใน 6 วินาที หรืออัปโหลดไฟล์เสียงด้านล่าง</p>
+    <p class='instructions'>กรุณาออกเสียงคำว่า "พา - ทา - คา" ให้จบภายใน 6 วินาที</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -275,7 +275,7 @@ if pataka_bytes:
         pataka_path = tmp.name
     st.success("บันทึกพยางค์สำเร็จ", icon="✅")
 
-uploaded_pataka = st.file_uploader("หรืออัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
+uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
 if uploaded_pataka and not pataka_path:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
         tmp.write(uploaded_pataka.read())
@@ -287,7 +287,7 @@ if uploaded_pataka and not pataka_path:
 st.markdown("""
 <div class='card'>
     <h2>3. ประโยค</h2>
-    <p class='instructions'>กรุณาอ่านประโยคอย่างชัดเจน หรืออัปโหลดไฟล์เสียงด้านล่าง</p>
+    <p class='instructions'>กรุณาอ่านประโยคอย่างชัดเจน</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -301,7 +301,7 @@ if sentence_bytes:
         sentence_path = tmp.name
     st.success("บันทึกประโยคสำเร็จ", icon="✅")
 
-uploaded_sentence = st.file_uploader("หรืออัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
+uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
 if uploaded_sentence and not sentence_path:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
         tmp.write(uploaded_sentence.read())
