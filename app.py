@@ -98,6 +98,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+st.set_page_config(page_title="SixtyScan", layout="centered")
+
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
 # =============================
 # Load Model
 # =============================
@@ -109,6 +115,13 @@ def load_model():
     return model
 
 model = load_model()
+
+# =============================
+# Header (Logo + Title + Subtitle)
+# =============================
+st.markdown("<img src='https://drive.google.com/file/d/1D7sCxOMuMFwfe3Zgr0NsKPQiccu7BkCp/view?usp=sharing' class='logo'>", unsafe_allow_html=True)  # Replace URL with your own logo
+st.markdown("<div class='title'>SixtyScan</div>", unsafe_allow_html=True)
+st.markdown("<div class='subtitle'>ตรวจโรคพาร์กินสันจากเสียง</div>", unsafe_allow_html=True)
 
 # =============================
 # Audio Preprocessing
