@@ -1,16 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@700&display=swap');
 
-/* General page styles */
+/* Global font settings */
 html, body {
     background-color: #f2f4f8;
     font-family: 'Helvetica Neue', 'Thai Sans Lite', 'Noto Sans Thai', sans-serif;
-}
-
-/* Logo */
-.logo {
-    display: block;
-    margin: 40px auto 20px auto;
-    width: 160px;
 }
 
 /* Title: SixtyScan */
