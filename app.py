@@ -290,7 +290,7 @@ if uploaded_pataka and not pataka_path:
 st.markdown("""
     <style>
         .sentence-instruction {
-            font-size: 20px !important;
+            font-size: 30px !important;
             color: #333;
             margin-bottom: 24px;
             font-family: 'Noto Sans Thai', sans-serif;
@@ -429,6 +429,7 @@ if clear_btn:
         </script>
         <meta http-equiv="refresh" content="0">
     """, unsafe_allow_html=True)
+
 
 
 
