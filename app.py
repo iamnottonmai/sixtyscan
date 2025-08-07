@@ -290,7 +290,7 @@ if uploaded_pataka and not pataka_path:
 st.markdown("""
 <div class='card'>
     <h2>3. ประโยค</h2>
-    <p class='instructions' style='font-size:12px !important;'>กรุณาอ่านประโยค "วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</p>
+    <p class='instructions' style='font-size:22px !important;'>กรุณาอ่านประโยค "วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -417,6 +417,7 @@ if clear_btn:
         </script>
         <meta http-equiv="refresh" content="0">
     """, unsafe_allow_html=True)
+
 
 
 
