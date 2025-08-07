@@ -1,184 +1,63 @@
 import streamlit as st
 import numpy as np
-import torch
-import torch.nn.functional as F
-from torchvision import transforms
-from model import ResNet18Classifier
-import librosa
-import librosa.display
-import matplotlib.pyplot as plt
+from pathlib import Path
+from predict import predict_from_model  # your model logic
+from utils import handle_uploaded_audio  # your helper function
 from PIL import Image
-import io
-import tempfile
-import os
-import gdown
-from pydub import AudioSegment
 
-# =============================
-# Streamlit Config + Load CSS
-# =============================
-st.set_page_config(page_title="SixtyScan", layout="centered")
+st.set_page_config(page_title="SixtyScan", layout="wide")
 
+# Load custom style
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # =============================
-# Load Logo, Title, Subtitle
+# Logo + Title + Subtitle
 # =============================
-st.image("logo.png", width=160)  # Local logo
+st.markdown("<img src='logo.png' class='logo'>", unsafe_allow_html=True)
 st.markdown("<div class='title'>SixtyScan</div>", unsafe_allow_html=True)
 st.markdown("<div class='subtitle'>ตรวจโรคพาร์กินสันจากเสียง</div>", unsafe_allow_html=True)
 
 # =============================
-# Download Model if Missing
+# Audio Upload Sections
 # =============================
-MODEL_PATH = "best_resnet18.pth"
-if not os.path.exists(MODEL_PATH):
-    gdown.download(
-        "https://drive.google.com/uc?id=1_oHE9B-2PgSqpTQCC9HrG7yO0rsnZtqs",
-        MODEL_PATH,
-        quiet=False
-    )
-
-# =============================
-# Load Trained Model
-# =============================
-@st.cache_resource
-def load_model():
-    model = ResNet18Classifier()
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device("cpu")))
-    model.eval()
-    return model
-
-model = load_model()
-
-# =============================
-# Audio to Mel-Spectrogram Tensor
-# =============================
-def audio_to_mel_tensor(file_path):
-    if not file_path.lower().endswith(".wav"):
-        audio = AudioSegment.from_file(file_path)
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            audio.export(tmp.name, format="wav")
-            file_path = tmp.name
-
-    y, sr = librosa.load(file_path, sr=22050)
-    mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
-    mel_db = librosa.power_to_db(mel, ref=np.max)
-
-    fig, ax = plt.subplots(figsize=(2.24, 2.24), dpi=100)
-    ax.axis('off')
-    librosa.display.specshow(mel_db, sr=sr, ax=ax)
-
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
-    plt.close(fig)
-
-    buf.seek(0)
-    image = Image.open(buf).convert('RGB')
-
-    transform = transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor()
-    ])
-
-    return transform(image).unsqueeze(0)
-
-# =============================
-# Predict Function
-# =============================
-def predict_from_model(vowel_paths, pataka_path, sentence_path):
-    inputs = [audio_to_mel_tensor(p) for p in vowel_paths]
-    inputs.append(audio_to_mel_tensor(pataka_path))
-    inputs.append(audio_to_mel_tensor(sentence_path))
-    with torch.no_grad():
-        return [F.softmax(model(x), dim=1)[0][1].item() for x in inputs]
-
-# =============================
-# Section 1: Vowels
-# =============================
-st.markdown("""
-<div class='card'>
-    <h2>1. สระ</h2>
-    <p class='instructions'>กรุณาออกเสียงแต่ละสระ 5-8 วินาทีอย่างชัดเจน โดยกดปุ่มบันทึกทีละไฟล์ หรืออัปโหลดไฟล์เสียงด้านล่าง</p>
-</div>
-""", unsafe_allow_html=True)
-
-vowel_sounds = ["อา", "อี", "อือ", "อู", "ไอ", "อำ", "เอา"]
+# Create placeholders for the 7 vowel files, 1 pataka, and 1 sentence
+vowel_sounds = ["อะ", "อิ", "อึ", "อุ", "เอ", "แอ", "โอ"]
 vowel_paths = []
-
-for sound in vowel_sounds:
-    st.markdown(f"<p class='pronounce'>ออกเสียง \"{sound}\"</p>", unsafe_allow_html=True)
-    audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}")
-    if audio_bytes:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            tmp.write(audio_bytes.read())
-            vowel_paths.append(tmp.name)
-        st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
-
-uploaded_vowels = st.file_uploader("หรืออัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
-if uploaded_vowels and not vowel_paths:
-    for file in uploaded_vowels[:7]:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            tmp.write(file.read())
-            vowel_paths.append(tmp.name)
-
-# =============================
-# Section 2: Pataka
-# =============================
-st.markdown("""
-<div class='card'>
-    <h2>2. พยางค์</h2>
-    <p class='instructions'>กรุณาออกเสียงคำว่า "พา - ทา - คา" ให้จบภายใน 6 วินาที หรืออัปโหลดไฟล์เสียงด้านล่าง</p>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("<p class='pronounce'>ออกเสียง \"พา - ทา - คา\"</p>", unsafe_allow_html=True)
-
 pataka_path = None
-pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์")
-if pataka_bytes:
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        tmp.write(pataka_bytes.read())
-        pataka_path = tmp.name
-    st.success("บันทึกพยางค์สำเร็จ", icon="✅")
-
-uploaded_pataka = st.file_uploader("หรืออัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"])
-if uploaded_pataka and not pataka_path:
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        tmp.write(uploaded_pataka.read())
-        pataka_path = tmp.name
-
-# =============================
-# Section 3: Sentence
-# =============================
-st.markdown("""
-<div class='card'>
-    <h2>3. ประโยค</h2>
-    <p class='instructions'>กรุณาอ่านประโยคอย่างชัดเจน หรืออัปโหลดไฟล์เสียงด้านล่าง</p>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("<p class='pronounce'>อ่านประโยค \"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</p>", unsafe_allow_html=True)
-
 sentence_path = None
-sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค")
-if sentence_bytes:
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        tmp.write(sentence_bytes.read())
-        sentence_path = tmp.name
-    st.success("บันทึกประโยคสำเร็จ", icon="✅")
 
-uploaded_sentence = st.file_uploader("หรืออัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"])
-if uploaded_sentence and not sentence_path:
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        tmp.write(uploaded_sentence.read())
-        sentence_path = tmp.name
+# Vowel Section
+with st.container():
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    st.markdown("<h2>สระ</h2>", unsafe_allow_html=True)
+    for vowel in vowel_sounds:
+        uploaded = st.file_uploader(f"สระ: {vowel}", type=["wav", "mp3"], key=vowel)
+        if uploaded:
+            path = handle_uploaded_audio(uploaded, vowel)
+            vowel_paths.append(path)
+        else:
+            vowel_paths.append(None)
+    st.markdown("</div>", unsafe_allow_html=True)
 
-# 🔽 You can now continue from here to add:
-# - Prediction button
-# - Result display
-# - Reset/clear logic
+# Pataka Section
+with st.container():
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    st.markdown("<h2>พยางค์</h2>", unsafe_allow_html=True)
+    pataka = st.file_uploader("พูดคำว่า 'ปะ-ตะ-กะ'", type=["wav", "mp3"], key="pataka")
+    if pataka:
+        pataka_path = handle_uploaded_audio(pataka, "pataka")
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# Sentence Section
+with st.container():
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    st.markdown("<h2>ประโยค</h2>", unsafe_allow_html=True)
+    sentence = st.file_uploader("พูดประโยค “วันนี้วันพระ”", type=["wav", "mp3"], key="sentence")
+    if sentence:
+        sentence_path = handle_uploaded_audio(sentence, "sentence")
+    st.markdown("</div>", unsafe_allow_html=True)
+
 # =============================
 # Buttons Layout
 # =============================
@@ -256,7 +135,7 @@ if predict_btn:
             """
 
         st.markdown(f"""
-            <div style='background-color:{box_color}; padding: 32px; border-radius: 14px; font-size: 30px; color: #000000; font-family: "Helvetica Neue", "Thai Sans Lite", "Noto Sans Thai", sans-serif;'>
+            <div style='background-color:{box_color}; padding: 32px; border-radius: 14px; font-size: 30px; color: #000000; font-family: "Noto Sans Thai", sans-serif;'>
                 <div style='text-align: center; font-size: 42px; font-weight: bold; margin-bottom: 20px;'>{label}:</div>
                 <p><b>ระดับความน่าจะเป็น:</b> {level}</p>
                 <p><b>ความน่าจะเป็นของพาร์กินสัน:</b> {percent}%</p>
@@ -281,5 +160,3 @@ if clear_btn:
         <script>window.location.reload(true);</script>
         <meta http-equiv="refresh" content="0">
     """, unsafe_allow_html=True)
-
-
