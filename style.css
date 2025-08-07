@@ -1,1 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@700&display=swap');
 
+/* General page styles */
+html, body {
+    background-color: #f2f4f8;
+    font-family: 'Helvetica Neue', 'Thai Sans Lite', 'Noto Sans Thai', sans-serif;
+}
+
+/* Logo */
+.logo {
+    display: block;
+    margin: 40px auto 20px auto;
+    width: 160px;
+}
+
+/* Title: SixtyScan */
+.title {
+    text-align: center;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 84px;
+    color: #4A148C;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+/* Subtitle: ตรวจโรคพาร์กินสันจากเสียง */
+.subtitle {
+    text-align: center;
+    font-size: 36px;
+    font-family: 'Helvetica Neue', 'Thai Sans Lite', 'Noto Sans Thai', sans-serif;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 56px;
+}
+
+/* Card sections */
+.card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    margin-bottom: 40px;
+    font-family: 'Helvetica Neue', 'Thai Sans Lite', 'Noto Sans Thai', sans-serif;
+}
+
+/* Section Headers */
+.card h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #222;
+    font-weight: bold;
+}
+
+/* Instruction Text */
+.instructions {
+    font-size: 30px !important;
+    color: #333;
+    margin-bottom: 24px;
+    font-weight: normal;
+}
+
+/* Pronunciation prompt */
+.pronounce {
+    font-size: 36px !important;
+    color: #000;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+/* Buttons */
+.predict-btn, .clear-btn {
+    font-size: 38px !important;
+    padding: 1.4em 2.7em;
+    border-radius: 14px;
+    font-weight: bold;
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 10px auto;
+}
+
+.predict-btn {
+    background-color: #009688;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.clear-btn {
+    background-color: #cfd8dc;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
