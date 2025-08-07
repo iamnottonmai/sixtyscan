@@ -288,9 +288,21 @@ if uploaded_pataka and not pataka_path:
 
 # Removed: st.markdown("<p class='pronounce'>อ่านประโยค \"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</p>", u[...]
 st.markdown("""
+    <style>
+        .sentence-instruction {
+            font-size: 16px !important;
+            color: #333;
+            margin-bottom: 24px;
+            font-family: 'Noto Sans Thai', sans-serif;
+            font-weight: 400;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
 <div class='card'>
     <h2>3. ประโยค</h2>
-    <p class='instructions' style='font-size:16px !important;'>กรุณาอ่านประโยค "วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</p>
+    <p class='sentence-instruction'>กรุณาอ่านประโยค "วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -417,6 +429,7 @@ if clear_btn:
         </script>
         <meta http-equiv="refresh" content="0">
     """, unsafe_allow_html=True)
+
 
 
 
