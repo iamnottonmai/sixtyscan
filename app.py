@@ -79,7 +79,7 @@ st.markdown("""
             margin-bottom: 24px;
         }
         /* Main Title */
-        .title {
+        h1.title {
             text-align: center;
             font-family: 'Lexend Deca', sans-serif;
             font-size: 84px;
@@ -88,7 +88,7 @@ st.markdown("""
             margin-bottom: 10px;
         }
         /* Subtitle */
-        .subtitle {
+        p.subtitle {
             text-align: center;
             font-family: 'Noto Sans Thai', sans-serif;
             font-weight: 400;
@@ -139,6 +139,7 @@ st.markdown("""
             max-width: 300px;
             display: block;
             margin: 10px auto;
+            font-family: 'Noto Sans Thai', sans-serif;
         }
         .predict-btn {
             background-color: #009688;
@@ -151,6 +152,11 @@ st.markdown("""
             color: black;
             border: none;
             cursor: pointer;
+        }
+        /* All other text elements */
+        .stMarkdown, .stText, .stSuccess, .stWarning, ul, li {
+            font-family: 'Noto Sans Thai', sans-serif !important;
+            font-weight: 400 !important;
         }
     </style>
 """, unsafe_allow_html=True)
