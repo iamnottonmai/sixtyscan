@@ -415,7 +415,7 @@ if predict_btn:
             </div>
         """, unsafe_allow_html=True)
     else:
-        st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon=⚠️")
+        st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค ⚠️")
 
 # =============================
 # Clear Button Logic
@@ -430,3 +430,4 @@ if clear_btn:
         </script>
         <meta http-equiv="refresh" content="0">
     """, unsafe_allow_html=True)
+
