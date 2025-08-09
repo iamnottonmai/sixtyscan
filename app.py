@@ -282,20 +282,19 @@ st.markdown("<h1 class='title'>SixtyScan</h1>", unsafe_allow_html=True)
 st.markdown("<p class='subtitle'>ตรวจโรคพาร์กินสันจากเสียง</p>", unsafe_allow_html=True)
 
 # =============================
-# Clear Button Logic (moved to top to handle clearing before rendering)
+# Clear Button Logic (handle clearing before rendering)
 # =============================
-# Create columns for buttons at the top
-button_col1, button_col2 = st.columns([1, 1])
-with button_col2:
-    if st.button("ลบข้อมูล", key="clear", type="secondary"):
-        cleanup_temp_files()
-        # Clear session state
-        st.session_state.vowel_files = []
-        st.session_state.pataka_file = None
-        st.session_state.sentence_file = None
-        st.session_state.clear_clicked = True
-        st.success("ลบข้อมูลทั้งหมดเรียบร้อยแล้ว", icon="🗑️")
-        st.rerun()
+# Check if clear button was clicked (will be handled later in the layout)
+if 'clear_button_clicked' in st.session_state and st.session_state.clear_button_clicked:
+    cleanup_temp_files()
+    # Clear session state
+    st.session_state.vowel_files = []
+    st.session_state.pataka_file = None
+    st.session_state.sentence_file = None
+    st.session_state.clear_clicked = True
+    st.session_state.clear_button_clicked = False  # Reset the flag
+    st.success("ลบข้อมูลทั้งหมดเรียบร้อยแล้ว", icon="🗑️")
+    st.rerun()
 
 # =============================
 # Vowel Recordings (7)
@@ -397,15 +396,23 @@ if uploaded_sentence and not st.session_state.sentence_file:
         st.session_state.sentence_file = tmp.name
 
 # =============================
-# Prediction Button
+# Buttons Layout (Original Position)
 # =============================
 col1, col2 = st.columns([1, 0.18])
 with col1:
-    predict_col, loading_col = st.columns([1, 1])
-    with predict_col:
+    button_col1, button_col2 = st.columns([1, 1])
+    with button_col1:
         predict_btn = st.button("วิเคราะห์", key="predict", type="primary")
-    with loading_col:
+    with button_col2:
         loading_placeholder = st.empty()
+with col2:
+    st.markdown("""
+        <div style="display: flex; justify-content: flex-end;">
+    """, unsafe_allow_html=True)
+    if st.button("ลบข้อมูল", key="clear", type="secondary"):
+        st.session_state.clear_button_clicked = True
+        st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # Reset clear_clicked flag after rendering
 if st.session_state.clear_clicked:
@@ -491,4 +498,4 @@ if predict_btn:
             </div>
         """, unsafe_allow_html=True)
     else:
-        st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค ⚠️")
+        st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠")
