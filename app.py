@@ -409,7 +409,7 @@ with col2:
     st.markdown("""
         <div style="display: flex; justify-content: flex-end;">
     """, unsafe_allow_html=True)
-    if st.button("ลบข้อมูল", key="clear", type="secondary"):
+    if st.button("ลบข้อมูล", key="clear", type="secondary"):
         st.session_state.clear_button_clicked = True
         st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
@@ -499,3 +499,4 @@ if predict_btn:
         """, unsafe_allow_html=True)
     else:
         st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠")
+
