@@ -397,29 +397,25 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Create columns for audio input and spectrogram
-pataka_audio_col, pataka_spec_col = st.columns([1, 1])
+# Fixed: Use consistent layout like vowels and sentence
+if not st.session_state.clear_clicked:
+    pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka")
+    if pataka_bytes:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            tmp.write(pataka_bytes.read())
+            # Clean up previous file if exists
+            if st.session_state.pataka_file and os.path.exists(st.session_state.pataka_file):
+                os.unlink(st.session_state.pataka_file)
+            st.session_state.pataka_file = tmp.name
+        st.success("บันทึกพยางค์สำเร็จ", icon="✅")
+else:
+    pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka_new")
 
-with pataka_audio_col:
-    if not st.session_state.clear_clicked:
-        pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka")
-        if pataka_bytes:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-                tmp.write(pataka_bytes.read())
-                # Clean up previous file if exists
-                if st.session_state.pataka_file and os.path.exists(st.session_state.pataka_file):
-                    os.unlink(st.session_state.pataka_file)
-                st.session_state.pataka_file = tmp.name
-            st.success("บันทึกพยางค์สำเร็จ", icon="✅")
-    else:
-        pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka_new")
-
-with pataka_spec_col:
-    # Show spectrogram if audio exists
-    if st.session_state.pataka_file:
-        spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์ \"พา-ทา-คา\"")
-        if spec_image:
-            st.image(spec_image, caption="Mel Spectrogram: พา-ทา-คา", use_container_width=True)
+# Show spectrogram below the audio input if audio exists (consistent with vowels and sentence)
+if st.session_state.pataka_file:
+    spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์ \"พา-ทา-คา\"")
+    if spec_image:
+        st.image(spec_image, caption="Mel Spectrogram: พา-ทา-คา", use_container_width=True)
 
 uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
 if uploaded_pataka and not st.session_state.pataka_file:
@@ -604,7 +600,3 @@ if predict_btn:
         """, unsafe_allow_html=True)
     else:
         st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠")
-
-
-
-
