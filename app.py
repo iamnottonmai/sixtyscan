@@ -281,11 +281,10 @@ def create_mel_spectrogram_display(file_path, title="Mel Spectrogram"):
         # Create a more visually appealing spectrogram
         fig, ax = plt.subplots(figsize=(8, 4), dpi=100, facecolor='white')
         
-        # Use a colorful colormap
+        # Use a colorful colormap (no title in matplotlib)
         img = librosa.display.specshow(mel_db, sr=sr, ax=ax, x_axis='time', y_axis='mel', 
                                       cmap='plasma', fmax=8000)
         
-        ax.set_title(title, fontsize=14, fontweight='bold', color='#4A148C')
         ax.set_xlabel('Time (s)', fontsize=12)
         ax.set_ylabel('Mel Frequency', fontsize=12)
         
@@ -376,7 +375,8 @@ for i, sound in enumerate(vowel_sounds):
     if i < len(st.session_state.vowel_files) and st.session_state.vowel_files[i]:
         spec_image = create_mel_spectrogram_display(st.session_state.vowel_files[i], f"สระ \"{sound}\"")
         if spec_image:
-            st.image(spec_image, caption=f"Mel Spectrogram: {sound}", use_container_width=True)
+            st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 8px;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
+            st.image(spec_image, use_container_width=True)
 
 uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
 if uploaded_vowels and len([f for f in st.session_state.vowel_files if f is not None]) < 7:
@@ -415,7 +415,8 @@ else:
 if st.session_state.pataka_file:
     spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์ \"พา-ทา-คา\"")
     if spec_image:
-        st.image(spec_image, caption="Mel Spectrogram: พา-ทา-คา", use_container_width=True)
+        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
+        st.image(spec_image, use_container_width=True)
 
 uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
 if uploaded_pataka and not st.session_state.pataka_file:
@@ -450,7 +451,8 @@ else:
 if st.session_state.sentence_file:
     spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
     if spec_image:
-        st.image(spec_image, caption="Mel Spectrogram: ประโยค", use_container_width=True)
+        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px;'>Mel Spectrogram: <b>\"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</b></div>", unsafe_allow_html=True)
+        st.image(spec_image, use_container_width=True)
 
 uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
 if uploaded_sentence and not st.session_state.sentence_file:
@@ -572,21 +574,24 @@ if predict_btn:
             with spec_cols[i % 3]:
                 spec_image = create_mel_spectrogram_display(file_path, f"สระ \"{sound}\"")
                 if spec_image:
-                    st.image(spec_image, caption=f"สระ {sound}", use_container_width=True)
+                    st.markdown(f"<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
+                    st.image(spec_image, use_container_width=True)
         
         # Display pataka spectrogram
         col_idx = len(vowel_sounds) % 3
         with spec_cols[col_idx]:
             spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์")
             if spec_image:
-                st.image(spec_image, caption="พา-ทา-คา", use_container_width=True)
+                st.markdown("<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
+                st.image(spec_image, use_container_width=True)
         
         # Display sentence spectrogram
         col_idx = (len(vowel_sounds) + 1) % 3
         with spec_cols[col_idx]:
             spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
             if spec_image:
-                st.image(spec_image, caption="ประโยค", use_container_width=True)
+                st.markdown("<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center;'>Mel Spectrogram: <b>\"ประโยค\"</b></div>", unsafe_allow_html=True)
+                st.image(spec_image, use_container_width=True)
         
         st.markdown("""
         <div style='margin-top: 20px; padding: 20px; background-color: #f0f2f6; border-radius: 10px;'>
