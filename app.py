@@ -419,7 +419,7 @@ with pataka_spec_col:
     if st.session_state.pataka_file:
         spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์ \"พา-ทา-คา\"")
         if spec_image:
-            st.image(spec_image, caption="Mel Spectrogram: พา-ทา-คา", use_column_width=True)
+            st.image(spec_image, caption="Mel Spectrogram: พา-ทา-คา", use_container_width=True)
 
 uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
 if uploaded_pataka and not st.session_state.pataka_file:
@@ -604,6 +604,7 @@ if predict_btn:
         """, unsafe_allow_html=True)
     else:
         st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠")
+
 
 
 
