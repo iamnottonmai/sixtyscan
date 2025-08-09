@@ -3,6 +3,12 @@ import base64
 import os
 
 # =============================
+# Initialize Session State
+# =============================
+if 'page' not in st.session_state:
+    st.session_state.page = 'home'
+
+# =============================
 # Logo Loading Function
 # =============================
 @st.cache_data
@@ -153,42 +159,66 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================
-# Main Content
+# Navigation Logic
 # =============================
+def show_home_page():
+    """Display the home page"""
+    # Logo
+    display_logo()
 
-# Logo
-display_logo()
+    # Title
+    st.markdown("<h1 class='title'>SixtyScan</h1>", unsafe_allow_html=True)
 
-# Title
-st.markdown("<h1 class='title'>SixtyScan</h1>", unsafe_allow_html=True)
-
-# Description
-st.markdown("""
-    <div class='description'>
-        ตรวจโรคพาร์กินสันจากเสียงด้วยปัญญาประดิษฐ์<br>
-        เทคโนโลยีที่ทันสมัยเพื่อการตรวจคัดกรองเบื้องต้น
-    </div>
-""", unsafe_allow_html=True)
-
-# Start Button (centered) - CHANGED THIS LINE
-col1, col2, col3 = st.columns([1, 1, 1])
-with col2:
-    if st.button("เริ่มการวิเคราะห์", key="start_analysis"):
-        st.switch_page("analysis.py")  # CHANGED from "main.py" to "analysis.py"
-
-# About Us Section
-st.markdown("""
-    <div class='about-section'>
-        <h2 class='about-title'>เกี่ยวกับเรา</h2>
-        <div class='about-content'>
-            นวัตกรรมนี้ได้รับการพัฒนาขึ้นเพื่อการตรวจคัดกรองโรคพาร์กินสันในระยะเริ่มต้นแบบไม่รุกรานโดยใช้การวิเคราะห์เสียง 
-            โมเดลที่ใช้เทคโนโลยี ResNet18 ได้รับการฝึกฝนด้วยข้อมูล Mel Spectrogram จากตัวอย่างเสียงภาษาไทย 
-            และสามารถบรรลุความแม่นยำ 100% ในชุดข้อมูลทดสอบ แสดงให้เห็นถึงศักยภาพที่แข็งแกร่งในการสนับสนุน
-            การวินิจฉัยในโลกแห่งความเป็นจริง ระบบนี้ออกแบบมาเพื่อเป็นเครื่องมือสนับสนุนการตัดสินใจทางการแพทย์
-            และไม่ใช่การทดแทนการวินิจฉัยโดยแพทย์ผู้เชี่ยวชาญ
+    # Description
+    st.markdown("""
+        <div class='description'>
+            ตรวจโรคพาร์กินสันจากเสียงด้วยปัญญาประดิษฐ์<br>
+            เทคโนโลยีที่ทันสมัยเพื่อการตรวจคัดกรองเบื้องต้น
         </div>
-    </div>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
-# Footer spacing
-st.markdown("<br><br>", unsafe_allow_html=True)
+    # Start Button (centered)
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        if st.button("เริ่มการวิเคราะห์", key="start_analysis"):
+            st.session_state.page = 'analysis'
+            st.rerun()
+
+    # About Us Section
+    st.markdown("""
+        <div class='about-section'>
+            <h2 class='about-title'>เกี่ยวกับเรา</h2>
+            <div class='about-content'>
+                นวัตกรรมนี้ได้รับการพัฒนาขึ้นเพื่อการตรวจคัดกรองโรคพาร์กินสันในระยะเริ่มต้นแบบไม่รุกรานโดยใช้การวิเคราะห์เสียง 
+                โมเดลที่ใช้เทคโนโลยี ResNet18 ได้รับการฝึกฝนด้วยข้อมูล Mel Spectrogram จากตัวอย่างเสียงภาษาไทย 
+                และสามารถบรรลุความแม่นยำ 100% ในชุดข้อมูลทดสอบ แสดงให้เห็นถึงศักยภาพที่แข็งแกร่งในการสนับสนุน
+                การวินิจฉัยในโลกแห่งความเป็นจริง ระบบนี้ออกแบบมาเพื่อเป็นเครื่องมือสนับสนุนการตัดสินใจทางการแพทย์
+                และไม่ใช่การทดแทนการวินิจฉัยโดยแพทย์ผู้เชี่ยวชาญ
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Footer spacing
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+def show_analysis_page():
+    """Import and run the analysis page"""
+    # Import your analysis module
+    try:
+        import analysis
+        # Run the analysis page - this will execute all the code in analysis.py
+        # Note: Make sure to remove any st.set_page_config() calls from analysis.py
+        # since it's already set in this main file
+    except ImportError:
+        st.error("Could not import analysis.py. Make sure the file exists in the same directory.")
+        if st.button("← กลับหน้าแรก"):
+            st.session_state.page = 'home'
+            st.rerun()
+
+# =============================
+# Main App Logic
+# =============================
+if st.session_state.page == 'home':
+    show_home_page()
+elif st.session_state.page == 'analysis':
+    show_analysis_page()
