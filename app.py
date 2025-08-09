@@ -202,16 +202,26 @@ def show_home_page():
     st.markdown("<br><br>", unsafe_allow_html=True)
 
 def show_analysis_page():
-    """Import and run the analysis page"""
-    # Import your analysis module
+    """Display the analysis page"""
+    # Add back button at the top
+    if st.button("← กลับหน้าแรก", key="back_to_home"):
+        st.session_state.page = 'home'
+        st.rerun()
+    
+    # Import and run analysis function
     try:
-        import analysis
-        # Run the analysis page - this will execute all the code in analysis.py
-        # Note: Make sure to remove any st.set_page_config() calls from analysis.py
-        # since it's already set in this main file
-    except ImportError:
-        st.error("Could not import analysis.py. Make sure the file exists in the same directory.")
-        if st.button("← กลับหน้าแรก"):
+        from analysis import run_analysis
+        run_analysis()
+    except FileNotFoundError:
+        st.error("ไม่พบไฟล์ analysis.py กรุณาตรวจสอบว่าไฟล์อยู่ในโฟลเดอร์เดียวกัน")
+        st.markdown("---")
+        if st.button("← กลับหน้าแรก", key="error_back_home"):
+            st.session_state.page = 'home'
+            st.rerun()
+    except Exception as e:
+        st.error(f"เกิดข้อผิดพลาดในการโหลดหน้าวิเคราะห์: {str(e)}")
+        st.markdown("---")
+        if st.button("← กลับหน้าแรก", key="exception_back_home"):
             st.session_state.page = 'home'
             st.rerun()
 
