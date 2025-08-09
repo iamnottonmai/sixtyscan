@@ -375,7 +375,7 @@ for i, sound in enumerate(vowel_sounds):
     if i < len(st.session_state.vowel_files) and st.session_state.vowel_files[i]:
         spec_image = create_mel_spectrogram_display(st.session_state.vowel_files[i], f"สระ \"{sound}\"")
         if spec_image:
-            st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 8px;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
             st.image(spec_image, use_container_width=True)
 
 uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
@@ -415,7 +415,7 @@ else:
 if st.session_state.pataka_file:
     spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์ \"พา-ทา-คา\"")
     if spec_image:
-        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
+        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
         st.image(spec_image, use_container_width=True)
 
 uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
@@ -451,7 +451,7 @@ else:
 if st.session_state.sentence_file:
     spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
     if spec_image:
-        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px;'>Mel Spectrogram: <b>\"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</b></div>", unsafe_allow_html=True)
+        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center;'>Mel Spectrogram: <b>\"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</b></div>", unsafe_allow_html=True)
         st.image(spec_image, use_container_width=True)
 
 uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
