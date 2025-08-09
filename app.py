@@ -1,4 +1,4 @@
-import streamlit as st 
+import streamlit as st
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -13,70 +13,170 @@ import tempfile
 import os
 import gdown
 import base64
-from pydub import AudioSegment
 
 # =============================
-# Logo Loader
+# Logo Loading Function
 # =============================
 @st.cache_data
 def load_logo():
-    for path in ["logo.png", "./logo.png", "assets/logo.png", "images/logo.png"]:
-        if os.path.exists(path):
-            with open(path, "rb") as f:
-                return base64.b64encode(f.read()).decode()
+    """Load logo with fallback options for reliability"""
+    logo_paths = [
+        "logo.png",           # Same directory
+        "./logo.png",         # Explicit relative path
+        "assets/logo.png",    # If in assets folder
+        "images/logo.png"     # If in images folder
+    ]
+    
+    for path in logo_paths:
+        try:
+            if os.path.exists(path):
+                with open(path, "rb") as f:
+                    return base64.b64encode(f.read()).decode()
+        except Exception as e:
+            continue
+    
+    # If no logo found, return None
     return None
 
 def display_logo():
+    """Display logo if available"""
     logo_b64 = load_logo()
     if logo_b64:
-        st.markdown(f"""<img src="data:image/png;base64,{logo_b64}" class="logo">""", unsafe_allow_html=True)
+        st.markdown(f"""
+        <img src="data:image/png;base64,{logo_b64}" class="logo" alt="SixtyScan Logo">
+        """, unsafe_allow_html=True)
 
 # =============================
-# Model Download
+# Download model from Google Drive
 # =============================
 MODEL_PATH = "best_resnet18.pth"
 if not os.path.exists(MODEL_PATH):
-    gdown.download("https://drive.google.com/uc?id=1_oHE9B-2PgSqpTQCC9HrG7yO0rsnZtqs", MODEL_PATH, quiet=False)
+    gdown.download(
+        "https://drive.google.com/uc?id=1_oHE9B-2PgSqpTQCC9HrG7yO0rsnZtqs",
+        MODEL_PATH,
+        quiet=False
+    )
 
 # =============================
-# Page Config & Styles
+# Page Config & Font Styles
 # =============================
 st.set_page_config(page_title="SixtyScan", layout="centered")
 st.markdown("""
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600&family=Lexend+Deca:wght@700&display=swap');
-html, body { background-color: #f2f4f8; font-family: 'Noto Sans Thai', sans-serif; }
-.logo { display:block; margin:0 auto 24px auto; width: 180px; }
-h1.title { text-align:center; font-family:'Lexend Deca',sans-serif; font-size:84px; color:#4A148C; font-weight:700; margin-bottom:10px; }
-p.subtitle { text-align:center; font-size:32px; margin-bottom:56px; }
-.card { background-color:#fff; border-radius:16px; padding:40px; box-shadow:0 4px 20px rgba(0,0,0,0.06); margin-bottom:40px; }
-.card h2 { font-size:48px; margin-bottom:20px; color:#222; font-weight:600; }
-.instructions { font-size:28px; margin-bottom:24px; }
-.pronounce { font-size:24px; margin: 0 0 24px 0; }
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600&family=Lexend+Deca:wght@700&display=swap');
+        /* Global */
+        html, body {
+            background-color: #f2f4f8;
+            font-family: 'Noto Sans Thai', sans-serif;
+            font-weight: 400;
+        }
+        /* Centered logo */
+        .logo {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 180px;
+            margin-bottom: 24px;
+        }
+        /* Main Title */
+        h1.title {
+            text-align: center;
+            font-family: 'Lexend Deca', sans-serif;
+            font-size: 84px;
+            color: #4A148C;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        /* Subtitle */
+        p.subtitle {
+            text-align: center;
+            font-family: 'Noto Sans Thai', sans-serif;
+            font-weight: 400;
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 56px;
+        }
+        /* Card container */
+        .card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            margin-bottom: 40px;
+        }
+        /* Section headers */
+        .card h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #222;
+            font-weight: 600;
+            font-family: 'Noto Sans Thai', sans-serif;
+        }
+        /* Instructions text */
+        .instructions {
+            font-size: 28px !important;
+            color: #333;
+            margin-bottom: 24px;
+            font-weight: 400;
+            font-family: 'Noto Sans Thai', sans-serif;
+        }
+        /* Pronunciation display */
+        .pronounce {
+            font-size: 24px !important;
+            color: #000;
+            font-weight: 400;
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-family: 'Noto Sans Thai', sans-serif;
+        }
+        /* Buttons */
+        .predict-btn, .clear-btn {
+            font-size: 38px !important;
+            padding: 1.4em 2.7em;
+            border-radius: 14px;
+            font-weight: bold;
+            width: 100%;
+            max-width: 300px;
+            display: block;
+            margin: 10px auto;
+            font-family: 'Noto Sans Thai', sans-serif;
+        }
+        .predict-btn {
+            background-color: #009688;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .clear-btn {
+            background-color: #cfd8dc;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+        /* All other text elements */
+        .stMarkdown, .stText, .stSuccess, .stWarning, ul, li {
+            font-family: 'Noto Sans Thai', sans-serif !important;
+            font-weight: 400 !important;
+        }
+        /* Make bold inside .pronounce, .instructions, .sentence-instruction larger and more visible */
+        .pronounce b, .instructions b, .sentence-instruction b {
+            font-weight: 700 !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-/* Big mic button */
-.big-mic-wrapper { text-align: center; margin: 20px 0; }
-.big-mic-button {
-    border-radius: 50%;
-    width: 120px; height: 120px;
-    display: flex; align-items: center; justify-content: center;
-    margin: auto; cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    transition: background-color 0.3s, transform 0.2s;
-}
-.big-mic-button i { font-size: 50px; color: white; }
-.big-mic-button:hover { transform: scale(1.05); }
-.stAudio > div { transform: scale(1.6); transform-origin: center; margin-top: 12px; }
-
-/* Action buttons */
-.predict-btn, .clear-btn {
-    font-size: 38px !important; padding: 1.4em 2.7em; border-radius: 14px;
-    font-weight: bold; width: 100%; max-width: 300px; margin: 10px auto;
-}
-.predict-btn { background-color: #009688; color: white; border: none; }
-.clear-btn { background-color: #cfd8dc; color: black; border: none; }
-</style>
+# Add a custom style for the sentence instruction after the main style block
+st.markdown("""
+    <style>
+        .card .sentence-instruction {
+            font-size: 24px !important;
+            font-weight: 400 !important;
+            color: #333 !important;
+            margin-bottom: 24px !important;
+            font-family: 'Noto Sans Thai', sans-serif !important;
+            display: block !important;
+        }
+    </style>
 """, unsafe_allow_html=True)
 
 # =============================
@@ -88,33 +188,47 @@ def load_model():
     model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device("cpu")))
     model.eval()
     return model
+
 model = load_model()
 
 # =============================
-# Audio to Mel Tensor
+# Audio Preprocessing
 # =============================
+from pydub import AudioSegment
+import soundfile as sf
+
 def audio_to_mel_tensor(file_path):
+    # Convert to WAV if necessary
     if not file_path.lower().endswith(".wav"):
         audio = AudioSegment.from_file(file_path)
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
             audio.export(tmp.name, format="wav")
             file_path = tmp.name
+
     y, sr = librosa.load(file_path, sr=22050)
     mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
     mel_db = librosa.power_to_db(mel, ref=np.max)
+
     fig, ax = plt.subplots(figsize=(2.24, 2.24), dpi=100)
     ax.axis('off')
     librosa.display.specshow(mel_db, sr=sr, ax=ax)
+
     buf = io.BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
     plt.close(fig)
+
     buf.seek(0)
     image = Image.open(buf).convert('RGB')
-    transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
+
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor()
+    ])
+
     return transform(image).unsqueeze(0)
 
 # =============================
-# Predict Function
+# Prediction
 # =============================
 def predict_from_model(vowel_paths, pataka_path, sentence_path):
     inputs = [audio_to_mel_tensor(p) for p in vowel_paths]
@@ -124,117 +238,195 @@ def predict_from_model(vowel_paths, pataka_path, sentence_path):
         return [F.softmax(model(x), dim=1)[0][1].item() for x in inputs]
 
 # =============================
-# Header
+# Header with Logo
 # =============================
 display_logo()
 st.markdown("<h1 class='title'>SixtyScan</h1>", unsafe_allow_html=True)
 st.markdown("<p class='subtitle'>ตรวจโรคพาร์กินสันจากเสียง</p>", unsafe_allow_html=True)
 
 # =============================
-# Session Init
+# Vowel Recordings (7)
 # =============================
-if "vowel_paths" not in st.session_state: st.session_state.vowel_paths = []
-if "pataka_path" not in st.session_state: st.session_state.pataka_path = None
-if "sentence_path" not in st.session_state: st.session_state.sentence_path = None
+st.markdown("""
+<div class='card'>
+    <h2>1. สระ</h2>
+    <p class='instructions'>กรุณาออกเสียงแต่ละสระ 5-8 วินาทีอย่างชัดเจน โดยกดปุ่มบันทึกทีละสระ</p>
+</div>
+""", unsafe_allow_html=True)
 
-# =============================
-# Step 1: Vowels
-# =============================
-st.markdown("<div class='card'><h2>1. สระ</h2><p class='instructions'>บันทึกทีละสระ 5-8 วินาที</p></div>", unsafe_allow_html=True)
 vowel_sounds = ["อา", "อี", "อือ", "อู", "ไอ", "อำ", "เอา"]
+vowel_paths = []
+
 for sound in vowel_sounds:
-    st.markdown(f"<p class='pronounce'>ออกเสียง <b>{sound}</b></p>", unsafe_allow_html=True)
-    st.markdown(f"""
-        <div class="big-mic-wrapper">
-            <div class="big-mic-button" style="background-color:#009688;" onclick="document.getElementById('rec-{sound}').click()">
-                <i class="fa fa-microphone"></i>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-    audio_bytes = st.audio_input(f"บันทึกเสียง {sound}", key=f"rec-{sound}")
+    st.markdown(f"<p class='pronounce'>ออกเสียง <b>\"{sound}\"</b></p>", unsafe_allow_html=True)
+    audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}")
     if audio_bytes:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
             tmp.write(audio_bytes.read())
-            st.session_state.vowel_paths.append(tmp.name)
-        st.success(f"บันทึก {sound} สำเร็จ ✅")
+            vowel_paths.append(tmp.name)
+        st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
 
-st.markdown("--- หรือ อัปโหลดไฟล์เสียง ---")
-uploaded_vowels = st.file_uploader("อัปโหลดสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
-if uploaded_vowels:
-    st.session_state.vowel_paths = []
+uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
+if uploaded_vowels and not vowel_paths:
     for file in uploaded_vowels[:7]:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
             tmp.write(file.read())
-            st.session_state.vowel_paths.append(tmp.name)
+            vowel_paths.append(tmp.name)
 
 # =============================
-# Step 2: Pataka
+# Pataka Recording
 # =============================
-st.markdown("<div class='card'><h2>2. พยางค์</h2></div>", unsafe_allow_html=True)
-st.markdown(f"""
-    <div class="big-mic-wrapper">
-        <div class="big-mic-button" style="background-color:#3f51b5;" onclick="document.getElementById('rec-pataka').click()">
-            <i class="fa fa-microphone"></i>
-        </div>
-    </div>
+st.markdown("""
+<div class='card'>
+    <h2>2. พยางค์</h2>
+    <p class='instructions'>กรุณาออกเสียงคำว่า <b>"พา - ทา - คา"</b> ให้จบภายใน 6 วินาที</p>
+</div>
 """, unsafe_allow_html=True)
-pataka_bytes = st.audio_input("บันทึกเสียง พา-ทา-คา", key="rec-pataka")
+
+pataka_path = None
+pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์")
 if pataka_bytes:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
         tmp.write(pataka_bytes.read())
-        st.session_state.pataka_path = tmp.name
-    st.success("บันทึกพยางค์สำเร็จ ✅")
+        pataka_path = tmp.name
+    st.success("บันทึกพยางค์สำเร็จ", icon="✅")
 
-uploaded_pataka = st.file_uploader("อัปโหลดไฟล์พยางค์", type=["wav", "mp3", "m4a"])
-if uploaded_pataka:
+uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
+if uploaded_pataka and not pataka_path:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
         tmp.write(uploaded_pataka.read())
-        st.session_state.pataka_path = tmp.name
+        pataka_path = tmp.name
 
 # =============================
-# Step 3: Sentence
+# Sentence Recording
 # =============================
-st.markdown("<div class='card'><h2>3. ประโยค</h2></div>", unsafe_allow_html=True)
-st.markdown(f"""
-    <div class="big-mic-wrapper">
-        <div class="big-mic-button" style="background-color:#9c27b0;" onclick="document.getElementById('rec-sentence').click()">
-            <i class="fa fa-microphone"></i>
-        </div>
-    </div>
+st.markdown("""
+<div class='card'>
+    <h2>3. ประโยค</h2>
+    <p class='sentence-instruction'>กรุณาอ่านประโยค <b>"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</b></p>
+</div>
 """, unsafe_allow_html=True)
-sentence_bytes = st.audio_input("บันทึกการอ่านประโยค", key="rec-sentence")
+
+sentence_path = None
+sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค")
 if sentence_bytes:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
         tmp.write(sentence_bytes.read())
-        st.session_state.sentence_path = tmp.name
-    st.success("บันทึกประโยคสำเร็จ ✅")
+        sentence_path = tmp.name
+    st.success("บันทึกประโยคสำเร็จ", icon="✅")
 
-uploaded_sentence = st.file_uploader("อัปโหลดไฟล์ประโยค", type=["wav", "mp3", "m4a"])
-if uploaded_sentence:
+uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
+if uploaded_sentence and not sentence_path:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
         tmp.write(uploaded_sentence.read())
-        st.session_state.sentence_path = tmp.name
+        sentence_path = tmp.name
 
 # =============================
-# Action Buttons
+# Buttons Layout
 # =============================
-col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns([1, 0.18])
 with col1:
-    predict_btn = st.button("วิเคราะห์", key="predict", type="primary")
+    button_col1, button_col2 = st.columns([1, 1])
+    with button_col1:
+        predict_btn = st.button("วิเคราะห์", key="predict", type="primary")
+    with button_col2:
+        loading_placeholder = st.empty()
 with col2:
-    if st.button("ลบข้อมูล", key="clear", type="secondary"):
-        st.session_state.vowel_paths = []
-        st.session_state.pataka_path = None
-        st.session_state.sentence_path = None
-        st.experimental_rerun()
+    st.markdown("""
+        <div style="display: flex; justify-content: flex-end;">
+    """, unsafe_allow_html=True)
+    clear_btn = st.button("ลบข้อมูล", key="clear", type="secondary")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # =============================
 # Prediction Logic
 # =============================
 if predict_btn:
-    if len(st.session_state.vowel_paths) == 7 and st.session_state.pataka_path and st.session_state.sentence_path:
-        all_probs = predict_from_model(st.session_state.vowel_paths, st.session_state.pataka_path, st.session_state.sentence_path)
-        percent = int(np.mean(all_probs) * 100)
-        st.success(f"ความน่าจะเป็นพาร์กินสัน: {percent}%")
+    if len(vowel_paths) == 7 and pataka_path and sentence_path:
+        # Show loading indicator
+        loading_placeholder.markdown("""
+            <div style="display: flex; align-items: center; margin-top: 8px;">
+                <div style="width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #009688; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <span style="margin-left: 10px; font-size: 16px; color: #009688;">กำลังวิเคราะห์...</span>
+            </div>
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
+        """, unsafe_allow_html=True)
+        
+        all_probs = predict_from_model(vowel_paths, pataka_path, sentence_path)
+        final_prob = np.mean(all_probs)
+        percent = int(final_prob * 100)
+        
+        # Clear loading indicator
+        loading_placeholder.empty()
+
+        if percent <= 50:
+            level = "ระดับต่ำ (Low)"
+            label = "Non Parkinson"
+            diagnosis = "ไม่เป็นพาร์กินสัน"
+            box_color = "#e6f9e6"
+            advice = """
+            <ul style='font-size:28px;'>
+                <li>ถ้าไม่มีอาการ: ควรตรวจปีละครั้ง(ไม่บังคับ)</li>
+                <li>ถ้ามีอาการเล็กน้อย: ตรวจปีละ 2 ครั้ง</li>
+                <li>ถ้ามีอาการเตือน: ตรวจ 2–4 ครั้งต่อปี</li>
+            </ul>
+            """
+        elif percent <= 75:
+            level = "ปานกลาง (Moderate)"
+            label = "Parkinson"
+            diagnosis = "เป็นพาร์กินสัน"
+            box_color = "#fff7e6"
+            advice = """
+            <ul style='font-size:28px;'>
+                <li>พบแพทย์เฉพาะทางระบบประสาท</li>
+                <li>บันทึกอาการประจำวัน</li>
+                <li>หากได้รับยา: บันทึกผลข้างเคียง</li>
+            </ul>
+            """
+        else:
+            level = "สูง (High)"
+            label = "Parkinson"
+            diagnosis = "เป็นพาร์กินสัน"
+            box_color = "#ffe6e6"
+            advice = """
+            <ul style='font-size:28px;'>
+                <li>พบแพทย์เฉพาะทางโดยเร็วที่สุด</li>
+                <li>บันทึกอาการทุกวัน</li>
+                <li>หากได้รับยา: ติดตามผลอย่างละเอียด</li>
+            </ul>
+            """
+
+        st.markdown(f"""
+            <div style='background-color:{box_color}; padding: 32px; border-radius: 14px; font-size: 30px; color: #000000;'>
+                <div style='text-align: center; font-size: 42px; font-weight: bold; margin-bottom: 20px;'>{label}:</div>
+                <p><b>ระดับความน่าจะเป็น:</b> {level}</p>
+                <p><b>ความน่าจะเป็นของพาร์กินสัน:</b> {percent}%</p>
+                <div style='height: 36px; background: linear-gradient(to right, green, yellow, red); border-radius: 6px; margin-bottom: 16px; position: relative;'>
+                    <div style='position: absolute; left: {percent}%; top: 0; bottom: 0; width: 4px; background-color: black;'></div>
+                </div>
+                <p><b>ผลการวิเคราะห์:</b> {diagnosis}</p>
+                <p><b>คำแนะนำ</b></p>
+                {advice}
+            </div>
+        """, unsafe_allow_html=True)
     else:
-        st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบ ⚠️")
+        st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon=⚠️")
+
+# =============================
+# Clear Button Logic
+# =============================
+if clear_btn:
+    # Clear all session state
+    st.session_state.clear()
+    # Force a hard refresh like Ctrl+F5
+    st.markdown("""
+        <script>
+            window.location.reload(true);
+        </script>
+        <meta http-equiv="refresh" content="0">
+    """, unsafe_allow_html=True)
