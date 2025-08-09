@@ -94,7 +94,7 @@ if not os.path.exists(MODEL_PATH):
 # =============================
 # Page Config & Font Styles
 # =============================
-st.set_page_config(page_title="SixtyScan", layout="centered")
+# st.set_page_config(page_title="SixtyScan", layout="centered")
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600&family=Lexend+Deca:wght@700&display=swap');
