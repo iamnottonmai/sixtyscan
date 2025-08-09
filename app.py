@@ -264,6 +264,50 @@ def audio_to_mel_tensor(file_path):
 
     return transform(image).unsqueeze(0)
 
+def create_mel_spectrogram_display(file_path, title="Mel Spectrogram"):
+    """Create a mel spectrogram for display purposes"""
+    try:
+        # Convert to WAV if necessary
+        if not file_path.lower().endswith(".wav"):
+            audio = AudioSegment.from_file(file_path)
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+                audio.export(tmp.name, format="wav")
+                file_path = tmp.name
+
+        y, sr = librosa.load(file_path, sr=22050)
+        mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
+        mel_db = librosa.power_to_db(mel, ref=np.max)
+
+        # Create a more visually appealing spectrogram
+        fig, ax = plt.subplots(figsize=(8, 4), dpi=100, facecolor='white')
+        
+        # Use a colorful colormap
+        img = librosa.display.specshow(mel_db, sr=sr, ax=ax, x_axis='time', y_axis='mel', 
+                                      cmap='plasma', fmax=8000)
+        
+        ax.set_title(title, fontsize=14, fontweight='bold', color='#4A148C')
+        ax.set_xlabel('Time (s)', fontsize=12)
+        ax.set_ylabel('Mel Frequency', fontsize=12)
+        
+        # Add colorbar
+        cbar = plt.colorbar(img, ax=ax, format='%+2.0f dB')
+        cbar.set_label('Power (dB)', fontsize=10)
+        
+        # Style the plot
+        ax.grid(True, alpha=0.3)
+        plt.tight_layout()
+
+        # Convert to image for Streamlit
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png', bbox_inches='tight', dpi=150, facecolor='white')
+        plt.close(fig)
+        
+        buf.seek(0)
+        return Image.open(buf)
+        
+    except Exception as e:
+        return None
+
 # =============================
 # Prediction
 # =============================
@@ -311,22 +355,33 @@ vowel_sounds = ["อา", "อี", "อือ", "อู", "ไอ", "อำ", "
 for i, sound in enumerate(vowel_sounds):
     st.markdown(f"<p class='pronounce'>ออกเสียง <b>\"{sound}\"</b></p>", unsafe_allow_html=True)
     
-    # Only show audio input if not cleared recently
-    if not st.session_state.clear_clicked:
-        audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}", key=f"vowel_{i}")
-        if audio_bytes:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-                tmp.write(audio_bytes.read())
-                # Ensure we have enough slots in the list
-                while len(st.session_state.vowel_files) <= i:
-                    st.session_state.vowel_files.append(None)
-                # Clean up previous file if exists
-                if st.session_state.vowel_files[i] and os.path.exists(st.session_state.vowel_files[i]):
-                    os.unlink(st.session_state.vowel_files[i])
-                st.session_state.vowel_files[i] = tmp.name
-            st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
-    else:
-        st.audio_input(f"🎤 บันทึกเสียง {sound}", key=f"vowel_{i}_new")
+    # Create columns for audio input and spectrogram
+    audio_col, spec_col = st.columns([1, 1])
+    
+    with audio_col:
+        # Only show audio input if not cleared recently
+        if not st.session_state.clear_clicked:
+            audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}", key=f"vowel_{i}")
+            if audio_bytes:
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+                    tmp.write(audio_bytes.read())
+                    # Ensure we have enough slots in the list
+                    while len(st.session_state.vowel_files) <= i:
+                        st.session_state.vowel_files.append(None)
+                    # Clean up previous file if exists
+                    if st.session_state.vowel_files[i] and os.path.exists(st.session_state.vowel_files[i]):
+                        os.unlink(st.session_state.vowel_files[i])
+                    st.session_state.vowel_files[i] = tmp.name
+                st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
+        else:
+            st.audio_input(f"🎤 บันทึกเสียง {sound}", key=f"vowel_{i}_new")
+    
+    with spec_col:
+        # Show spectrogram if audio exists
+        if i < len(st.session_state.vowel_files) and st.session_state.vowel_files[i]:
+            spec_image = create_mel_spectrogram_display(st.session_state.vowel_files[i], f"สระ \"{sound}\"")
+            if spec_image:
+                st.image(spec_image, caption=f"Mel Spectrogram: {sound}", use_column_width=True)
 
 uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
 if uploaded_vowels and len([f for f in st.session_state.vowel_files if f is not None]) < 7:
@@ -347,18 +402,29 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-if not st.session_state.clear_clicked:
-    pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka")
-    if pataka_bytes:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            tmp.write(pataka_bytes.read())
-            # Clean up previous file if exists
-            if st.session_state.pataka_file and os.path.exists(st.session_state.pataka_file):
-                os.unlink(st.session_state.pataka_file)
-            st.session_state.pataka_file = tmp.name
-        st.success("บันทึกพยางค์สำเร็จ", icon="✅")
-else:
-    pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka_new")
+# Create columns for audio input and spectrogram
+pataka_audio_col, pataka_spec_col = st.columns([1, 1])
+
+with pataka_audio_col:
+    if not st.session_state.clear_clicked:
+        pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka")
+        if pataka_bytes:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+                tmp.write(pataka_bytes.read())
+                # Clean up previous file if exists
+                if st.session_state.pataka_file and os.path.exists(st.session_state.pataka_file):
+                    os.unlink(st.session_state.pataka_file)
+                st.session_state.pataka_file = tmp.name
+            st.success("บันทึกพยางค์สำเร็จ", icon="✅")
+    else:
+        pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka_new")
+
+with pataka_spec_col:
+    # Show spectrogram if audio exists
+    if st.session_state.pataka_file:
+        spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์ \"พา-ทา-คา\"")
+        if spec_image:
+            st.image(spec_image, caption="Mel Spectrogram: พา-ทา-คา", use_column_width=True)
 
 uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
 if uploaded_pataka and not st.session_state.pataka_file:
@@ -376,18 +442,29 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-if not st.session_state.clear_clicked:
-    sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค", key="sentence")
-    if sentence_bytes:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            tmp.write(sentence_bytes.read())
-            # Clean up previous file if exists
-            if st.session_state.sentence_file and os.path.exists(st.session_state.sentence_file):
-                os.unlink(st.session_state.sentence_file)
-            st.session_state.sentence_file = tmp.name
-        st.success("บันทึกประโยคสำเร็จ", icon="✅")
-else:
-    sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค", key="sentence_new")
+# Create columns for audio input and spectrogram
+sentence_audio_col, sentence_spec_col = st.columns([1, 1])
+
+with sentence_audio_col:
+    if not st.session_state.clear_clicked:
+        sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค", key="sentence")
+        if sentence_bytes:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+                tmp.write(sentence_bytes.read())
+                # Clean up previous file if exists
+                if st.session_state.sentence_file and os.path.exists(st.session_state.sentence_file):
+                    os.unlink(st.session_state.sentence_file)
+                st.session_state.sentence_file = tmp.name
+            st.success("บันทึกประโยคสำเร็จ", icon="✅")
+    else:
+        sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค", key="sentence_new")
+
+with sentence_spec_col:
+    # Show spectrogram if audio exists
+    if st.session_state.sentence_file:
+        spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
+        if spec_image:
+            st.image(spec_image, caption="Mel Spectrogram: ประโยค", use_column_width=True)
 
 uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
 if uploaded_sentence and not st.session_state.sentence_file:
@@ -409,7 +486,7 @@ with col2:
     st.markdown("""
         <div style="display: flex; justify-content: flex-end;">
     """, unsafe_allow_html=True)
-    if st.button("ลบข้อมูล", key="clear", type="secondary"):
+    if st.button("ลบข้อมูল", key="clear", type="secondary"):
         st.session_state.clear_button_clicked = True
         st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
@@ -497,6 +574,43 @@ if predict_btn:
                 {advice}
             </div>
         """, unsafe_allow_html=True)
+        
+        # Display all spectrograms in the results section
+        st.markdown("### 📊 การวิเคราะห์ Mel Spectrogram ทั้งหมด")
+        
+        # Create a grid layout for all spectrograms
+        spec_cols = st.columns(3)
+        
+        # Display vowel spectrograms
+        for i, (sound, file_path) in enumerate(zip(vowel_sounds, valid_vowel_files)):
+            with spec_cols[i % 3]:
+                spec_image = create_mel_spectrogram_display(file_path, f"สระ \"{sound}\"")
+                if spec_image:
+                    st.image(spec_image, caption=f"สระ {sound}", use_column_width=True)
+        
+        # Display pataka spectrogram
+        col_idx = len(vowel_sounds) % 3
+        with spec_cols[col_idx]:
+            spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์")
+            if spec_image:
+                st.image(spec_image, caption="พา-ทา-คา", use_column_width=True)
+        
+        # Display sentence spectrogram
+        col_idx = (len(vowel_sounds) + 1) % 3
+        with spec_cols[col_idx]:
+            spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
+            if spec_image:
+                st.image(spec_image, caption="ประโยค", use_column_width=True)
+        
+        st.markdown("""
+        <div style='margin-top: 20px; padding: 20px; background-color: #f0f2f6; border-radius: 10px;'>
+            <h4 style='color: #4A148C; margin-bottom: 10px;'>💡 เกี่ยวกับ Mel Spectrogram</h4>
+            <p style='font-size: 16px; margin-bottom: 8px;'>• <b>สีเข้ม (น้ำเงิน/ม่วง):</b> ความถี่ที่มีพลังงานต่ำ</p>
+            <p style='font-size: 16px; margin-bottom: 8px;'>• <b>สีอ่อน (เหลือง/แดง):</b> ความถี่ที่มีพลังงานสูง</p>
+            <p style='font-size: 16px; margin-bottom: 8px;'>• <b>แกน X:</b> เวลา (วินาที)</p>
+            <p style='font-size: 16px; margin-bottom: 8px;'>• <b>แกน Y:</b> ความถี่ Mel</p>
+            <p style='font-size: 16px;'>• รูปแบบของ Spectrogram สามารถช่วยระบุความผิดปกติของการออกเสียงได้</p>
+        </div>
+        """, unsafe_allow_html=True)
     else:
         st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠")
-
