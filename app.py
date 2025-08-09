@@ -465,7 +465,7 @@ if uploaded_sentence and not st.session_state.sentence_file:
 # =============================
 # Buttons Layout (Original Position)
 # =============================
-col1, col2 = st.columns([1, 0.17])
+col1, col2 = st.columns([1, 0.16])
 with col1:
     button_col1, button_col2 = st.columns([1, 1])
     with button_col1:
@@ -604,5 +604,6 @@ if predict_btn:
         """, unsafe_allow_html=True)
     else:
         st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠")
+
 
 
