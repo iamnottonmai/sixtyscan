@@ -73,7 +73,7 @@ def run_desktop_app():
         return None
 
     # =============================
-    # Global Styles
+    # Global Styles - Updated to match the image
     # =============================
     def load_styles():
         st.markdown("""
@@ -83,10 +83,11 @@ def run_desktop_app():
                 
                 /* Global Reset */
                 .stApp {
-                    background-color: #f5f5f5 !important;
+                    background: linear-gradient(135deg, #f8f4ff 0%, #e8f4fd 100%) !important;
                     margin: 0 !important;
                     padding: 0 !important;
                     font-family: 'Prompt', sans-serif !important;
+                    min-height: 100vh;
                 }
                 
                 /* Hide Streamlit elements */
@@ -95,162 +96,186 @@ def run_desktop_app():
                 .stApp > header {visibility: hidden;}
                 #MainMenu {visibility: hidden;}
                 
-                /* Remove the keyboard arrow icon */
-                .stButton > button > div[data-testid="stMarkdownContainer"] p {
-                    display: none;
-                }
-                
-                /* Header Styles */
+                /* Header Styles - Redesigned */
                 .header {
                     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%);
-                    padding: 16px 40px;
+                    padding: 20px 60px;
                     display: flex;
                     align-items: center;
-                    justify-content: flex-start;
+                    justify-content: space-between;
                     margin: 0;
                     width: 100%;
                     box-sizing: border-box;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                }
+                
+                .header-left {
+                    display: flex;
+                    align-items: center;
                 }
                 
                 .header-logo {
-                    height: 48px;
+                    height: 56px;
                     width: auto;
-                    margin-right: 20px;
+                    margin-right: 24px;
+                }
+                
+                .header-content {
+                    display: flex;
+                    align-items: center;
+                }
+                
+                .header-divider {
+                    width: 2px;
+                    height: 40px;
+                    background-color: rgba(255, 255, 255, 0.3);
+                    margin: 0 24px;
                 }
                 
                 .header-title {
                     color: white;
                     font-family: 'Prompt', sans-serif;
-                    font-size: 24px;
+                    font-size: 28px;
                     font-weight: 500;
                     margin: 0;
-                    text-align: left;
+                    letter-spacing: -0.5px;
                 }
                 
                 .header-datetime {
-                    background: rgba(255, 255, 255, 0.2);
+                    background: rgba(255, 255, 255, 0.15);
                     color: white;
-                    padding: 8px 16px;
-                    border-radius: 20px;
+                    padding: 12px 24px;
+                    border-radius: 25px;
                     font-family: 'Prompt', sans-serif;
-                    font-size: 14px;
+                    font-size: 16px;
                     font-weight: 400;
-                    margin-left: auto;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
                 }
                 
-                /* Main Content Area - Reduced top padding */
+                /* Main Content Area */
                 .main-content {
-                    padding: 40px 60px 80px 60px;
+                    padding: 80px 60px;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                     max-width: 1400px;
                     margin: 0 auto;
                     min-height: 70vh;
+                    gap: 80px;
                 }
                 
                 .content-left {
                     flex: 1;
-                    padding-right: 60px;
+                    max-width: 600px;
                 }
                 
                 .content-right {
                     flex: 1;
                     text-align: center;
+                    max-width: 600px;
                 }
                 
-                /* Main Title */
+                /* Main Title - Updated */
                 .main-title {
                     font-family: 'Prompt', sans-serif;
-                    font-size: 64px;
+                    font-size: 72px;
                     font-weight: 700;
                     color: #2d2d2d;
-                    line-height: 1.2;
-                    margin-bottom: 40px;
+                    line-height: 1.1;
+                    margin-bottom: 60px;
                     margin-top: 0;
+                    letter-spacing: -1px;
                 }
                 
                 .title-highlight {
-                    color: #4A148C;
-                }
-                
-                /* Home page buttons - Keep custom styling */
-                .home-button-primary {
-                    font-size: 32px !important;
-                    padding: 24px 48px !important;
-                    border-radius: 50px !important;
-                    font-weight: 900 !important;
-                    font-family: 'Prompt', sans-serif !important;
-                    min-width: 280px !important;
-                    height: 80px !important;
-                    margin: 10px 0 !important;
-                    border: none !important;
-                    cursor: pointer !important;
-                    transition: all 0.3s ease !important;
-                    box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3) !important;
-                    text-align: center !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    background: linear-gradient(135deg, #1976D2 0%, #9C27B0 100%) !important;
-                    color: white !important;
-                }
-                
-                .home-button-secondary {
-                    font-size: 32px !important;
-                    padding: 24px 48px !important;
-                    border-radius: 50px !important;
-                    font-weight: 900 !important;
-                    font-family: 'Prompt', sans-serif !important;
-                    min-width: 280px !important;
-                    height: 80px !important;
-                    margin: 10px 0 !important;
-                    border: none !important;
-                    cursor: pointer !important;
-                    transition: all 0.3s ease !important;
-                    box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3) !important;
-                    text-align: center !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 100%) !important;
-                    color: white !important;
-                }
-                
-                /* Home page button hover effects */
-                .home-button-primary:hover, .home-button-secondary:hover {
-                    transform: translateY(-3px) !important;
-                    box-shadow: 0 8px 25px rgba(74, 20, 140, 0.4) !important;
-                }
-                
-                .home-button-primary:active, .home-button-secondary:active {
-                    transform: translateY(0px) !important;
-                }
-                
-                /* Woman Image */
-                .woman-image {
-                    width: 100%;
-                    max-width: 500px;
-                    height: auto;
-                    border-radius: 20px;
-                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                    color: #6A1B9A;
+                    font-weight: 800;
                 }
                 
                 /* Button Container */
                 .button-container {
                     display: flex;
                     flex-direction: column;
-                    gap: 20px;
+                    gap: 24px;
                     align-items: flex-start;
+                }
+                
+                /* Enhanced Button Styles */
+                .stButton > button {
+                    font-size: 28px !important;
+                    padding: 20px 60px !important;
+                    border-radius: 60px !important;
+                    font-weight: 700 !important;
+                    font-family: 'Prompt', sans-serif !important;
+                    min-width: 320px !important;
+                    height: 75px !important;
+                    margin: 0 !important;
+                    border: none !important;
+                    cursor: pointer !important;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                    text-align: center !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    letter-spacing: 0.5px !important;
+                    position: relative !important;
+                    overflow: hidden !important;
+                }
+                
+                /* Primary Button (เริ่มใช้งาน) */
+                .stButton:first-child > button {
+                    background: linear-gradient(135deg, #1976D2 0%, #42A5F5 50%, #64B5F6 100%) !important;
+                    color: white !important;
+                    box-shadow: 0 6px 25px rgba(25, 118, 210, 0.4) !important;
+                }
+                
+                .stButton:first-child > button:hover {
+                    transform: translateY(-4px) !important;
+                    box-shadow: 0 12px 35px rgba(25, 118, 210, 0.5) !important;
+                    background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #42A5F5 100%) !important;
+                }
+                
+                /* Secondary Button (คู่มือ) */
+                .stButton:nth-child(2) > button {
+                    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%) !important;
+                    color: white !important;
+                    box-shadow: 0 6px 25px rgba(74, 20, 140, 0.4) !important;
+                }
+                
+                .stButton:nth-child(2) > button:hover {
+                    transform: translateY(-4px) !important;
+                    box-shadow: 0 12px 35px rgba(74, 20, 140, 0.5) !important;
+                    background: linear-gradient(135deg, #38006b 0%, #4A148C 50%, #6A1B9A 100%) !important;
+                }
+                
+                .stButton > button:active {
+                    transform: translateY(-1px) !important;
+                }
+                
+                /* Woman Image - Enhanced */
+                .woman-image {
+                    width: 100%;
+                    max-width: 520px;
+                    height: auto;
+                    border-radius: 24px;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+                    transition: transform 0.3s ease;
+                }
+                
+                .woman-image:hover {
+                    transform: translateY(-5px);
                 }
                 
                 /* Analysis page styles */
                 .card {
                     background-color: #ffffff;
-                    border-radius: 16px;
+                    border-radius: 20px;
                     padding: 40px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-                    margin-bottom: 40px;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+                    margin-bottom: 32px;
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    backdrop-filter: blur(10px);
                 }
                 
                 .card h2 {
@@ -262,29 +287,43 @@ def run_desktop_app():
                 }
                 
                 .instructions {
-                    font-size: 28px !important;
-                    color: #333;
+                    font-size: 26px !important;
+                    color: #444;
                     margin-bottom: 24px;
                     font-weight: 400;
                     font-family: 'Prompt', sans-serif;
+                    line-height: 1.5;
                 }
                 
                 .pronounce {
                     font-size: 24px !important;
                     color: #000;
-                    font-weight: 400;
+                    font-weight: 500;
                     margin-top: 0;
-                    margin-bottom: 24px;
+                    margin-bottom: 20px;
                     font-family: 'Prompt', sans-serif;
                 }
                 
                 .sentence-instruction {
-                    font-size: 24px !important;
+                    font-size: 26px !important;
                     font-weight: 400 !important;
-                    color: #333 !important;
+                    color: #444 !important;
                     margin-bottom: 24px !important;
                     font-family: 'Prompt', sans-serif !important;
                     display: block !important;
+                    line-height: 1.5 !important;
+                }
+                
+                /* Back button styling */
+                .stButton[data-testid="stButton"]:has(button:contains("←")) > button {
+                    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%) !important;
+                    color: white !important;
+                    font-size: 18px !important;
+                    padding: 12px 24px !important;
+                    min-width: auto !important;
+                    height: 45px !important;
+                    border-radius: 25px !important;
+                    margin-bottom: 20px !important;
                 }
                 
                 /* Responsive adjustments */
@@ -292,20 +331,58 @@ def run_desktop_app():
                     .main-content {
                         flex-direction: column;
                         text-align: center;
-                        padding: 40px 30px;
+                        padding: 60px 40px;
+                        gap: 60px;
                     }
                     
                     .content-left {
-                        padding-right: 0;
-                        margin-bottom: 40px;
+                        max-width: none;
+                    }
+                    
+                    .content-right {
+                        max-width: none;
                     }
                     
                     .main-title {
-                        font-size: 48px;
+                        font-size: 56px;
                     }
                     
                     .button-container {
                         align-items: center;
+                    }
+                    
+                    .header {
+                        padding: 16px 40px;
+                    }
+                    
+                    .header-title {
+                        font-size: 24px;
+                    }
+                }
+                
+                @media (max-width: 768px) {
+                    .main-title {
+                        font-size: 48px;
+                    }
+                    
+                    .header {
+                        flex-direction: column;
+                        gap: 16px;
+                        text-align: center;
+                    }
+                    
+                    .header-content {
+                        flex-direction: column;
+                        gap: 16px;
+                    }
+                    
+                    .header-divider {
+                        display: none;
+                    }
+                    
+                    .stButton > button {
+                        min-width: 280px !important;
+                        font-size: 24px !important;
                     }
                 }
                 
@@ -321,11 +398,47 @@ def run_desktop_app():
                 p, div, span, label {
                     font-family: 'Prompt', sans-serif !important;
                 }
+                
+                /* Enhanced placeholder styling */
+                .image-placeholder {
+                    width: 100%;
+                    max-width: 520px;
+                    height: 400px;
+                    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 50%, #e8f5e8 100%);
+                    border-radius: 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+                    transition: transform 0.3s ease;
+                    border: 2px dashed rgba(106, 27, 154, 0.3);
+                }
+                
+                .image-placeholder:hover {
+                    transform: translateY(-5px);
+                }
+                
+                .placeholder-content {
+                    text-align: center;
+                    color: #666;
+                }
+                
+                .placeholder-icon {
+                    font-size: 64px;
+                    margin-bottom: 16px;
+                    opacity: 0.7;
+                }
+                
+                .placeholder-text {
+                    font-size: 20px;
+                    font-weight: 500;
+                    font-family: 'Prompt', sans-serif;
+                }
             </style>
         """, unsafe_allow_html=True)
 
     # =============================
-    # Analysis Functions
+    # Analysis Functions (unchanged)
     # =============================
     def cleanup_temp_files():
         """Clean up all temporary files stored in session state"""
@@ -455,10 +568,10 @@ def run_desktop_app():
             return [F.softmax(model(x), dim=1)[0][1].item() for x in inputs]
 
     # =============================
-    # Page Functions
+    # Page Functions - Updated Header
     # =============================
     def show_header():
-        """Display the header with logo, title, and datetime"""
+        """Display the enhanced header matching the image design"""
         logo_b64 = load_logo()
         current_time = datetime.now()
         thai_datetime = current_time.strftime("%d/%m/%Y %H:%M")
@@ -469,14 +582,20 @@ def run_desktop_app():
         
         st.markdown(f"""
             <div class="header">
-                {logo_html}
-                <div class="header-title">นวัตกรรมคัดกรองโรคพาร์กินสันจากเสียง</div>
+                <div class="header-left">
+                    <div class="header-content">
+                        {logo_html}
+                        <div class="header-title">SixtyScan</div>
+                        <div class="header-divider"></div>
+                        <div class="header-title">นวัตกรรมคัดกรองโรคพาร์กินสันจากเสียง</div>
+                    </div>
+                </div>
                 <div class="header-datetime">{thai_datetime}</div>
             </div>
         """, unsafe_allow_html=True)
 
     def show_home_page():
-        """Display the home page matching the design"""
+        """Display the enhanced home page matching the design image"""
         load_styles()
         show_header()
         
@@ -490,59 +609,38 @@ def run_desktop_app():
                         ตรวจเช็คโรคพาร์กินสัน<br>
                         ทันทีด้วย <span class="title-highlight">SixtyScan</span>
                     </h1>
-                    <div class="button-container">
         """, unsafe_allow_html=True)
         
-        # Create custom styled buttons for home page only
-        if st.button("เริ่มใช้งาน", key="start_analysis"):
-            st.session_state.page = 'analysis'
-            st.rerun()
-            
-        # Apply custom styling to the home page buttons
-        st.markdown("""
-            <script>
-                // Apply custom classes to home page buttons
-                const buttons = document.querySelectorAll('[data-testid="stButton"] button');
-                if (buttons.length >= 1) {
-                    buttons[0].className += ' home-button-primary';
-                }
-            </script>
-        """, unsafe_allow_html=True)
-            
-        if st.button("คู่มือ", key="guide_manual"):
-            st.session_state.page = 'guide'
-            st.rerun()
-            
-        # Apply styling to second button
-        st.markdown("""
-            <script>
-                const buttons = document.querySelectorAll('[data-testid="stButton"] button');
-                if (buttons.length >= 2) {
-                    buttons[1].className += ' home-button-secondary';
-                }
-            </script>
-        """, unsafe_allow_html=True)
+        # Button container with enhanced styling
+        col1, col2 = st.columns([1, 1], gap="medium")
+        
+        with col1:
+            if st.button("เริ่มใช้งาน", key="start_analysis", use_container_width=True):
+                st.session_state.page = 'analysis'
+                st.rerun()
+        
+        with col2:
+            if st.button("คู่มือ", key="guide_manual", use_container_width=True):
+                st.session_state.page = 'guide'
+                st.rerun()
         
         st.markdown("""
-                    </div>
                 </div>
                 <div class="content-right">
         """, unsafe_allow_html=True)
         
-        # Display woman image
+        # Display woman image with enhanced styling
         if woman_image_b64:
             st.markdown(f"""
                 <img src="data:image/jpg;base64,{woman_image_b64}" class="woman-image" alt="Woman using phone">
             """, unsafe_allow_html=True)
         else:
-            # Fallback placeholder
+            # Enhanced placeholder
             st.markdown("""
-                <div style="width: 100%; max-width: 500px; height: 400px; background: linear-gradient(135deg, #e3f2fd, #f3e5f5); 
-                           border-radius: 20px; display: flex; align-items: center; justify-content: center; 
-                           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
-                    <div style="text-align: center; color: #666;">
-                        <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
-                        <div style="font-size: 18px;">insert.jpg<br>not found</div>
+                <div class="image-placeholder">
+                    <div class="placeholder-content">
+                        <div class="placeholder-icon">📱</div>
+                        <div class="placeholder-text">insert.jpg<br>not found</div>
                     </div>
                 </div>
             """, unsafe_allow_html=True)
@@ -553,22 +651,22 @@ def run_desktop_app():
         """, unsafe_allow_html=True)
 
     def show_guide_page():
-        """Display the guide/manual page"""
+        """Display the guide/manual page with enhanced styling"""
         load_styles()
         show_header()
         
-        # Back button - normal Streamlit button
+        # Back button
         if st.button("← กลับหน้าแรก", key="back_to_home_from_guide"):
             st.session_state.page = 'home'
             st.rerun()
         
         st.markdown("""
             <div style="max-width: 1000px; margin: 40px auto; padding: 0 40px;">
-                <h1 style="text-align: center; color: #4A148C; font-size: 48px; margin-bottom: 40px; font-family: 'Prompt', sans-serif;">คู่มือการใช้งาน SixtyScan</h1>
+                <h1 style="text-align: center; color: #4A148C; font-size: 56px; margin-bottom: 50px; font-family: 'Prompt', sans-serif; font-weight: 700;">คู่มือการใช้งาน SixtyScan</h1>
                 
-                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
-                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
-                    <ul style="font-size: 20px; line-height: 1.6; font-family: 'Prompt', sans-serif;">
+                <div style="background: white; padding: 50px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 40px;">
+                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 30px; font-family: 'Prompt', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
+                    <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif;">
                         <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
                         <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
                         <li>นั่งหรือยืนในท่าที่สบาย</li>
@@ -576,24 +674,24 @@ def run_desktop_app():
                     </ul>
                 </div>
                 
-                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
-                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">ขั้นตอนการตรวจ</h2>
-                    <div style="font-size: 20px; line-height: 1.6; font-family: 'Prompt', sans-serif;">
-                        <h3 style="color: #666; font-size: 24px;">1. การออกเสียงสระ</h3>
+                <div style="background: white; padding: 50px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 40px;">
+                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 30px; font-family: 'Prompt', sans-serif;">ขั้นตอนการตรวจ</h2>
+                    <div style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif;">
+                        <h3 style="color: #666; font-size: 28px; margin-top: 30px;">1. การออกเสียงสระ</h3>
                         <ul>
                             <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
                             <li>ออกเสียงให้ชัดเจนและคงที่</li>
                             <li>ไม่ต้องออกเสียงดังเกินไป</li>
                         </ul>
                         
-                        <h3 style="color: #666; font-size: 24px;">2. การออกเสียงพยางค์</h3>
+                        <h3 style="color: #666; font-size: 28px; margin-top: 30px;">2. การออกเสียงพยางค์</h3>
                         <ul>
                             <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
                             <li>ใช้เวลาประมาณ 6 วินาที</li>
                             <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
                         </ul>
                         
-                        <h3 style="color: #666; font-size: 24px;">3. การอ่านประโยค</h3>
+                        <h3 style="color: #666; font-size: 28px; margin-top: 30px;">3. การอ่านประโยค</h3>
                         <ul>
                             <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
                             <li>ไม่ต้องรีบร้อน</li>
@@ -602,9 +700,9 @@ def run_desktop_app():
                     </div>
                 </div>
                 
-                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">ข้อควรระวัง</h2>
-                    <ul style="font-size: 20px; line-height: 1.6; color: #d32f2f; font-family: 'Prompt', sans-serif;">
+                <div style="background: white; padding: 50px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08);">
+                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 30px; font-family: 'Prompt', sans-serif;">ข้อควรระวัง</h2>
+                    <ul style="font-size: 22px; line-height: 1.7; color: #d32f2f; font-family: 'Prompt', sans-serif;">
                         <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
                         <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
                         <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
@@ -614,14 +712,14 @@ def run_desktop_app():
         """, unsafe_allow_html=True)
 
     def show_analysis_page():
-        """Display the analysis page - desktop version with normal Streamlit buttons for analysis functions"""
+        """Display the analysis page with consistent styling"""
         load_styles()
         initialize_analysis_session_state()
         
         # Header
         show_header()
         
-        # Back button - normal Streamlit button
+        # Back button
         if st.button("← กลับหน้าแรก", key="back_to_home"):
             st.session_state.page = 'home'
             st.rerun()
@@ -629,7 +727,7 @@ def run_desktop_app():
         # Load model
         model = load_model()
         
-        st.markdown("<h1 style='text-align: center; font-size: 48px; color: #4A148C; margin: 20px 0; font-family: \"Prompt\", sans-serif;'>การวิเคราะห์เสียง</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center; font-size: 56px; color: #4A148C; margin: 30px 0; font-family: \"Prompt\", sans-serif; font-weight: 700;'>การวิเคราะห์เสียง</h1>", unsafe_allow_html=True)
 
         # Clear button logic
         if 'clear_button_clicked' in st.session_state and st.session_state.clear_button_clicked:
@@ -672,10 +770,10 @@ def run_desktop_app():
             if i < len(st.session_state.vowel_files) and st.session_state.vowel_files[i]:
                 spec_image = create_mel_spectrogram_display(st.session_state.vowel_files[i], f"สระ \"{sound}\"")
                 if spec_image:
-                    st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
+                    st.markdown(f"<div style='color: black; font-size: 18px; margin-bottom: 12px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
                     st.image(spec_image, use_container_width=True)
 
-        # File uploader for vowels - normal Streamlit component
+        # File uploader for vowels
         uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
         if uploaded_vowels and len([f for f in st.session_state.vowel_files if f is not None]) < 7:
             cleanup_temp_files()
@@ -708,10 +806,10 @@ def run_desktop_app():
         if st.session_state.pataka_file:
             spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์")
             if spec_image:
-                st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
+                st.markdown("<div style='color: black; font-size: 18px; margin-bottom: 12px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
                 st.image(spec_image, use_container_width=True)
 
-        # File uploader for pataka - normal Streamlit component
+        # File uploader for pataka
         uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
         if uploaded_pataka and not st.session_state.pataka_file:
             with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
@@ -741,22 +839,22 @@ def run_desktop_app():
         if st.session_state.sentence_file:
             spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
             if spec_image:
-                st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</b></div>", unsafe_allow_html=True)
+                st.markdown("<div style='color: black; font-size: 18px; margin-bottom: 12px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</b></div>", unsafe_allow_html=True)
                 st.image(spec_image, use_container_width=True)
 
-        # File uploader for sentence - normal Streamlit component
+        # File uploader for sentence
         uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
         if uploaded_sentence and not st.session_state.sentence_file:
             with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
                 tmp.write(uploaded_sentence.read())
                 st.session_state.sentence_file = tmp.name
 
-        # Action buttons - Normal Streamlit buttons
+        # Action buttons with enhanced styling
         col1, col2 = st.columns([1, 1])
         with col1:
-            predict_btn = st.button("🔍 วิเคราะห์", key="predict", type="primary")
+            predict_btn = st.button("🔍 วิเคราะห์", key="predict", type="primary", use_container_width=True)
         with col2:
-            if st.button("🗑️ ลบข้อมูล", key="clear", type="secondary"):
+            if st.button("🗑️ ลบข้อมูล", key="clear", type="secondary", use_container_width=True):
                 st.session_state.clear_button_clicked = True
                 st.rerun()
 
@@ -778,9 +876,10 @@ def run_desktop_app():
                     level = "ระดับต่ำ (Low)"
                     label = "Non Parkinson"
                     diagnosis = "ไม่เป็นพาร์กินสัน"
-                    box_color = "#e6f9e6"
+                    box_color = "#e8f5e9"
+                    border_color = "#4caf50"
                     advice = """
-                    <ul style='font-size:28px; font-family: "Prompt", sans-serif;'>
+                    <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
                         <li>ถ้าไม่มีอาการ: ควรตรวจปีละครั้ง(ไม่บังคับ)</li>
                         <li>ถ้ามีอาการเล็กน้อย: ตรวจปีละ 2 ครั้ง</li>
                         <li>ถ้ามีอาการเตือน: ตรวจ 2–4 ครั้งต่อปี</li>
@@ -790,9 +889,10 @@ def run_desktop_app():
                     level = "ปานกลาง (Moderate)"
                     label = "Parkinson"
                     diagnosis = "เป็นพาร์กินสัน"
-                    box_color = "#fff7e6"
+                    box_color = "#fff8e1"
+                    border_color = "#ff9800"
                     advice = """
-                    <ul style='font-size:28px; font-family: "Prompt", sans-serif;'>
+                    <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
                         <li>พบแพทย์เฉพาะทางระบบประสาท</li>
                         <li>บันทึกอาการประจำวัน</li>
                         <li>หากได้รับยา: บันทึกผลข้างเคียง</li>
@@ -802,9 +902,10 @@ def run_desktop_app():
                     level = "สูง (High)"
                     label = "Parkinson"
                     diagnosis = "เป็นพาร์กินสัน"
-                    box_color = "#ffe6e6"
+                    box_color = "#ffebee"
+                    border_color = "#f44336"
                     advice = """
-                    <ul style='font-size:28px; font-family: "Prompt", sans-serif;'>
+                    <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
                         <li>พบแพทย์เฉพาะทางโดยเร็วที่สุด</li>
                         <li>บันทึกอาการทุกวัน</li>
                         <li>หากได้รับยา: ติดตามผลอย่างละเอียด</li>
@@ -812,15 +913,15 @@ def run_desktop_app():
                     """
 
                 st.markdown(f"""
-                    <div style='background-color:{box_color}; padding: 32px; border-radius: 14px; font-size: 30px; color: #000000; font-family: "Prompt", sans-serif;'>
-                        <div style='text-align: center; font-size: 42px; font-weight: bold; margin-bottom: 20px;'>{label}:</div>
-                        <p><b>ระดับความน่าจะเป็น:</b> {level}</p>
-                        <p><b>ความน่าจะเป็นของพาร์กินสัน:</b> {percent}%</p>
-                        <div style='height: 36px; background: linear-gradient(to right, green, yellow, red); border-radius: 6px; margin-bottom: 16px; position: relative;'>
-                            <div style='position: absolute; left: {percent}%; top: 0; bottom: 0; width: 4px; background-color: black;'></div>
+                    <div style='background-color:{box_color}; padding: 40px; border-radius: 20px; font-size: 28px; color: #000000; font-family: "Prompt", sans-serif; border-left: 8px solid {border_color}; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin: 30px 0;'>
+                        <div style='text-align: center; font-size: 48px; font-weight: 700; margin-bottom: 30px; color: {border_color};'>{label}</div>
+                        <p style='margin-bottom: 20px;'><b>ระดับความน่าจะเป็น:</b> {level}</p>
+                        <p style='margin-bottom: 20px;'><b>ความน่าจะเป็นของพาร์กินสัน:</b> {percent}%</p>
+                        <div style='height: 40px; background: linear-gradient(to right, #4caf50, #ff9800, #f44336); border-radius: 20px; margin-bottom: 25px; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);'>
+                            <div style='position: absolute; left: {percent}%; top: -5px; bottom: -5px; width: 6px; background-color: #333; border-radius: 3px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);'></div>
                         </div>
-                        <p><b>ผลการวิเคราะห์:</b> {diagnosis}</p>
-                        <p><b>คำแนะนำ</b></p>
+                        <p style='margin-bottom: 20px;'><b>ผลการวิเคราะห์:</b> {diagnosis}</p>
+                        <p style='margin-bottom: 15px; font-size: 30px; font-weight: 600;'><b>คำแนะนำ</b></p>
                         {advice}
                     </div>
                 """, unsafe_allow_html=True)
@@ -836,7 +937,7 @@ def run_desktop_app():
                     with spec_cols[i % 3]:
                         spec_image = create_mel_spectrogram_display(file_path, f"สระ \"{sound}\"")
                         if spec_image:
-                            st.markdown(f"<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
+                            st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
                             st.image(spec_image, use_container_width=True)
                 
                 # Display pataka spectrogram
@@ -844,7 +945,7 @@ def run_desktop_app():
                 with spec_cols[col_idx]:
                     spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์")
                     if spec_image:
-                        st.markdown("<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
+                        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
                         st.image(spec_image, use_container_width=True)
                 
                 # Display sentence spectrogram
@@ -852,17 +953,17 @@ def run_desktop_app():
                 with spec_cols[col_idx]:
                     spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
                     if spec_image:
-                        st.markdown("<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"ประโยค\"</b></div>", unsafe_allow_html=True)
+                        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"ประโยค\"</b></div>", unsafe_allow_html=True)
                         st.image(spec_image, use_container_width=True)
                 
                 st.markdown("""
-                <div style='margin-top: 20px; padding: 20px; background-color: #f0f2f6; border-radius: 10px;'>
-                    <h4 style='color: #4A148C; margin-bottom: 10px; font-family: "Prompt", sans-serif;'>💡 เกี่ยวกับ Mel Spectrogram</h4>
-                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Prompt", sans-serif;'>• <b>สีเข้ม (น้ำเงิน/ม่วง):</b> ความถี่ที่มีพลังงานต่ำ</p>
-                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Prompt", sans-serif;'>• <b>สีอ่อน (เหลือง/แดง):</b> ความถี่ที่มีพลังงานสูง</p>
-                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Prompt", sans-serif;'>• <b>แกน X:</b> เวลา (วินาที)</p>
-                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Prompt", sans-serif;'>• <b>แกน Y:</b> ความถี่ Mel</p>
-                    <p style='font-size: 16px; font-family: "Prompt", sans-serif;'>• รูปแบบของ Spectrogram สามารถช่วยระบุความผิดปกติของการออกเสียงได้</p>
+                <div style='margin-top: 30px; padding: 30px; background-color: #f8f9fa; border-radius: 16px; border-left: 6px solid #6A1B9A;'>
+                    <h4 style='color: #4A148C; margin-bottom: 20px; font-family: "Prompt", sans-serif; font-size: 24px; font-weight: 600;'>💡 เกี่ยวกับ Mel Spectrogram</h4>
+                    <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>สีเข้ม (น้ำเงิน/ม่วง):</b> ความถี่ที่มีพลังงานต่ำ</p>
+                    <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>สีอ่อน (เหลือง/แดง):</b> ความถี่ที่มีพลังงานสูง</p>
+                    <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>แกน X:</b> เวลา (วินาที)</p>
+                    <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>แกน Y:</b> ความถี่ Mel</p>
+                    <p style='font-size: 18px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• รูปแบบของ Spectrogram สามารถช่วยระบุความผิดปกติของการออกเสียงได้</p>
                 </div>
                 """, unsafe_allow_html=True)
             else:
