@@ -73,7 +73,7 @@ def run_desktop_app():
         return None
 
     # =============================
-    # Global Styles - Completely Fixed CSS
+    # Global Styles - Fixed CSS
     # =============================
     def load_styles():
         css_content = """
@@ -489,7 +489,11 @@ def run_desktop_app():
 
     def audio_to_mel_tensor(file_path):
         """Convert audio file to mel spectrogram tensor"""
-        from pydub import AudioSegment
+        try:
+            from pydub import AudioSegment
+        except ImportError:
+            st.error("pydub library is required. Please install it with: pip install pydub")
+            return None
         
         # Convert to WAV if necessary
         if not file_path.lower().endswith(".wav"):
@@ -558,6 +562,7 @@ def run_desktop_app():
             return Image.open(buf)
             
         except Exception as e:
+            st.error(f"Error creating spectrogram: {str(e)}")
             return None
 
     def predict_from_model(vowel_paths, pataka_path, sentence_path, model):
@@ -877,106 +882,109 @@ def run_desktop_app():
             
             if len(valid_vowel_files) == 7 and st.session_state.pataka_file and st.session_state.sentence_file:
                 with st.spinner("กำลังวิเคราะห์..."):
-                    all_probs = predict_from_model(valid_vowel_files, st.session_state.pataka_file, st.session_state.sentence_file, model)
-                    final_prob = np.mean(all_probs)
-                    percent = int(final_prob * 100)
+                    try:
+                        all_probs = predict_from_model(valid_vowel_files, st.session_state.pataka_file, st.session_state.sentence_file, model)
+                        final_prob = np.mean(all_probs)
+                        percent = int(final_prob * 100)
 
-                if percent <= 50:
-                    level = "ระดับต่ำ (Low)"
-                    label = "Non Parkinson"
-                    diagnosis = "ไม่เป็นพาร์กินสัน"
-                    box_color = "#e8f5e9"
-                    border_color = "#4caf50"
-                    advice_html = """
-                    <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
-                        <li>ถ้าไม่มีอาการ: ควรตรวจปีละครั้ง(ไม่บังคับ)</li>
-                        <li>ถ้ามีอาการเล็กน้อย: ตรวจปีละ 2 ครั้ง</li>
-                        <li>ถ้ามีอาการเตือน: ตรวจ 2–4 ครั้งต่อปี</li>
-                    </ul>
-                    """
-                elif percent <= 75:
-                    level = "ปานกลาง (Moderate)"
-                    label = "Parkinson"
-                    diagnosis = "เป็นพาร์กินสัน"
-                    box_color = "#fff8e1"
-                    border_color = "#ff9800"
-                    advice_html = """
-                    <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
-                        <li>พบแพทย์เฉพาะทางระบบประสาท</li>
-                        <li>บันทึกอาการประจำวัน</li>
-                        <li>หากได้รับยา: บันทึกผลข้างเคียง</li>
-                    </ul>
-                    """
-                else:
-                    level = "สูง (High)"
-                    label = "Parkinson"
-                    diagnosis = "เป็นพาร์กินสัน"
-                    box_color = "#ffebee"
-                    border_color = "#f44336"
-                    advice_html = """
-                    <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
-                        <li>พบแพทย์เฉพาะทางโดยเร็วที่สุด</li>
-                        <li>บันทึกอาการทุกวัน</li>
-                        <li>หากได้รับยา: ติดตามผลอย่างละเอียด</li>
-                    </ul>
-                    """
+                        if percent <= 50:
+                            level = "ระดับต่ำ (Low)"
+                            label = "Non Parkinson"
+                            diagnosis = "ไม่เป็นพาร์กินสัน"
+                            box_color = "#e8f5e9"
+                            border_color = "#4caf50"
+                            advice_html = """
+                            <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
+                                <li>ถ้าไม่มีอาการ: ควรตรวจปีละครั้ง(ไม่บังคับ)</li>
+                                <li>ถ้ามีอาการเล็กน้อย: ตรวจปีละ 2 ครั้ง</li>
+                                <li>ถ้ามีอาการเตือน: ตรวจ 2–4 ครั้งต่อปี</li>
+                            </ul>
+                            """
+                        elif percent <= 75:
+                            level = "ปานกลาง (Moderate)"
+                            label = "Parkinson"
+                            diagnosis = "เป็นพาร์กินสัน"
+                            box_color = "#fff8e1"
+                            border_color = "#ff9800"
+                            advice_html = """
+                            <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
+                                <li>พบแพทย์เฉพาะทางระบบประสาท</li>
+                                <li>บันทึกอาการประจำวัน</li>
+                                <li>หากได้รับยา: บันทึกผลข้างเคียง</li>
+                            </ul>
+                            """
+                        else:
+                            level = "สูง (High)"
+                            label = "Parkinson"
+                            diagnosis = "เป็นพาร์กินสัน"
+                            box_color = "#ffebee"
+                            border_color = "#f44336"
+                            advice_html = """
+                            <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
+                                <li>พบแพทย์เฉพาะทางโดยเร็วที่สุด</li>
+                                <li>บันทึกอาการทุกวัน</li>
+                                <li>หากได้รับยา: ติดตามผลอย่างละเอียด</li>
+                            </ul>
+                            """
 
-                results_html = f"""
-                    <div style='background-color:{box_color}; padding: 40px; border-radius: 20px; font-size: 28px; color: #000000; font-family: "Prompt", sans-serif; border-left: 8px solid {border_color}; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin: 30px 0;'>
-                        <div style='text-align: center; font-size: 48px; font-weight: 700; margin-bottom: 30px; color: {border_color};'>{label}</div>
-                        <p style='margin-bottom: 20px;'><b>ระดับความน่าจะเป็น:</b> {level}</p>
-                        <p style='margin-bottom: 20px;'><b>ความน่าจะเป็นของพาร์กินสัน:</b> {percent}%</p>
-                        <div style='height: 40px; background: linear-gradient(to right, #4caf50, #ff9800, #f44336); border-radius: 20px; margin-bottom: 25px; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);'>
-                            <div style='position: absolute; left: {percent}%; top: -5px; bottom: -5px; width: 6px; background-color: #333; border-radius: 3px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);'></div>
+                        results_html = f"""
+                            <div style='background-color:{box_color}; padding: 40px; border-radius: 20px; font-size: 28px; color: #000000; font-family: "Prompt", sans-serif; border-left: 8px solid {border_color}; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin: 30px 0;'>
+                                <div style='text-align: center; font-size: 48px; font-weight: 700; margin-bottom: 30px; color: {border_color};'>{label}</div>
+                                <p style='margin-bottom: 20px;'><b>ระดับความน่าจะเป็น:</b> {level}</p>
+                                <p style='margin-bottom: 20px;'><b>ความน่าจะเป็นของพาร์กินสัน:</b> {percent}%</p>
+                                <div style='height: 40px; background: linear-gradient(to right, #4caf50, #ff9800, #f44336); border-radius: 20px; margin-bottom: 25px; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);'>
+                                    <div style='position: absolute; left: {percent}%; top: -5px; bottom: -5px; width: 6px; background-color: #333; border-radius: 3px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);'></div>
+                                </div>
+                                <p style='margin-bottom: 20px;'><b>ผลการวิเคราะห์:</b> {diagnosis}</p>
+                                <p style='margin-bottom: 15px; font-size: 30px; font-weight: 600;'><b>คำแนะนำ</b></p>
+                                {advice_html}
+                            </div>
+                        """
+                        st.markdown(results_html, unsafe_allow_html=True)
+                        
+                        # Display all spectrograms in the results section
+                        st.markdown("### 📊 การวิเคราะห์ Mel Spectrogram ทั้งหมด")
+                        
+                        # Create a grid layout for all spectrograms
+                        spec_cols = st.columns(3)
+                        
+                        # Display vowel spectrograms
+                        for i, (sound, file_path) in enumerate(zip(vowel_sounds, valid_vowel_files)):
+                            with spec_cols[i % 3]:
+                                spec_image = create_mel_spectrogram_display(file_path, f"สระ \"{sound}\"")
+                                if spec_image:
+                                    st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
+                                    st.image(spec_image, use_container_width=True)
+                        
+                        # Display pataka spectrogram
+                        col_idx = len(vowel_sounds) % 3
+                        with spec_cols[col_idx]:
+                            spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์")
+                            if spec_image:
+                                st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
+                                st.image(spec_image, use_container_width=True)
+                        
+                        # Display sentence spectrogram
+                        col_idx = (len(vowel_sounds) + 1) % 3
+                        with spec_cols[col_idx]:
+                            spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
+                            if spec_image:
+                                st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"ประโยค\"</b></div>", unsafe_allow_html=True)
+                                st.image(spec_image, use_container_width=True)
+                        
+                        info_html = """
+                        <div style='margin-top: 30px; padding: 30px; background-color: #f8f9fa; border-radius: 16px; border-left: 6px solid #6A1B9A;'>
+                            <h4 style='color: #4A148C; margin-bottom: 20px; font-family: "Prompt", sans-serif; font-size: 24px; font-weight: 600;'>💡 เกี่ยวกับ Mel Spectrogram</h4>
+                            <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>สีเข้ม (น้ำเงิน/ม่วง):</b> ความถี่ที่มีพลังงานต่ำ</p>
+                            <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>สีอ่อน (เหลือง/แดง):</b> ความถี่ที่มีพลังงานสูง</p>
+                            <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>แกน X:</b> เวลา (วินาที)</p>
+                            <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>แกน Y:</b> ความถี่ Mel</p>
+                            <p style='font-size: 18px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• รูปแบบของ Spectrogram สามารถช่วยระบุความผิดปกติของการออกเสียงได้</p>
                         </div>
-                        <p style='margin-bottom: 20px;'><b>ผลการวิเคราะห์:</b> {diagnosis}</p>
-                        <p style='margin-bottom: 15px; font-size: 30px; font-weight: 600;'><b>คำแนะนำ</b></p>
-                        {advice_html}
-                    </div>
-                """
-                st.markdown(results_html, unsafe_allow_html=True)
-                
-                # Display all spectrograms in the results section
-                st.markdown("### 📊 การวิเคราะห์ Mel Spectrogram ทั้งหมด")
-                
-                # Create a grid layout for all spectrograms
-                spec_cols = st.columns(3)
-                
-                # Display vowel spectrograms
-                for i, (sound, file_path) in enumerate(zip(vowel_sounds, valid_vowel_files)):
-                    with spec_cols[i % 3]:
-                        spec_image = create_mel_spectrogram_display(file_path, f"สระ \"{sound}\"")
-                        if spec_image:
-                            st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
-                            st.image(spec_image, use_container_width=True)
-                
-                # Display pataka spectrogram
-                col_idx = len(vowel_sounds) % 3
-                with spec_cols[col_idx]:
-                    spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์")
-                    if spec_image:
-                        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
-                        st.image(spec_image, use_container_width=True)
-                
-                # Display sentence spectrogram
-                col_idx = (len(vowel_sounds) + 1) % 3
-                with spec_cols[col_idx]:
-                    spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
-                    if spec_image:
-                        st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"ประโยค\"</b></div>", unsafe_allow_html=True)
-                        st.image(spec_image, use_container_width=True)
-                
-                info_html = """
-                <div style='margin-top: 30px; padding: 30px; background-color: #f8f9fa; border-radius: 16px; border-left: 6px solid #6A1B9A;'>
-                    <h4 style='color: #4A148C; margin-bottom: 20px; font-family: "Prompt", sans-serif; font-size: 24px; font-weight: 600;'>💡 เกี่ยวกับ Mel Spectrogram</h4>
-                    <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>สีเข้ม (น้ำเงิน/ม่วง):</b> ความถี่ที่มีพลังงานต่ำ</p>
-                    <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>สีอ่อน (เหลือง/แดง):</b> ความถี่ที่มีพลังงานสูง</p>
-                    <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>แกน X:</b> เวลา (วินาที)</p>
-                    <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>แกน Y:</b> ความถี่ Mel</p>
-                    <p style='font-size: 18px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• รูปแบบของ Spectrogram สามารถช่วยระบุความผิดปกติของการออกเสียงได้</p>
-                </div>
-                """
-                st.markdown(info_html, unsafe_allow_html=True)
+                        """
+                        st.markdown(info_html, unsafe_allow_html=True)
+                    except Exception as e:
+                        st.error(f"เกิดข้อผิดพลาดในการวิเคราะห์: {str(e)}")
             else:
                 st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠")
 
