@@ -197,10 +197,10 @@ def load_styles():
             
             /* Custom button styling */
             .stButton > button {
-                font-size: 28px !important;
+                font-size: 36px !important;
                 padding: 1.2em 3em !important;
                 border-radius: 50px !important;
-                font-weight: bold !important;
+                font-weight: 900 !important;
                 background: linear-gradient(135deg, #009688, #00bcd4) !important;
                 color: white !important;
                 border: none !important;
