@@ -145,23 +145,6 @@ def show_device_info(device_type: DeviceType, detection_method: str):
         {device_emoji} {device_name} Version
     </div>
     """, unsafe_allow_html=True)
-    
-    with st.expander("ℹ️ Detection Details", expanded=False):
-        st.caption(f"**Device Type:** {device_name}")
-        st.caption(f"**Detection Method:** {detection_method}")
-        
-        # Show current viewport info using JavaScript
-        st.markdown("""
-        <div id="viewport-info" style="font-size: 12px; color: #666;"></div>
-        <script>
-        document.getElementById('viewport-info').innerHTML = `
-            <strong>Screen Info:</strong><br>
-            Width: ${window.innerWidth}px<br>
-            Height: ${window.innerHeight}px<br>
-            User Agent: ${navigator.userAgent.substring(0, 100)}...
-        `;
-        </script>
-        """, unsafe_allow_html=True)
 
 def create_debug_panel():
     """Create a comprehensive debug panel"""
@@ -283,10 +266,11 @@ def create_sample_desktop_app():
 def main():
     """Main application logic with enhanced device detection"""
     
+    # Initial page config - will be updated based on device detection
     st.set_page_config(
         page_title="Device-Aware App",
         page_icon="📱",
-        layout="wide"
+        layout="centered"  # Default to centered, will change to wide for desktop
     )
     
     # Create debug panel and get manual override
@@ -327,6 +311,22 @@ def main():
         </style>
         """, unsafe_allow_html=True)
         st.stop()
+    
+    # Force wide layout for desktop
+    if device_type == 'desktop':
+        st.markdown("""
+        <style>
+        .main > div {
+            max-width: none !important;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .block-container {
+            max-width: none !important;
+            padding-top: 1rem;
+        }
+        </style>
+        """, unsafe_allow_html=True)
     
     # Load appropriate app
     load_app_module(device_type)
