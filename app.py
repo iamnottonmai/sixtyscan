@@ -197,7 +197,7 @@ def load_styles():
             
             /* Custom button styling */
             .stButton > button {
-                font-size: 50px !important;
+                font-size: 36px !important;
                 padding: 1.2em 3em !important;
                 border-radius: 50px !important;
                 font-weight: 900 !important;
