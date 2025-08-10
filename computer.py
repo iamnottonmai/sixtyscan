@@ -171,48 +171,78 @@ def run_desktop_app():
                     color: #4A148C;
                 }
                 
-                /* Home Page Buttons - Much Bigger and Bolder */
-                .stButton > button[data-testid="baseButton-primary"],
-                .stButton > button[data-testid="baseButton-secondary"] {
+                /* Buttons - Much Bigger and Bolder */
+                .stButton > button {
                     font-size: 32px !important;
                     padding: 24px 48px !important;
                     border-radius: 50px !important;
                     font-weight: 900 !important;
                     font-family: 'Prompt', sans-serif !important;
-                    min-width: 350px !important;
+                    min-width: 280px !important;
                     height: 80px !important;
-                    margin: 15px 0 !important;
+                    margin: 10px 0 !important;
+                    border: none !important;
+                    cursor: pointer !important;
+                    transition: all 0.3s ease !important;
+                    box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3) !important;
+                    text-align: center !important;
                     display: flex !important;
                     align-items: center !important;
                     justify-content: center !important;
-                    text-transform: none !important;
-                    letter-spacing: 0.5px !important;
                 }
                 
-                .stButton > button[data-testid="baseButton-primary"] {
+                /* Primary Button (เริ่มใช้งาน) */
+                .stButton > button[kind="primary"] {
                     background: linear-gradient(135deg, #1976D2 0%, #9C27B0 100%) !important;
                     color: white !important;
-                    border: none !important;
-                    box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3) !important;
-                    transition: all 0.3s ease !important;
                 }
                 
-                .stButton > button[data-testid="baseButton-secondary"] {
+                /* Secondary Button (คู่มือ) */
+                .stButton > button[kind="secondary"] {
                     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 100%) !important;
                     color: white !important;
-                    border: none !important;
-                    box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3) !important;
-                    transition: all 0.3s ease !important;
                 }
                 
-                .stButton > button[data-testid="baseButton-primary"]:hover,
-                .stButton > button[data-testid="baseButton-secondary"]:hover {
+                /* Analysis Page Buttons */
+                .stButton > button[data-baseweb="button"] {
+                    background: linear-gradient(135deg, #009688, #00bcd4) !important;
+                    color: white !important;
+                }
+                
+                /* Predict Button Special */
+                button[kind="primary"] {
+                    font-size: 36px !important;
+                    padding: 28px 56px !important;
+                    font-weight: 900 !important;
+                    background: linear-gradient(135deg, #4CAF50, #8BC34A) !important;
+                    min-width: 320px !important;
+                    height: 90px !important;
+                }
+                
+                /* Clear Button Special */
+                button[kind="secondary"]:not([key*="guide"]):not([key*="back"]) {
+                    background: linear-gradient(135deg, #f44336, #e91e63) !important;
+                    font-size: 24px !important;
+                    min-width: 200px !important;
+                    height: 60px !important;
+                }
+                
+                /* Back Button */
+                button[key*="back"] {
+                    background: linear-gradient(135deg, #666, #888) !important;
+                    font-size: 20px !important;
+                    padding: 12px 24px !important;
+                    min-width: 150px !important;
+                    height: 50px !important;
+                }
+                
+                /* Button Hover Effects */
+                .stButton > button:hover {
                     transform: translateY(-3px) !important;
                     box-shadow: 0 8px 25px rgba(74, 20, 140, 0.4) !important;
                 }
                 
-                .stButton > button[data-testid="baseButton-primary"]:active,
-                .stButton > button[data-testid="baseButton-secondary"]:active {
+                .stButton > button:active {
                     transform: translateY(0px) !important;
                 }
                 
@@ -276,88 +306,6 @@ def run_desktop_app():
                     display: block !important;
                 }
                 
-                /* Analysis Page Buttons - Bigger and Bolder */
-                .stButton > button:not([data-testid="baseButton-primary"]):not([data-testid="baseButton-secondary"]) {
-                    font-size: 28px !important;
-                    padding: 20px 40px !important;
-                    border-radius: 50px !important;
-                    font-weight: 900 !important;
-                    background: linear-gradient(135deg, #009688, #00bcd4) !important;
-                    color: white !important;
-                    border: none !important;
-                    box-shadow: 0 4px 15px rgba(0, 150, 136, 0.3) !important;
-                    transition: all 0.3s ease !important;
-                    font-family: 'Prompt', sans-serif !important;
-                    min-width: 250px !important;
-                    height: 70px !important;
-                }
-                
-                .stButton > button:not([data-testid="baseButton-primary"]):not([data-testid="baseButton-secondary"]):hover {
-                    background: linear-gradient(135deg, #00796b, #0097a7) !important;
-                    box-shadow: 0 6px 20px rgba(0, 150, 136, 0.4) !important;
-                    transform: translateY(-2px) !important;
-                }
-                
-                .stButton > button:not([data-testid="baseButton-primary"]):not([data-testid="baseButton-secondary"]):active {
-                    transform: translateY(0px) !important;
-                }
-                
-                /* Back Button Styling */
-                .stButton > button[key="back_to_home"],
-                .stButton > button[key="back_to_home_from_guide"] {
-                    font-size: 20px !important;
-                    padding: 12px 24px !important;
-                    border-radius: 25px !important;
-                    font-weight: 700 !important;
-                    background: linear-gradient(135deg, #666, #888) !important;
-                    color: white !important;
-                    border: none !important;
-                    font-family: 'Prompt', sans-serif !important;
-                    margin-bottom: 20px !important;
-                }
-                
-                /* Clear Button Special Styling */
-                .stButton > button[key="clear"] {
-                    font-size: 24px !important;
-                    padding: 16px 32px !important;
-                    border-radius: 40px !important;
-                    font-weight: 800 !important;
-                    background: linear-gradient(135deg, #f44336, #e91e63) !important;
-                    color: white !important;
-                    border: none !important;
-                    font-family: 'Prompt', sans-serif !important;
-                    min-width: 180px !important;
-                    height: 60px !important;
-                }
-                
-                .stButton > button[key="clear"]:hover {
-                    background: linear-gradient(135deg, #d32f2f, #c2185b) !important;
-                    transform: translateY(-2px) !important;
-                }
-                
-                /* Predict Button Special Styling */
-                .stButton > button[key="predict"] {
-                    font-size: 32px !important;
-                    padding: 24px 48px !important;
-                    border-radius: 50px !important;
-                    font-weight: 900 !important;
-                    background: linear-gradient(135deg, #4CAF50, #8BC34A) !important;
-                    color: white !important;
-                    border: none !important;
-                    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
-                    transition: all 0.3s ease !important;
-                    font-family: 'Prompt', sans-serif !important;
-                    min-width: 300px !important;
-                    height: 80px !important;
-                    text-transform: none !important;
-                }
-                
-                .stButton > button[key="predict"]:hover {
-                    background: linear-gradient(135deg, #388E3C, #689F38) !important;
-                    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5) !important;
-                    transform: translateY(-3px) !important;
-                }
-                
                 /* Responsive adjustments */
                 @media (max-width: 1200px) {
                     .main-content {
@@ -379,8 +327,7 @@ def run_desktop_app():
                         align-items: center;
                     }
                     
-                    .stButton > button[data-testid="baseButton-primary"],
-                    .stButton > button[data-testid="baseButton-secondary"] {
+                    .stButton > button {
                         font-size: 28px !important;
                         min-width: 300px !important;
                     }
@@ -612,6 +559,67 @@ def run_desktop_app():
         """Display the guide/manual page"""
         load_styles()
         show_header()
+        
+        # Back button
+        if st.button("← กลับหน้าแรก", key="back_to_home_from_guide"):
+            st.session_state.page = 'home'
+            st.rerun()
+        
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 40px auto; padding: 0 40px;">
+                <h1 style="text-align: center; color: #4A148C; font-size: 48px; margin-bottom: 40px; font-family: 'Prompt', sans-serif;">คู่มือการใช้งาน SixtyScan</h1>
+                
+                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
+                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
+                    <ul style="font-size: 20px; line-height: 1.6; font-family: 'Prompt', sans-serif;">
+                        <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
+                        <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
+                        <li>นั่งหรือยืนในท่าที่สบาย</li>
+                        <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
+                    </ul>
+                </div>
+                
+                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
+                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">ขั้นตอนการตรวจ</h2>
+                    <div style="font-size: 20px; line-height: 1.6; font-family: 'Prompt', sans-serif;">
+                        <h3 style="color: #666; font-size: 24px;">1. การออกเสียงสระ</h3>
+                        <ul>
+                            <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
+                            <li>ออกเสียงให้ชัดเจนและคงที่</li>
+                            <li>ไม่ต้องออกเสียงดังเกินไป</li>
+                        </ul>
+                        
+                        <h3 style="color: #666; font-size: 24px;">2. การออกเสียงพยางค์</h3>
+                        <ul>
+                            <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
+                            <li>ใช้เวลาประมาณ 6 วินาที</li>
+                            <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
+                        </ul>
+                        
+                        <h3 style="color: #666; font-size: 24px;">3. การอ่านประโยค</h3>
+                        <ul>
+                            <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
+                            <li>ไม่ต้องรีบร้อน</li>
+                            <li>ออกเสียงให้ชัดเจน</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">ข้อควรระวัง</h2>
+                    <ul style="font-size: 20px; line-height: 1.6; color: #d32f2f; font-family: 'Prompt', sans-serif;">
+                        <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
+                        <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
+                        <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
+                    </ul>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+    def show_analysis_page():
+        """Display the analysis page - desktop version with full features"""
+        load_styles()
+        initialize_analysis_session_state()
         
         # Back button
         if st.button("← กลับหน้าแรก", key="back_to_home"):
@@ -890,65 +898,4 @@ def run_desktop_app():
 
 # Run the app
 if __name__ == "__main__":
-    run_desktop_app()หน้าแรก", key="back_to_home_from_guide"):
-            st.session_state.page = 'home'
-            st.rerun()
-        
-        st.markdown("""
-            <div style="max-width: 1000px; margin: 40px auto; padding: 0 40px;">
-                <h1 style="text-align: center; color: #4A148C; font-size: 48px; margin-bottom: 40px; font-family: 'Prompt', sans-serif;">คู่มือการใช้งาน SixtyScan</h1>
-                
-                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
-                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
-                    <ul style="font-size: 20px; line-height: 1.6; font-family: 'Prompt', sans-serif;">
-                        <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
-                        <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
-                        <li>นั่งหรือยืนในท่าที่สบาย</li>
-                        <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
-                    </ul>
-                </div>
-                
-                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
-                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">ขั้นตอนการตรวจ</h2>
-                    <div style="font-size: 20px; line-height: 1.6; font-family: 'Prompt', sans-serif;">
-                        <h3 style="color: #666; font-size: 24px;">1. การออกเสียงสระ</h3>
-                        <ul>
-                            <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
-                            <li>ออกเสียงให้ชัดเจนและคงที่</li>
-                            <li>ไม่ต้องออกเสียงดังเกินไป</li>
-                        </ul>
-                        
-                        <h3 style="color: #666; font-size: 24px;">2. การออกเสียงพยางค์</h3>
-                        <ul>
-                            <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
-                            <li>ใช้เวลาประมาณ 6 วินาที</li>
-                            <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
-                        </ul>
-                        
-                        <h3 style="color: #666; font-size: 24px;">3. การอ่านประโยค</h3>
-                        <ul>
-                            <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
-                            <li>ไม่ต้องรีบร้อน</li>
-                            <li>ออกเสียงให้ชัดเจน</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">ข้อควรระวัง</h2>
-                    <ul style="font-size: 20px; line-height: 1.6; color: #d32f2f; font-family: 'Prompt', sans-serif;">
-                        <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
-                        <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
-                        <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
-                    </ul>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-
-    def show_analysis_page():
-        """Display the analysis page - desktop version with full features"""
-        load_styles()
-        initialize_analysis_session_state()
-        
-        # Back button
-        if st.button("← กลับ
+    run_desktop_app()
