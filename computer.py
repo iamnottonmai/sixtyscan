@@ -73,10 +73,10 @@ def run_desktop_app():
         return None
 
     # =============================
-    # Global Styles - Fixed CSS
+    # Global Styles - Completely Fixed CSS
     # =============================
     def load_styles():
-        st.markdown("""
+        css_content = """
             <style>
                 /* Import fonts */
                 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
@@ -223,7 +223,7 @@ def run_desktop_app():
                     overflow: hidden !important;
                 }
                 
-                /* Primary Button (เริ่มใช้งาน) */
+                /* Primary Button */
                 .stButton:first-child > button {
                     background: linear-gradient(135deg, #1976D2 0%, #42A5F5 50%, #64B5F6 100%) !important;
                     color: white !important;
@@ -236,7 +236,7 @@ def run_desktop_app():
                     background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #42A5F5 100%) !important;
                 }
                 
-                /* Secondary Button (คู่มือ) */
+                /* Secondary Button */
                 .stButton:nth-child(2) > button {
                     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%) !important;
                     color: white !important;
@@ -435,10 +435,11 @@ def run_desktop_app():
                     font-family: 'Prompt', sans-serif;
                 }
             </style>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(css_content, unsafe_allow_html=True)
 
     # =============================
-    # Analysis Functions (unchanged)
+    # Analysis Functions
     # =============================
     def cleanup_temp_files():
         """Clean up all temporary files stored in session state"""
@@ -568,7 +569,7 @@ def run_desktop_app():
             return [F.softmax(model(x), dim=1)[0][1].item() for x in inputs]
 
     # =============================
-    # Page Functions - Updated Header
+    # Page Functions
     # =============================
     def show_header():
         """Display the enhanced header matching the image design"""
@@ -580,7 +581,7 @@ def run_desktop_app():
         if logo_b64:
             logo_html = f'<img src="data:image/png;base64,{logo_b64}" class="header-logo" alt="SixtyScan Logo">'
         
-        st.markdown(f"""
+        header_html = f"""
             <div class="header">
                 <div class="header-left">
                     <div class="header-content">
@@ -592,7 +593,8 @@ def run_desktop_app():
                 </div>
                 <div class="header-datetime">{thai_datetime}</div>
             </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(header_html, unsafe_allow_html=True)
 
     def show_home_page():
         """Display the enhanced home page matching the design image"""
@@ -602,14 +604,15 @@ def run_desktop_app():
         woman_image_b64 = load_woman_image()
         
         # Main content area
-        st.markdown("""
+        main_content_start = """
             <div class="main-content">
                 <div class="content-left">
                     <h1 class="main-title">
                         ตรวจเช็คโรคพาร์กินสัน<br>
                         ทันทีด้วย <span class="title-highlight">SixtyScan</span>
                     </h1>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(main_content_start, unsafe_allow_html=True)
         
         # Button container with enhanced styling
         col1, col2 = st.columns([1, 1], gap="medium")
@@ -624,31 +627,33 @@ def run_desktop_app():
                 st.session_state.page = 'guide'
                 st.rerun()
         
-        st.markdown("""
+        content_right_start = """
                 </div>
                 <div class="content-right">
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(content_right_start, unsafe_allow_html=True)
         
         # Display woman image with enhanced styling
         if woman_image_b64:
-            st.markdown(f"""
-                <img src="data:image/jpg;base64,{woman_image_b64}" class="woman-image" alt="Woman using phone">
-            """, unsafe_allow_html=True)
+            image_html = f'<img src="data:image/jpg;base64,{woman_image_b64}" class="woman-image" alt="Woman using phone">'
+            st.markdown(image_html, unsafe_allow_html=True)
         else:
             # Enhanced placeholder
-            st.markdown("""
+            placeholder_html = """
                 <div class="image-placeholder">
                     <div class="placeholder-content">
                         <div class="placeholder-icon">📱</div>
                         <div class="placeholder-text">insert.jpg<br>not found</div>
                     </div>
                 </div>
-            """, unsafe_allow_html=True)
+            """
+            st.markdown(placeholder_html, unsafe_allow_html=True)
         
-        st.markdown("""
+        main_content_end = """
                 </div>
             </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(main_content_end, unsafe_allow_html=True)
 
     def show_guide_page():
         """Display the guide/manual page with enhanced styling"""
@@ -660,7 +665,7 @@ def run_desktop_app():
             st.session_state.page = 'home'
             st.rerun()
         
-        st.markdown("""
+        guide_content = """
             <div style="max-width: 1000px; margin: 40px auto; padding: 0 40px;">
                 <h1 style="text-align: center; color: #4A148C; font-size: 56px; margin-bottom: 50px; font-family: 'Prompt', sans-serif; font-weight: 700;">คู่มือการใช้งาน SixtyScan</h1>
                 
@@ -709,7 +714,8 @@ def run_desktop_app():
                     </ul>
                 </div>
             </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(guide_content, unsafe_allow_html=True)
 
     def show_analysis_page():
         """Display the analysis page with consistent styling"""
@@ -741,12 +747,13 @@ def run_desktop_app():
             st.rerun()
 
         # Vowel recordings
-        st.markdown("""
+        vowel_card_html = """
         <div class='card'>
             <h2>1. สระ</h2>
             <p class='instructions'>กรุณาออกเสียงแต่ละสระ 5-8 วินาทีอย่างชัดเจน โดยกดปุ่มบันทึกทีละสระ</p>
         </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(vowel_card_html, unsafe_allow_html=True)
 
         vowel_sounds = ["อา", "อี", "อือ", "อู", "ไอ", "อำ", "เอา"]
 
@@ -784,12 +791,13 @@ def run_desktop_app():
                     st.session_state.vowel_files.append(tmp.name)
 
         # Pataka recording
-        st.markdown("""
+        pataka_card_html = """
         <div class='card'>
             <h2>2. พยางค์</h2>
             <p class='instructions'>กรุณาออกเสียงคำว่า <b>"พา - ทา - คา"</b> ให้จบภายใน 6 วินาที</p>
         </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(pataka_card_html, unsafe_allow_html=True)
 
         if not st.session_state.clear_clicked:
             pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka")
@@ -817,12 +825,13 @@ def run_desktop_app():
                 st.session_state.pataka_file = tmp.name
 
         # Sentence recording
-        st.markdown("""
+        sentence_card_html = """
         <div class='card'>
             <h2>3. ประโยค</h2>
             <p class='sentence-instruction'>กรุณาอ่านประโยค <b>"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</b></p>
         </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(sentence_card_html, unsafe_allow_html=True)
 
         if not st.session_state.clear_clicked:
             sentence_bytes = st.audio_input("🎤 บันทึกการอ่านประโยค", key="sentence")
@@ -878,7 +887,7 @@ def run_desktop_app():
                     diagnosis = "ไม่เป็นพาร์กินสัน"
                     box_color = "#e8f5e9"
                     border_color = "#4caf50"
-                    advice = """
+                    advice_html = """
                     <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
                         <li>ถ้าไม่มีอาการ: ควรตรวจปีละครั้ง(ไม่บังคับ)</li>
                         <li>ถ้ามีอาการเล็กน้อย: ตรวจปีละ 2 ครั้ง</li>
@@ -891,7 +900,7 @@ def run_desktop_app():
                     diagnosis = "เป็นพาร์กินสัน"
                     box_color = "#fff8e1"
                     border_color = "#ff9800"
-                    advice = """
+                    advice_html = """
                     <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
                         <li>พบแพทย์เฉพาะทางระบบประสาท</li>
                         <li>บันทึกอาการประจำวัน</li>
@@ -904,7 +913,7 @@ def run_desktop_app():
                     diagnosis = "เป็นพาร์กินสัน"
                     box_color = "#ffebee"
                     border_color = "#f44336"
-                    advice = """
+                    advice_html = """
                     <ul style='font-size:26px; font-family: "Prompt", sans-serif; line-height: 1.6;'>
                         <li>พบแพทย์เฉพาะทางโดยเร็วที่สุด</li>
                         <li>บันทึกอาการทุกวัน</li>
@@ -912,7 +921,7 @@ def run_desktop_app():
                     </ul>
                     """
 
-                st.markdown(f"""
+                results_html = f"""
                     <div style='background-color:{box_color}; padding: 40px; border-radius: 20px; font-size: 28px; color: #000000; font-family: "Prompt", sans-serif; border-left: 8px solid {border_color}; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin: 30px 0;'>
                         <div style='text-align: center; font-size: 48px; font-weight: 700; margin-bottom: 30px; color: {border_color};'>{label}</div>
                         <p style='margin-bottom: 20px;'><b>ระดับความน่าจะเป็น:</b> {level}</p>
@@ -922,9 +931,10 @@ def run_desktop_app():
                         </div>
                         <p style='margin-bottom: 20px;'><b>ผลการวิเคราะห์:</b> {diagnosis}</p>
                         <p style='margin-bottom: 15px; font-size: 30px; font-weight: 600;'><b>คำแนะนำ</b></p>
-                        {advice}
+                        {advice_html}
                     </div>
-                """, unsafe_allow_html=True)
+                """
+                st.markdown(results_html, unsafe_allow_html=True)
                 
                 # Display all spectrograms in the results section
                 st.markdown("### 📊 การวิเคราะห์ Mel Spectrogram ทั้งหมด")
@@ -956,7 +966,7 @@ def run_desktop_app():
                         st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"ประโยค\"</b></div>", unsafe_allow_html=True)
                         st.image(spec_image, use_container_width=True)
                 
-                st.markdown("""
+                info_html = """
                 <div style='margin-top: 30px; padding: 30px; background-color: #f8f9fa; border-radius: 16px; border-left: 6px solid #6A1B9A;'>
                     <h4 style='color: #4A148C; margin-bottom: 20px; font-family: "Prompt", sans-serif; font-size: 24px; font-weight: 600;'>💡 เกี่ยวกับ Mel Spectrogram</h4>
                     <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>สีเข้ม (น้ำเงิน/ม่วง):</b> ความถี่ที่มีพลังงานต่ำ</p>
@@ -965,7 +975,8 @@ def run_desktop_app():
                     <p style='font-size: 18px; margin-bottom: 12px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• <b>แกน Y:</b> ความถี่ Mel</p>
                     <p style='font-size: 18px; font-family: "Prompt", sans-serif; line-height: 1.6;'>• รูปแบบของ Spectrogram สามารถช่วยระบุความผิดปกติของการออกเสียงได้</p>
                 </div>
-                """, unsafe_allow_html=True)
+                """
+                st.markdown(info_html, unsafe_allow_html=True)
             else:
                 st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠")
 
