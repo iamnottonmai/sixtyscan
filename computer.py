@@ -56,10 +56,10 @@ def run_desktop_app():
     def load_woman_image():
         """Load the woman image"""
         image_paths = [
-            "insert.png",           # Same directory
-            "./insert.png",         # Explicit relative path
-            "assets/insert.png",    # If in assets folder
-            "images/insert.png"     # If in images folder
+            "insert.jpg",           # Same directory
+            "./insert.jpg",         # Explicit relative path
+            "assets/insert.jpg",    # If in assets folder
+            "images/insert.jpg"     # If in images folder
         ]
         
         for path in image_paths:
@@ -286,7 +286,7 @@ def run_desktop_app():
         # Display woman image
         if woman_image_b64:
             st.markdown(f"""
-                <img src="data:image/png;base64,{woman_image_b64}" class="woman-image" alt="Woman using phone">
+                <img src="data:image/jpg;base64,{woman_image_b64}" class="woman-image" alt="Woman using phone">
             """, unsafe_allow_html=True)
         else:
             # Fallback placeholder
@@ -296,7 +296,7 @@ def run_desktop_app():
                            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
                     <div style="text-align: center; color: #666;">
                         <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
-                        <div style="font-size: 18px;">insert.png<br>not found</div>
+                        <div style="font-size: 18px;">insert.jpg<br>not found</div>
                     </div>
                 </div>
             """, unsafe_allow_html=True)
