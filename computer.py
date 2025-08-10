@@ -73,7 +73,7 @@ def run_desktop_app():
         return None
 
     # =============================
-    # Global Styles - Updated to match the image
+    # Global Styles - Fixed CSS
     # =============================
     def load_styles():
         st.markdown("""
