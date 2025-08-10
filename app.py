@@ -131,17 +131,18 @@ def create_js_detector() -> str:
     """
 
 def show_device_info(device_type: DeviceType, detection_method: str):
-    """Display device detection information"""
+    """Display device detection information at the bottom"""
     device_emoji = "📱" if device_type == 'mobile' else "🖥️"
     device_name = "Mobile" if device_type == 'mobile' else "Desktop"
     
-    # Create a small, unobtrusive status indicator in top-left
+    # Add some spacing before the bottom section
+    st.markdown("<br><hr>", unsafe_allow_html=True)
+    
+    # Small device indicator at the bottom
     st.markdown(f"""
-    <div style="position: fixed; top: 10px; left: 10px; z-index: 999; 
-                background: rgba(255,255,255,0.9); padding: 5px 10px; 
-                border-radius: 5px; font-size: 11px; color: #666; 
-                border: 1px solid #ddd;">
-        {device_emoji} {device_name}
+    <div style="text-align: center; font-size: 11px; color: #999; 
+                padding: 10px; margin-top: 20px;">
+        {device_emoji} {device_name} Version
     </div>
     """, unsafe_allow_html=True)
     
@@ -327,11 +328,11 @@ def main():
         """, unsafe_allow_html=True)
         st.stop()
     
-    # Show device info
-    show_device_info(device_type, detection_method)
-    
     # Load appropriate app
     load_app_module(device_type)
+    
+    # Show device info at the bottom
+    show_device_info(device_type, detection_method)
 
 if __name__ == "__main__":
     main()
