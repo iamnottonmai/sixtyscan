@@ -135,15 +135,23 @@ def show_device_info(device_type: DeviceType, detection_method: str):
     device_emoji = "📱" if device_type == 'mobile' else "🖥️"
     device_name = "Mobile" if device_type == 'mobile' else "Desktop"
     
-    st.success(f"{device_emoji} {device_name} Version Loaded")
+    # Create a small, unobtrusive status indicator in top-left
+    st.markdown(f"""
+    <div style="position: fixed; top: 10px; left: 10px; z-index: 999; 
+                background: rgba(255,255,255,0.9); padding: 5px 10px; 
+                border-radius: 5px; font-size: 11px; color: #666; 
+                border: 1px solid #ddd;">
+        {device_emoji} {device_name}
+    </div>
+    """, unsafe_allow_html=True)
     
-    with st.expander("ℹ️ Detection Details"):
-        st.info(f"**Device Type:** {device_name}")
-        st.info(f"**Detection Method:** {detection_method}")
+    with st.expander("ℹ️ Detection Details", expanded=False):
+        st.caption(f"**Device Type:** {device_name}")
+        st.caption(f"**Detection Method:** {detection_method}")
         
         # Show current viewport info using JavaScript
         st.markdown("""
-        <div id="viewport-info"></div>
+        <div id="viewport-info" style="font-size: 12px; color: #666;"></div>
         <script>
         document.getElementById('viewport-info').innerHTML = `
             <strong>Screen Info:</strong><br>
