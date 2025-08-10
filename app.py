@@ -4,120 +4,127 @@ import re
 def detect_device():
     """Detect if the user is on mobile or desktop based on user agent"""
     try:
-        # Method 1: Try to get user agent from headers (newer Streamlit versions)
+        # Method 1: Try modern Streamlit context headers
         if hasattr(st, 'context') and hasattr(st.context, 'headers'):
             headers = dict(st.context.headers)
             user_agent = headers.get('user-agent', '').lower()
+            
+        # Method 2: Try legacy websocket headers (for older Streamlit versions)
+        elif hasattr(st.web.server, 'websocket_headers'):
+            from streamlit.web.server.websocket_headers import get_websocket_headers
+            headers = get_websocket_headers()
+            user_agent = headers.get('User-Agent', '').lower()
+            
+        # Method 3: Use query parameters as manual override
         else:
-            # Method 2: Fallback method using query params or session state
-            user_agent = st.session_state.get('user_agent', '').lower()
+            query_params = st.experimental_get_query_params()
+            if 'mobile' in query_params:
+                return 'mobile' if query_params['mobile'][0].lower() == 'true' else 'desktop'
+            user_agent = ''
         
-        # If still no user agent, try JavaScript detection
-        if not user_agent:
-            return detect_with_javascript()
-        
-        # Mobile device patterns
-        mobile_patterns = [
-            r'mobile', r'android', r'iphone', r'ipad', r'ipod',
-            r'blackberry', r'windows phone', r'opera mini', r'webos'
-        ]
-        
-        # Check if any mobile pattern matches
-        is_mobile = any(re.search(pattern, user_agent) for pattern in mobile_patterns)
-        
-        return 'mobile' if is_mobile else 'desktop'
-    
-    except Exception as e:
-        # Show the actual error for debugging
-        st.sidebar.error(f"Device detection error: {str(e)}")
-        return 'desktop'  # Fallback to desktop
-
-def detect_with_javascript():
-    """Alternative detection using JavaScript"""
-    # Check if we've already detected the device
-    if 'device_type' not in st.session_state:
-        # Use JavaScript to detect mobile
-        js_code = """
-        <script>
-        function detectDevice() {
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            const deviceType = isMobile ? 'mobile' : 'desktop';
+        # If we got a user agent, check for mobile patterns
+        if user_agent:
+            mobile_patterns = [
+                'mobile', 'android', 'iphone', 'ipad', 'ipod',
+                'blackberry', 'windows phone', 'opera mini', 'webos'
+            ]
             
-            // Try to communicate with Streamlit
-            if (window.parent && window.parent.postMessage) {
-                window.parent.postMessage({
-                    type: 'streamlit:componentReady',
-                    deviceType: deviceType
-                }, '*');
-            }
-            
-            return deviceType;
-        }
+            is_mobile = any(pattern in user_agent for pattern in mobile_patterns)
+            return 'mobile' if is_mobile else 'desktop'
         
-        // Set a cookie that we can read from Python
-        document.cookie = `device_type=${detectDevice()}; path=/`;
-        </script>
-        """
-        
-        st.components.v1.html(js_code, height=0)
-        
-        # For now, return desktop and let user refresh
-        st.info("🔄 Please refresh the page to properly detect your device type.")
+        # If no user agent available, return desktop as default
         return 'desktop'
-    
-    return st.session_state.device_type
+        
+    except Exception as e:
+        st.sidebar.error(f"Detection error: {str(e)}")
+        return 'desktop'
+
+def show_device_detector():
+    """Show a JavaScript-based device detector that sets URL parameters"""
+    st.markdown("""
+    <script>
+    // Check if we need to redirect with device parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has('device_detected')) {
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const deviceType = isMobile ? 'mobile' : 'desktop';
+        
+        // Redirect with device parameter
+        const newUrl = window.location.href + 
+            (window.location.href.includes('?') ? '&' : '?') + 
+            `device=${deviceType}&device_detected=true`;
+        window.location.href = newUrl;
+    }
+    </script>
+    """, unsafe_allow_html=True)
 
 def main():
-    # Add debug mode toggle
-    debug_mode = st.sidebar.checkbox("Debug Mode", value=False)
+    # Check if we have device detection from URL parameters first
+    query_params = st.experimental_get_query_params()
     
-    # Manual override for testing
-    manual_override = st.sidebar.selectbox(
-        "Manual Device Override (for testing)", 
-        ["Auto-detect", "Force Mobile", "Force Desktop"]
-    )
-    
-    if manual_override == "Force Mobile":
-        device_type = 'mobile'
-    elif manual_override == "Force Desktop":
-        device_type = 'desktop'
+    if 'device' in query_params and 'device_detected' in query_params:
+        # Use JavaScript detection result
+        device_type = query_params['device'][0]
     else:
+        # Try server-side detection
         device_type = detect_device()
-    
-    # Debug information
-    if debug_mode:
-        st.sidebar.write("**Debug Info:**")
-        st.sidebar.write(f"Detected device: **{device_type}**")
         
-        try:
-            if hasattr(st, 'context') and hasattr(st.context, 'headers'):
-                headers = dict(st.context.headers)
-                user_agent = headers.get('user-agent', 'Not found')
-                st.sidebar.write(f"User Agent: `{user_agent}`")
-        except:
-            st.sidebar.write("Could not access headers")
+        # If server-side detection failed, use JavaScript fallback
+        if device_type == 'desktop':  # This might be wrong, so let's use JS
+            show_device_detector()
+            st.info("🔄 Detecting device type...")
+            st.stop()  # Stop execution until redirect happens
+    
+    # Add debug info in sidebar
+    with st.sidebar:
+        st.write(f"**Device Type:** {device_type}")
+        
+        # Manual override for testing
+        manual_override = st.selectbox(
+            "Override (for testing)", 
+            ["Use Detection", "Force Mobile", "Force Desktop"],
+            key="manual_override"
+        )
+        
+        if manual_override == "Force Mobile":
+            device_type = 'mobile'
+        elif manual_override == "Force Desktop":
+            device_type = 'desktop'
+        
+        # Show debug info
+        if st.checkbox("Show Debug Info"):
+            st.write("**Query Params:**", dict(query_params))
+            try:
+                if hasattr(st, 'context') and hasattr(st.context, 'headers'):
+                    headers = dict(st.context.headers)
+                    st.write("**Headers Available:**", "✅")
+                    st.write("**User Agent:**", headers.get('user-agent', 'Not found'))
+                else:
+                    st.write("**Headers Available:**", "❌")
+            except Exception as e:
+                st.write("**Header Error:**", str(e))
     
     # Route to appropriate app
     if device_type == 'mobile':
-        st.sidebar.success("📱 Loading Mobile Version")
+        st.success("📱 Mobile Version Loaded")
         try:
             import mobile
             mobile.run_mobile_app()
         except ImportError as e:
-            st.error(f"❌ mobile.py file not found! Error: {str(e)}")
-            st.info("Make sure mobile.py exists and contains a run_mobile_app() function")
+            st.error(f"❌ Error: {str(e)}")
+            st.info("Make sure mobile.py exists with run_mobile_app() function")
         except Exception as e:
-            st.error(f"❌ Error loading mobile app: {str(e)}")
+            st.error(f"❌ Mobile app error: {str(e)}")
     else:
-        st.sidebar.success("🖥️ Loading Desktop Version")
+        st.success("🖥️ Desktop Version Loaded")
         try:
             import computer
             computer.run_desktop_app()
         except ImportError as e:
-            st.error(f"❌ computer.py file not found! Error: {str(e)}")
-            st.info("Make sure computer.py exists and contains a run_desktop_app() function")
+            st.error(f"❌ Error: {str(e)}")
+            st.info("Make sure computer.py exists with run_desktop_app() function")
         except Exception as e:
-            st.error(f"❌ Error loading desktop app: {str(e)}")
+            st.error(f"❌ Desktop app error: {str(e)}")
 
 if __name__ == "__main__":
     main()
