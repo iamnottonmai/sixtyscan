@@ -94,8 +94,10 @@ def run_desktop_app():
                 footer {visibility: hidden;}
                 .stApp > header {visibility: hidden;}
                 #MainMenu {visibility: hidden;}
-                .stButton > button:first-child {
-                    all: unset;
+                
+                /* Remove the keyboard arrow icon */
+                .stButton > button > div[data-testid="stMarkdownContainer"] p {
+                    display: none;
                 }
                 
                 /* Header Styles */
@@ -136,9 +138,9 @@ def run_desktop_app():
                     margin-left: auto;
                 }
                 
-                /* Main Content Area */
+                /* Main Content Area - Reduced top padding */
                 .main-content {
-                    padding: 80px 60px;
+                    padding: 40px 60px 80px 60px;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
@@ -165,14 +167,15 @@ def run_desktop_app():
                     color: #2d2d2d;
                     line-height: 1.2;
                     margin-bottom: 40px;
+                    margin-top: 0;
                 }
                 
                 .title-highlight {
                     color: #4A148C;
                 }
                 
-                /* Buttons - Much Bigger and Bolder */
-                .stButton > button {
+                /* Home page buttons - Keep custom styling */
+                .home-button-primary {
                     font-size: 32px !important;
                     padding: 24px 48px !important;
                     border-radius: 50px !important;
@@ -189,60 +192,38 @@ def run_desktop_app():
                     display: flex !important;
                     align-items: center !important;
                     justify-content: center !important;
-                }
-                
-                /* Primary Button (เริ่มใช้งาน) */
-                .stButton > button[kind="primary"] {
                     background: linear-gradient(135deg, #1976D2 0%, #9C27B0 100%) !important;
                     color: white !important;
                 }
                 
-                /* Secondary Button (คู่มือ) */
-                .stButton > button[kind="secondary"] {
+                .home-button-secondary {
+                    font-size: 32px !important;
+                    padding: 24px 48px !important;
+                    border-radius: 50px !important;
+                    font-weight: 900 !important;
+                    font-family: 'Prompt', sans-serif !important;
+                    min-width: 280px !important;
+                    height: 80px !important;
+                    margin: 10px 0 !important;
+                    border: none !important;
+                    cursor: pointer !important;
+                    transition: all 0.3s ease !important;
+                    box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3) !important;
+                    text-align: center !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
                     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 100%) !important;
                     color: white !important;
                 }
                 
-                /* Analysis Page Buttons */
-                .stButton > button[data-baseweb="button"] {
-                    background: linear-gradient(135deg, #009688, #00bcd4) !important;
-                    color: white !important;
-                }
-                
-                /* Predict Button Special */
-                button[kind="primary"] {
-                    font-size: 36px !important;
-                    padding: 28px 56px !important;
-                    font-weight: 900 !important;
-                    background: linear-gradient(135deg, #4CAF50, #8BC34A) !important;
-                    min-width: 320px !important;
-                    height: 90px !important;
-                }
-                
-                /* Clear Button Special */
-                button[kind="secondary"]:not([key*="guide"]):not([key*="back"]) {
-                    background: linear-gradient(135deg, #f44336, #e91e63) !important;
-                    font-size: 24px !important;
-                    min-width: 200px !important;
-                    height: 60px !important;
-                }
-                
-                /* Back Button */
-                button[key*="back"] {
-                    background: linear-gradient(135deg, #666, #888) !important;
-                    font-size: 20px !important;
-                    padding: 12px 24px !important;
-                    min-width: 150px !important;
-                    height: 50px !important;
-                }
-                
-                /* Button Hover Effects */
-                .stButton > button:hover {
+                /* Home page button hover effects */
+                .home-button-primary:hover, .home-button-secondary:hover {
                     transform: translateY(-3px) !important;
                     box-shadow: 0 8px 25px rgba(74, 20, 140, 0.4) !important;
                 }
                 
-                .stButton > button:active {
+                .home-button-primary:active, .home-button-secondary:active {
                     transform: translateY(0px) !important;
                 }
                 
@@ -325,11 +306,6 @@ def run_desktop_app():
                     
                     .button-container {
                         align-items: center;
-                    }
-                    
-                    .stButton > button {
-                        font-size: 28px !important;
-                        min-width: 300px !important;
                     }
                 }
                 
@@ -517,14 +493,35 @@ def run_desktop_app():
                     <div class="button-container">
         """, unsafe_allow_html=True)
         
-        # Create the actual working buttons
-        if st.button("เริ่มใช้งาน", key="start_analysis", type="primary"):
+        # Create custom styled buttons for home page only
+        if st.button("เริ่มใช้งาน", key="start_analysis"):
             st.session_state.page = 'analysis'
             st.rerun()
             
-        if st.button("คู่มือ", key="guide_manual", type="secondary"):
+        # Apply custom styling to the home page buttons
+        st.markdown("""
+            <script>
+                // Apply custom classes to home page buttons
+                const buttons = document.querySelectorAll('[data-testid="stButton"] button');
+                if (buttons.length >= 1) {
+                    buttons[0].className += ' home-button-primary';
+                }
+            </script>
+        """, unsafe_allow_html=True)
+            
+        if st.button("คู่มือ", key="guide_manual"):
             st.session_state.page = 'guide'
             st.rerun()
+            
+        # Apply styling to second button
+        st.markdown("""
+            <script>
+                const buttons = document.querySelectorAll('[data-testid="stButton"] button');
+                if (buttons.length >= 2) {
+                    buttons[1].className += ' home-button-secondary';
+                }
+            </script>
+        """, unsafe_allow_html=True)
         
         st.markdown("""
                     </div>
@@ -560,7 +557,7 @@ def run_desktop_app():
         load_styles()
         show_header()
         
-        # Back button
+        # Back button - normal Streamlit button
         if st.button("← กลับหน้าแรก", key="back_to_home_from_guide"):
             st.session_state.page = 'home'
             st.rerun()
@@ -617,11 +614,14 @@ def run_desktop_app():
         """, unsafe_allow_html=True)
 
     def show_analysis_page():
-        """Display the analysis page - desktop version with full features"""
+        """Display the analysis page - desktop version with normal Streamlit buttons for analysis functions"""
         load_styles()
         initialize_analysis_session_state()
         
-        # Back button
+        # Header
+        show_header()
+        
+        # Back button - normal Streamlit button
         if st.button("← กลับหน้าแรก", key="back_to_home"):
             st.session_state.page = 'home'
             st.rerun()
@@ -629,10 +629,7 @@ def run_desktop_app():
         # Load model
         model = load_model()
         
-        # Header (same as home page)
-        show_header()
-        
-        st.markdown("<h1 style='text-align: center; font-size: 48px; color: #4A148C; margin: 40px 0; font-family: \"Prompt\", sans-serif;'>การวิเคราะห์เสียง</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center; font-size: 48px; color: #4A148C; margin: 20px 0; font-family: \"Prompt\", sans-serif;'>การวิเคราะห์เสียง</h1>", unsafe_allow_html=True)
 
         # Clear button logic
         if 'clear_button_clicked' in st.session_state and st.session_state.clear_button_clicked:
@@ -678,6 +675,7 @@ def run_desktop_app():
                     st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
                     st.image(spec_image, use_container_width=True)
 
+        # File uploader for vowels - normal Streamlit component
         uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
         if uploaded_vowels and len([f for f in st.session_state.vowel_files if f is not None]) < 7:
             cleanup_temp_files()
@@ -713,6 +711,7 @@ def run_desktop_app():
                 st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
                 st.image(spec_image, use_container_width=True)
 
+        # File uploader for pataka - normal Streamlit component
         uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
         if uploaded_pataka and not st.session_state.pataka_file:
             with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
@@ -745,22 +744,19 @@ def run_desktop_app():
                 st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</b></div>", unsafe_allow_html=True)
                 st.image(spec_image, use_container_width=True)
 
+        # File uploader for sentence - normal Streamlit component
         uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
         if uploaded_sentence and not st.session_state.sentence_file:
             with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
                 tmp.write(uploaded_sentence.read())
                 st.session_state.sentence_file = tmp.name
 
-        # Buttons
-        col1, col2 = st.columns([1, 0.16])
+        # Action buttons - Normal Streamlit buttons
+        col1, col2 = st.columns([1, 1])
         with col1:
-            button_col1, button_col2 = st.columns([1, 1])
-            with button_col1:
-                predict_btn = st.button("วิเคราะห์", key="predict", type="primary")
-            with button_col2:
-                loading_placeholder = st.empty()
+            predict_btn = st.button("🔍 วิเคราะห์", key="predict", type="primary")
         with col2:
-            if st.button("ลบข้อมูล", key="clear", type="secondary"):
+            if st.button("🗑️ ลบข้อมูล", key="clear", type="secondary"):
                 st.session_state.clear_button_clicked = True
                 st.rerun()
 
@@ -773,24 +769,10 @@ def run_desktop_app():
             valid_vowel_files = [f for f in st.session_state.vowel_files if f is not None]
             
             if len(valid_vowel_files) == 7 and st.session_state.pataka_file and st.session_state.sentence_file:
-                loading_placeholder.markdown("""
-                    <div style="display: flex; align-items: center; margin-top: 8px;">
-                        <div style="width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #009688; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                        <span style="margin-left: 10px; font-size: 16px; color: #009688; font-family: 'Prompt', sans-serif;">กำลังวิเคราะห์...</span>
-                    </div>
-                    <style>
-                        @keyframes spin {
-                            0% { transform: rotate(0deg); }
-                            100% { transform: rotate(360deg); }
-                        }
-                    </style>
-                """, unsafe_allow_html=True)
-                
-                all_probs = predict_from_model(valid_vowel_files, st.session_state.pataka_file, st.session_state.sentence_file, model)
-                final_prob = np.mean(all_probs)
-                percent = int(final_prob * 100)
-                
-                loading_placeholder.empty()
+                with st.spinner("กำลังวิเคราะห์..."):
+                    all_probs = predict_from_model(valid_vowel_files, st.session_state.pataka_file, st.session_state.sentence_file, model)
+                    final_prob = np.mean(all_probs)
+                    percent = int(final_prob * 100)
 
                 if percent <= 50:
                     level = "ระดับต่ำ (Low)"
