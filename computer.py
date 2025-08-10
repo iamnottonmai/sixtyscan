@@ -78,14 +78,15 @@ def run_desktop_app():
     def load_styles():
         st.markdown("""
             <style>
-                @import url('https://fonts.googleapis.com/css2?family=Helvetica+Thai:wght@400;500;600;700&display=swap');
+                /* Import fonts */
+                @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
                 
                 /* Global Reset */
                 .stApp {
                     background-color: #f5f5f5 !important;
                     margin: 0 !important;
                     padding: 0 !important;
-                    font-family: 'Helvetica Thai', sans-serif !important;
+                    font-family: 'Prompt', sans-serif !important;
                 }
                 
                 /* Hide Streamlit elements */
@@ -117,7 +118,7 @@ def run_desktop_app():
                 
                 .header-title {
                     color: white;
-                    font-family: 'Helvetica Thai', sans-serif;
+                    font-family: 'Prompt', sans-serif;
                     font-size: 24px;
                     font-weight: 500;
                     margin: 0;
@@ -129,7 +130,7 @@ def run_desktop_app():
                     color: white;
                     padding: 8px 16px;
                     border-radius: 20px;
-                    font-family: 'Helvetica Thai', sans-serif;
+                    font-family: 'Prompt', sans-serif;
                     font-size: 14px;
                     font-weight: 400;
                     margin-left: auto;
@@ -158,7 +159,7 @@ def run_desktop_app():
                 
                 /* Main Title */
                 .main-title {
-                    font-family: 'Helvetica Thai', sans-serif;
+                    font-family: 'Prompt', sans-serif;
                     font-size: 64px;
                     font-weight: 700;
                     color: #2d2d2d;
@@ -170,34 +171,49 @@ def run_desktop_app():
                     color: #4A148C;
                 }
                 
-                /* Buttons */
-                .custom-button {
-                    display: inline-block;
-                    background: linear-gradient(135deg, #1976D2 0%, #9C27B0 100%);
-                    color: white;
-                    padding: 20px 40px;
-                    border-radius: 50px;
-                    text-decoration: none;
-                    font-family: 'Helvetica Thai', sans-serif;
-                    font-size: 24px;
-                    font-weight: 600;
-                    margin: 10px 0;
-                    border: none;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
-                    width: 100%;
-                    max-width: 300px;
-                    text-align: center;
+                /* Home Page Buttons - Much Bigger and Bolder */
+                .stButton > button[data-testid="baseButton-primary"],
+                .stButton > button[data-testid="baseButton-secondary"] {
+                    font-size: 32px !important;
+                    padding: 24px 48px !important;
+                    border-radius: 50px !important;
+                    font-weight: 900 !important;
+                    font-family: 'Prompt', sans-serif !important;
+                    min-width: 350px !important;
+                    height: 80px !important;
+                    margin: 15px 0 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    text-transform: none !important;
+                    letter-spacing: 0.5px !important;
                 }
                 
-                .custom-button:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 6px 20px rgba(74, 20, 140, 0.4);
+                .stButton > button[data-testid="baseButton-primary"] {
+                    background: linear-gradient(135deg, #1976D2 0%, #9C27B0 100%) !important;
+                    color: white !important;
+                    border: none !important;
+                    box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3) !important;
+                    transition: all 0.3s ease !important;
                 }
                 
-                .custom-button:active {
-                    transform: translateY(0px);
+                .stButton > button[data-testid="baseButton-secondary"] {
+                    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 100%) !important;
+                    color: white !important;
+                    border: none !important;
+                    box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3) !important;
+                    transition: all 0.3s ease !important;
+                }
+                
+                .stButton > button[data-testid="baseButton-primary"]:hover,
+                .stButton > button[data-testid="baseButton-secondary"]:hover {
+                    transform: translateY(-3px) !important;
+                    box-shadow: 0 8px 25px rgba(74, 20, 140, 0.4) !important;
+                }
+                
+                .stButton > button[data-testid="baseButton-primary"]:active,
+                .stButton > button[data-testid="baseButton-secondary"]:active {
+                    transform: translateY(0px) !important;
                 }
                 
                 /* Woman Image */
@@ -231,7 +247,7 @@ def run_desktop_app():
                     margin-bottom: 20px;
                     color: #222;
                     font-weight: 600;
-                    font-family: 'Helvetica Thai', sans-serif;
+                    font-family: 'Prompt', sans-serif;
                 }
                 
                 .instructions {
@@ -239,7 +255,7 @@ def run_desktop_app():
                     color: #333;
                     margin-bottom: 24px;
                     font-weight: 400;
-                    font-family: 'Helvetica Thai', sans-serif;
+                    font-family: 'Prompt', sans-serif;
                 }
                 
                 .pronounce {
@@ -248,7 +264,7 @@ def run_desktop_app():
                     font-weight: 400;
                     margin-top: 0;
                     margin-bottom: 24px;
-                    font-family: 'Helvetica Thai', sans-serif;
+                    font-family: 'Prompt', sans-serif;
                 }
                 
                 .sentence-instruction {
@@ -256,14 +272,14 @@ def run_desktop_app():
                     font-weight: 400 !important;
                     color: #333 !important;
                     margin-bottom: 24px !important;
-                    font-family: 'Helvetica Thai', sans-serif !important;
+                    font-family: 'Prompt', sans-serif !important;
                     display: block !important;
                 }
                 
-                /* Custom button styling for analysis page */
-                .stButton > button {
-                    font-size: 40px !important;
-                    padding: 35px 48px !important;
+                /* Analysis Page Buttons - Bigger and Bolder */
+                .stButton > button:not([data-testid="baseButton-primary"]):not([data-testid="baseButton-secondary"]) {
+                    font-size: 28px !important;
+                    padding: 20px 40px !important;
                     border-radius: 50px !important;
                     font-weight: 900 !important;
                     background: linear-gradient(135deg, #009688, #00bcd4) !important;
@@ -271,18 +287,75 @@ def run_desktop_app():
                     border: none !important;
                     box-shadow: 0 4px 15px rgba(0, 150, 136, 0.3) !important;
                     transition: all 0.3s ease !important;
-                    font-family: 'Helvetica Thai', sans-serif !important;
-                    min-width: 300px !important;
+                    font-family: 'Prompt', sans-serif !important;
+                    min-width: 250px !important;
+                    height: 70px !important;
                 }
                 
-                .stButton > button:hover {
+                .stButton > button:not([data-testid="baseButton-primary"]):not([data-testid="baseButton-secondary"]):hover {
                     background: linear-gradient(135deg, #00796b, #0097a7) !important;
                     box-shadow: 0 6px 20px rgba(0, 150, 136, 0.4) !important;
                     transform: translateY(-2px) !important;
                 }
                 
-                .stButton > button:active {
+                .stButton > button:not([data-testid="baseButton-primary"]):not([data-testid="baseButton-secondary"]):active {
                     transform: translateY(0px) !important;
+                }
+                
+                /* Back Button Styling */
+                .stButton > button[key="back_to_home"],
+                .stButton > button[key="back_to_home_from_guide"] {
+                    font-size: 20px !important;
+                    padding: 12px 24px !important;
+                    border-radius: 25px !important;
+                    font-weight: 700 !important;
+                    background: linear-gradient(135deg, #666, #888) !important;
+                    color: white !important;
+                    border: none !important;
+                    font-family: 'Prompt', sans-serif !important;
+                    margin-bottom: 20px !important;
+                }
+                
+                /* Clear Button Special Styling */
+                .stButton > button[key="clear"] {
+                    font-size: 24px !important;
+                    padding: 16px 32px !important;
+                    border-radius: 40px !important;
+                    font-weight: 800 !important;
+                    background: linear-gradient(135deg, #f44336, #e91e63) !important;
+                    color: white !important;
+                    border: none !important;
+                    font-family: 'Prompt', sans-serif !important;
+                    min-width: 180px !important;
+                    height: 60px !important;
+                }
+                
+                .stButton > button[key="clear"]:hover {
+                    background: linear-gradient(135deg, #d32f2f, #c2185b) !important;
+                    transform: translateY(-2px) !important;
+                }
+                
+                /* Predict Button Special Styling */
+                .stButton > button[key="predict"] {
+                    font-size: 32px !important;
+                    padding: 24px 48px !important;
+                    border-radius: 50px !important;
+                    font-weight: 900 !important;
+                    background: linear-gradient(135deg, #4CAF50, #8BC34A) !important;
+                    color: white !important;
+                    border: none !important;
+                    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+                    transition: all 0.3s ease !important;
+                    font-family: 'Prompt', sans-serif !important;
+                    min-width: 300px !important;
+                    height: 80px !important;
+                    text-transform: none !important;
+                }
+                
+                .stButton > button[key="predict"]:hover {
+                    background: linear-gradient(135deg, #388E3C, #689F38) !important;
+                    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5) !important;
+                    transform: translateY(-3px) !important;
                 }
                 
                 /* Responsive adjustments */
@@ -305,6 +378,25 @@ def run_desktop_app():
                     .button-container {
                         align-items: center;
                     }
+                    
+                    .stButton > button[data-testid="baseButton-primary"],
+                    .stButton > button[data-testid="baseButton-secondary"] {
+                        font-size: 28px !important;
+                        min-width: 300px !important;
+                    }
+                }
+                
+                /* Ensure all text elements use Prompt font */
+                * {
+                    font-family: 'Prompt', sans-serif !important;
+                }
+                
+                h1, h2, h3, h4, h5, h6 {
+                    font-family: 'Prompt', sans-serif !important;
+                }
+                
+                p, div, span, label {
+                    font-family: 'Prompt', sans-serif !important;
                 }
             </style>
         """, unsafe_allow_html=True)
@@ -522,67 +614,6 @@ def run_desktop_app():
         show_header()
         
         # Back button
-        if st.button("← กลับหน้าแรก", key="back_to_home_from_guide"):
-            st.session_state.page = 'home'
-            st.rerun()
-        
-        st.markdown("""
-            <div style="max-width: 1000px; margin: 40px auto; padding: 0 40px;">
-                <h1 style="text-align: center; color: #4A148C; font-size: 48px; margin-bottom: 40px; font-family: 'Helvetica Thai', sans-serif;">คู่มือการใช้งาน SixtyScan</h1>
-                
-                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
-                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Helvetica Thai', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
-                    <ul style="font-size: 20px; line-height: 1.6; font-family: 'Helvetica Thai', sans-serif;">
-                        <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
-                        <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
-                        <li>นั่งหรือยืนในท่าที่สบาย</li>
-                        <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
-                    </ul>
-                </div>
-                
-                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
-                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Helvetica Thai', sans-serif;">ขั้นตอนการตรวจ</h2>
-                    <div style="font-size: 20px; line-height: 1.6; font-family: 'Helvetica Thai', sans-serif;">
-                        <h3 style="color: #666; font-size: 24px;">1. การออกเสียงสระ</h3>
-                        <ul>
-                            <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
-                            <li>ออกเสียงให้ชัดเจนและคงที่</li>
-                            <li>ไม่ต้องออกเสียงดังเกินไป</li>
-                        </ul>
-                        
-                        <h3 style="color: #666; font-size: 24px;">2. การออกเสียงพยางค์</h3>
-                        <ul>
-                            <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
-                            <li>ใช้เวลาประมาณ 6 วินาที</li>
-                            <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
-                        </ul>
-                        
-                        <h3 style="color: #666; font-size: 24px;">3. การอ่านประโยค</h3>
-                        <ul>
-                            <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
-                            <li>ไม่ต้องรีบร้อน</li>
-                            <li>ออกเสียงให้ชัดเจน</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Helvetica Thai', sans-serif;">ข้อควรระวัง</h2>
-                    <ul style="font-size: 20px; line-height: 1.6; color: #d32f2f; font-family: 'Helvetica Thai', sans-serif;">
-                        <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
-                        <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
-                        <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
-                    </ul>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-
-    def show_analysis_page():
-        """Display the analysis page - desktop version with full features"""
-        load_styles()
-        initialize_analysis_session_state()
-        
-        # Back button
         if st.button("← กลับหน้าแรก", key="back_to_home"):
             st.session_state.page = 'home'
             st.rerun()
@@ -593,7 +624,7 @@ def run_desktop_app():
         # Header (same as home page)
         show_header()
         
-        st.markdown("<h1 style='text-align: center; font-size: 48px; color: #4A148C; margin: 40px 0; font-family: \"Helvetica Thai\", sans-serif;'>การวิเคราะห์เสียง</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center; font-size: 48px; color: #4A148C; margin: 40px 0; font-family: \"Prompt\", sans-serif;'>การวิเคราะห์เสียง</h1>", unsafe_allow_html=True)
 
         # Clear button logic
         if 'clear_button_clicked' in st.session_state and st.session_state.clear_button_clicked:
@@ -636,7 +667,7 @@ def run_desktop_app():
             if i < len(st.session_state.vowel_files) and st.session_state.vowel_files[i]:
                 spec_image = create_mel_spectrogram_display(st.session_state.vowel_files[i], f"สระ \"{sound}\"")
                 if spec_image:
-                    st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Helvetica Thai\", sans-serif;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
+                    st.markdown(f"<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
                     st.image(spec_image, use_container_width=True)
 
         uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
@@ -671,7 +702,7 @@ def run_desktop_app():
         if st.session_state.pataka_file:
             spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์")
             if spec_image:
-                st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Helvetica Thai\", sans-serif;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
+                st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
                 st.image(spec_image, use_container_width=True)
 
         uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
@@ -703,7 +734,7 @@ def run_desktop_app():
         if st.session_state.sentence_file:
             spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
             if spec_image:
-                st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Helvetica Thai\", sans-serif;'>Mel Spectrogram: <b>\"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</b></div>", unsafe_allow_html=True)
+                st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ\"</b></div>", unsafe_allow_html=True)
                 st.image(spec_image, use_container_width=True)
 
         uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
@@ -737,7 +768,7 @@ def run_desktop_app():
                 loading_placeholder.markdown("""
                     <div style="display: flex; align-items: center; margin-top: 8px;">
                         <div style="width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #009688; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                        <span style="margin-left: 10px; font-size: 16px; color: #009688; font-family: 'Helvetica Thai', sans-serif;">กำลังวิเคราะห์...</span>
+                        <span style="margin-left: 10px; font-size: 16px; color: #009688; font-family: 'Prompt', sans-serif;">กำลังวิเคราะห์...</span>
                     </div>
                     <style>
                         @keyframes spin {
@@ -759,7 +790,7 @@ def run_desktop_app():
                     diagnosis = "ไม่เป็นพาร์กินสัน"
                     box_color = "#e6f9e6"
                     advice = """
-                    <ul style='font-size:28px; font-family: "Helvetica Thai", sans-serif;'>
+                    <ul style='font-size:28px; font-family: "Prompt", sans-serif;'>
                         <li>ถ้าไม่มีอาการ: ควรตรวจปีละครั้ง(ไม่บังคับ)</li>
                         <li>ถ้ามีอาการเล็กน้อย: ตรวจปีละ 2 ครั้ง</li>
                         <li>ถ้ามีอาการเตือน: ตรวจ 2–4 ครั้งต่อปี</li>
@@ -771,7 +802,7 @@ def run_desktop_app():
                     diagnosis = "เป็นพาร์กินสัน"
                     box_color = "#fff7e6"
                     advice = """
-                    <ul style='font-size:28px; font-family: "Helvetica Thai", sans-serif;'>
+                    <ul style='font-size:28px; font-family: "Prompt", sans-serif;'>
                         <li>พบแพทย์เฉพาะทางระบบประสาท</li>
                         <li>บันทึกอาการประจำวัน</li>
                         <li>หากได้รับยา: บันทึกผลข้างเคียง</li>
@@ -783,7 +814,7 @@ def run_desktop_app():
                     diagnosis = "เป็นพาร์กินสัน"
                     box_color = "#ffe6e6"
                     advice = """
-                    <ul style='font-size:28px; font-family: "Helvetica Thai", sans-serif;'>
+                    <ul style='font-size:28px; font-family: "Prompt", sans-serif;'>
                         <li>พบแพทย์เฉพาะทางโดยเร็วที่สุด</li>
                         <li>บันทึกอาการทุกวัน</li>
                         <li>หากได้รับยา: ติดตามผลอย่างละเอียด</li>
@@ -791,7 +822,7 @@ def run_desktop_app():
                     """
 
                 st.markdown(f"""
-                    <div style='background-color:{box_color}; padding: 32px; border-radius: 14px; font-size: 30px; color: #000000; font-family: "Helvetica Thai", sans-serif;'>
+                    <div style='background-color:{box_color}; padding: 32px; border-radius: 14px; font-size: 30px; color: #000000; font-family: "Prompt", sans-serif;'>
                         <div style='text-align: center; font-size: 42px; font-weight: bold; margin-bottom: 20px;'>{label}:</div>
                         <p><b>ระดับความน่าจะเป็น:</b> {level}</p>
                         <p><b>ความน่าจะเป็นของพาร์กินสัน:</b> {percent}%</p>
@@ -815,7 +846,7 @@ def run_desktop_app():
                     with spec_cols[i % 3]:
                         spec_image = create_mel_spectrogram_display(file_path, f"สระ \"{sound}\"")
                         if spec_image:
-                            st.markdown(f"<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center; font-family: \"Helvetica Thai\", sans-serif;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
+                            st.markdown(f"<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
                             st.image(spec_image, use_container_width=True)
                 
                 # Display pataka spectrogram
@@ -823,7 +854,7 @@ def run_desktop_app():
                 with spec_cols[col_idx]:
                     spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์")
                     if spec_image:
-                        st.markdown("<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center; font-family: \"Helvetica Thai\", sans-serif;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
+                        st.markdown("<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
                         st.image(spec_image, use_container_width=True)
                 
                 # Display sentence spectrogram
@@ -831,17 +862,17 @@ def run_desktop_app():
                 with spec_cols[col_idx]:
                     spec_image = create_mel_spectrogram_display(st.session_state.sentence_file, "ประโยค")
                     if spec_image:
-                        st.markdown("<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center; font-family: \"Helvetica Thai\", sans-serif;'>Mel Spectrogram: <b>\"ประโยค\"</b></div>", unsafe_allow_html=True)
+                        st.markdown("<div style='color: black; font-size: 14px; margin-bottom: 8px; text-align: center; font-family: \"Prompt\", sans-serif;'>Mel Spectrogram: <b>\"ประโยค\"</b></div>", unsafe_allow_html=True)
                         st.image(spec_image, use_container_width=True)
                 
                 st.markdown("""
                 <div style='margin-top: 20px; padding: 20px; background-color: #f0f2f6; border-radius: 10px;'>
-                    <h4 style='color: #4A148C; margin-bottom: 10px; font-family: "Helvetica Thai", sans-serif;'>💡 เกี่ยวกับ Mel Spectrogram</h4>
-                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Helvetica Thai", sans-serif;'>• <b>สีเข้ม (น้ำเงิน/ม่วง):</b> ความถี่ที่มีพลังงานต่ำ</p>
-                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Helvetica Thai", sans-serif;'>• <b>สีอ่อน (เหลือง/แดง):</b> ความถี่ที่มีพลังงานสูง</p>
-                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Helvetica Thai", sans-serif;'>• <b>แกน X:</b> เวลา (วินาที)</p>
-                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Helvetica Thai", sans-serif;'>• <b>แกน Y:</b> ความถี่ Mel</p>
-                    <p style='font-size: 16px; font-family: "Helvetica Thai", sans-serif;'>• รูปแบบของ Spectrogram สามารถช่วยระบุความผิดปกติของการออกเสียงได้</p>
+                    <h4 style='color: #4A148C; margin-bottom: 10px; font-family: "Prompt", sans-serif;'>💡 เกี่ยวกับ Mel Spectrogram</h4>
+                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Prompt", sans-serif;'>• <b>สีเข้ม (น้ำเงิน/ม่วง):</b> ความถี่ที่มีพลังงานต่ำ</p>
+                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Prompt", sans-serif;'>• <b>สีอ่อน (เหลือง/แดง):</b> ความถี่ที่มีพลังงานสูง</p>
+                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Prompt", sans-serif;'>• <b>แกน X:</b> เวลา (วินาที)</p>
+                    <p style='font-size: 16px; margin-bottom: 8px; font-family: "Prompt", sans-serif;'>• <b>แกน Y:</b> ความถี่ Mel</p>
+                    <p style='font-size: 16px; font-family: "Prompt", sans-serif;'>• รูปแบบของ Spectrogram สามารถช่วยระบุความผิดปกติของการออกเสียงได้</p>
                 </div>
                 """, unsafe_allow_html=True)
             else:
@@ -856,3 +887,68 @@ def run_desktop_app():
         show_guide_page()
     elif st.session_state.page == 'analysis':
         show_analysis_page()
+
+# Run the app
+if __name__ == "__main__":
+    run_desktop_app()หน้าแรก", key="back_to_home_from_guide"):
+            st.session_state.page = 'home'
+            st.rerun()
+        
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 40px auto; padding: 0 40px;">
+                <h1 style="text-align: center; color: #4A148C; font-size: 48px; margin-bottom: 40px; font-family: 'Prompt', sans-serif;">คู่มือการใช้งาน SixtyScan</h1>
+                
+                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
+                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
+                    <ul style="font-size: 20px; line-height: 1.6; font-family: 'Prompt', sans-serif;">
+                        <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
+                        <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
+                        <li>นั่งหรือยืนในท่าที่สบาย</li>
+                        <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
+                    </ul>
+                </div>
+                
+                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px;">
+                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">ขั้นตอนการตรวจ</h2>
+                    <div style="font-size: 20px; line-height: 1.6; font-family: 'Prompt', sans-serif;">
+                        <h3 style="color: #666; font-size: 24px;">1. การออกเสียงสระ</h3>
+                        <ul>
+                            <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
+                            <li>ออกเสียงให้ชัดเจนและคงที่</li>
+                            <li>ไม่ต้องออกเสียงดังเกินไป</li>
+                        </ul>
+                        
+                        <h3 style="color: #666; font-size: 24px;">2. การออกเสียงพยางค์</h3>
+                        <ul>
+                            <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
+                            <li>ใช้เวลาประมาณ 6 วินาที</li>
+                            <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
+                        </ul>
+                        
+                        <h3 style="color: #666; font-size: 24px;">3. การอ่านประโยค</h3>
+                        <ul>
+                            <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
+                            <li>ไม่ต้องรีบร้อน</li>
+                            <li>ออกเสียงให้ชัดเจน</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                    <h2 style="color: #4A148C; font-size: 32px; margin-bottom: 20px; font-family: 'Prompt', sans-serif;">ข้อควรระวัง</h2>
+                    <ul style="font-size: 20px; line-height: 1.6; color: #d32f2f; font-family: 'Prompt', sans-serif;">
+                        <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
+                        <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
+                        <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
+                    </ul>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+    def show_analysis_page():
+        """Display the analysis page - desktop version with full features"""
+        load_styles()
+        initialize_analysis_session_state()
+        
+        # Back button
+        if st.button("← กลับ
