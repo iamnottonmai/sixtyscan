@@ -369,7 +369,7 @@ def show_home_page():
         </div>
     """, unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2, col3 = st.columns([2, 1, 2])
     with col2:
         if st.button("เริ่มการวิเคราะห์", key="start_analysis"):
             st.session_state.page = 'analysis'
