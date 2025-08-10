@@ -38,16 +38,21 @@ def run_mobile_app():
     )
 
     # =============================
-    # Logo Loading Function
+    # Logo Loading Function - Mobile Specific
     # =============================
     @st.cache_data
     def load_logo():
-        """Load logo with fallback options for reliability"""
+        """Load mobile-specific logo with fallback options for reliability"""
         logo_paths = [
-            "logo.png",           # Same directory
-            "./logo.png",         # Explicit relative path
-            "assets/logo.png",    # If in assets folder
-            "images/logo.png"     # If in images folder
+            "mobilelogo.png",           # Mobile-specific logo - same directory
+            "./mobilelogo.png",         # Explicit relative path
+            "assets/mobilelogo.png",    # If in assets folder
+            "images/mobilelogo.png",    # If in images folder
+            # Fallback to regular logo if mobile logo not found
+            "logo.png",                 # Regular logo as fallback
+            "./logo.png",
+            "assets/logo.png",
+            "images/logo.png"
         ]
         
         for path in logo_paths:
@@ -61,11 +66,11 @@ def run_mobile_app():
         return None
 
     def display_logo():
-        """Display logo if available"""
+        """Display mobile logo without title and description"""
         logo_b64 = load_logo()
         if logo_b64:
             st.markdown(f"""
-            <img src="data:image/png;base64,{logo_b64}" class="logo" alt="SixtyScan Logo">
+            <img src="data:image/png;base64,{logo_b64}" class="logo" alt="SixtyScan Mobile Logo">
             """, unsafe_allow_html=True)
 
     # =============================
@@ -95,29 +100,6 @@ def run_mobile_app():
                     margin-right: auto;
                     width: 140px;
                     margin-bottom: 20px;
-                }
-                
-                /* Mobile Main Title */
-                h1.title {
-                    text-align: center;
-                    font-family: 'Lexend Deca', sans-serif;
-                    font-size: 48px;
-                    color: #4A148C;
-                    font-weight: 700;
-                    margin-bottom: 10px;
-                    line-height: 1.1;
-                }
-                
-                /* Mobile Subtitle/Description */
-                .description {
-                    text-align: center;
-                    font-family: 'Noto Sans Thai', sans-serif;
-                    font-weight: 400;
-                    font-size: 18px;
-                    color: #333;
-                    margin-bottom: 30px;
-                    line-height: 1.3;
-                    padding: 0 10px;
                 }
                 
                 /* Mobile About Us Section */
@@ -386,18 +368,11 @@ def run_mobile_app():
     # Mobile Page Functions
     # =============================
     def show_mobile_home_page():
-        """Display the mobile-optimized home page"""
+        """Display the mobile-optimized home page - logo only"""
         load_mobile_styles()
+        
+        # Only display the logo - no title or description
         display_logo()
-
-        st.markdown("<h1 class='title'>SixtyScan</h1>", unsafe_allow_html=True)
-
-        st.markdown("""
-            <div class='description'>
-                ตรวจโรคพาร์กินสันจากเสียงด้วยปัญญาประดิษฐ์<br>
-                เทคโนโลยีที่ทันสมัยเพื่อการตรวจคัดกรองเบื้องต้น
-            </div>
-        """, unsafe_allow_html=True)
 
         # Full width button for mobile
         if st.button("เริ่มการวิเคราะห์", key="start_analysis"):
@@ -418,7 +393,7 @@ def run_mobile_app():
         """, unsafe_allow_html=True)
 
     def show_mobile_analysis_page():
-        """Display the mobile-optimized analysis page"""
+        """Display the mobile-optimized analysis page - logo only at top"""
         load_mobile_styles()
         initialize_analysis_session_state()
         
@@ -430,9 +405,8 @@ def run_mobile_app():
         # Load model
         model = load_model()
         
+        # Only display the logo - no title or description
         display_logo()
-        st.markdown("<h1 class='title'>SixtyScan</h1>", unsafe_allow_html=True)
-        st.markdown("<p class='description' style='font-size: 16px; margin-bottom: 30px;'>ตรวจโรคพาร์กินสันจากเสียง</p>", unsafe_allow_html=True)
 
         # Clear button logic
         if 'clear_button_clicked' in st.session_state and st.session_state.clear_button_clicked:
