@@ -95,6 +95,12 @@ def run_desktop_app():
                     min-height: 100vh;
                 }
                 
+                /* Remove default Streamlit padding */
+                .main .block-container {
+                    padding-top: 0 !important;
+                    padding-bottom: 1rem !important;
+                    max-width: none !important;
+                }
                 
                 /* Header Styles - Redesigned */
                 .header {
@@ -153,9 +159,9 @@ def run_desktop_app():
                     border: 1px solid rgba(255, 255, 255, 0.2);
                 }
                 
-                /* Main Content Area */
+                /* Main Content Area - REDUCED PADDING */
                 .main-content {
-                    padding: 80px 60px;
+                    padding: 40px 60px 60px 60px; /* Reduced top padding from 80px to 40px */
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
@@ -176,16 +182,17 @@ def run_desktop_app():
                     max-width: 600px;
                 }
                 
-                /* Main Title - Updated */
+                /* Main Title - FIXED for single line and better sizing */
                 .main-title {
                     font-family: 'Prompt', sans-serif;
-                    font-size: 72px;
+                    font-size: 64px; /* Reduced from 72px to prevent overflow */
                     font-weight: 700;
                     color: #2d2d2d;
                     line-height: 1.1;
-                    margin-bottom: 60px;
+                    margin-bottom: 50px; /* Reduced from 60px */
                     margin-top: 0;
                     letter-spacing: -1px;
+                    white-space: nowrap; /* Prevent line breaks */
                 }
                 
                 .title-highlight {
@@ -344,8 +351,8 @@ def run_desktop_app():
                     .main-content {
                         flex-direction: column;
                         text-align: center;
-                        padding: 60px 40px;
-                        gap: 60px;
+                        padding: 30px 40px 50px 40px; /* Reduced padding */
+                        gap: 50px; /* Reduced gap */
                     }
                     
                     .content-left {
@@ -357,7 +364,8 @@ def run_desktop_app():
                     }
                     
                     .main-title {
-                        font-size: 56px;
+                        font-size: 48px; /* Smaller for mobile */
+                        white-space: normal; /* Allow wrapping on mobile */
                     }
                     
                     .button-container {
@@ -375,7 +383,8 @@ def run_desktop_app():
                 
                 @media (max-width: 768px) {
                     .main-title {
-                        font-size: 48px;
+                        font-size: 40px; /* Even smaller for small screens */
+                        white-space: normal; /* Allow wrapping */
                     }
                     
                     .header {
@@ -396,6 +405,10 @@ def run_desktop_app():
                     .stButton > button {
                         min-width: 280px !important;
                         font-size: 24px !important;
+                    }
+                    
+                    .main-content {
+                        padding: 20px 20px 40px 20px; /* Further reduced padding */
                     }
                 }
                 
@@ -622,17 +635,16 @@ def run_desktop_app():
         woman_image_b64 = load_woman_image()
         
         # Create the main container
-        st.markdown('<div style="padding: 80px 60px; min-height: 70vh;">', unsafe_allow_html=True)
+        st.markdown('<div class="main-content">', unsafe_allow_html=True)
         
         # Use Streamlit columns for proper layout
         left_col, right_col = st.columns([1, 1], gap="large")
         
         with left_col:
-            # Title
+            # Title - FIXED to be on one line
             st.markdown("""
-                <h1 class="main-title" style="font-family: 'Prompt', sans-serif; font-size: 72px; font-weight: 700; color: #2d2d2d; line-height: 1.1; margin-bottom: 60px; margin-top: 0; letter-spacing: -1px;">
-                    ตรวจเช็คโรคพาร์กินสัน<br>
-                    ทันทีด้วย <span style="color: #6A1B9A; font-weight: 800;">SixtyScan</span>
+                <h1 class="main-title">
+                    ตรวจเช็คโรคพาร์กินสันทันทีด้วย <span class="title-highlight">SixtyScan</span>
                 </h1>
             """, unsafe_allow_html=True)
             
@@ -656,25 +668,17 @@ def run_desktop_app():
                     <div style="text-align: center; padding-top: 40px;">
                         <img src="data:image/jpg;base64,{woman_image_b64}" 
                              alt="Woman using phone"
-                             style="width: 100%; max-width: 520px; height: auto; 
-                                    border-radius: 24px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-                                    transition: transform 0.3s ease;"
-                             onmouseover="this.style.transform='translateY(-5px)'"
-                             onmouseout="this.style.transform='translateY(0)'">
+                             class="woman-image">
                     </div>
                 """, unsafe_allow_html=True)
             else:
                 # Enhanced placeholder
                 st.markdown("""
                     <div style="text-align: center; padding-top: 40px;">
-                        <div style="width: 100%; max-width: 520px; height: 400px; margin: 0 auto;
-                                    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 50%, #e8f5e8 100%);
-                                    border-radius: 24px; display: flex; align-items: center; justify-content: center;
-                                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-                                    border: 2px dashed rgba(106, 27, 154, 0.3);">
-                            <div style="text-align: center; color: #666;">
-                                <div style="font-size: 64px; margin-bottom: 16px; opacity: 0.7;">📱</div>
-                                <div style="font-size: 20px; font-weight: 500; font-family: 'Prompt', sans-serif;">
+                        <div class="image-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">📱</div>
+                                <div class="placeholder-text">
                                     insert.jpg<br>not found
                                 </div>
                             </div>
