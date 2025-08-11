@@ -18,6 +18,7 @@ st.set_page_config(
     page_title="SixtyScan - Parkinson Detection",
     page_icon="🎤",
     initial_sidebar_state="collapsed"
+)
 # Import your model class
 try:
     from model import ResNet18Classifier
