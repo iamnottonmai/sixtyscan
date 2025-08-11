@@ -95,11 +95,6 @@ def run_desktop_app():
                     min-height: 100vh;
                 }
                 
-                /* Hide Streamlit elements */
-                .stDeployButton {display:none;}
-                footer {visibility: hidden;}
-                .stApp > header {visibility: hidden;}
-                #MainMenu {visibility: hidden;}
                 
                 /* Header Styles - Redesigned */
                 .header {
