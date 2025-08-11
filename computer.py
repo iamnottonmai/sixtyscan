@@ -78,7 +78,7 @@ def run_desktop_app():
         return None
 
     # =============================
-    # Global Styles - Fixed CSS
+    # Global Styles - Updated to match image
     # =============================
     def load_styles():
         css_content = """
@@ -102,7 +102,7 @@ def run_desktop_app():
                     max-width: none !important;
                 }
                 
-                /* Header Styles - Redesigned */
+                /* Header Styles - Updated to match image */
                 .header {
                     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%);
                     padding: 20px 60px;
@@ -113,11 +113,13 @@ def run_desktop_app():
                     width: 100%;
                     box-sizing: border-box;
                     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                    position: relative;
                 }
                 
                 .header-left {
                     display: flex;
                     align-items: center;
+                    flex: 1;
                 }
                 
                 .header-logo {
@@ -147,27 +149,29 @@ def run_desktop_app():
                     letter-spacing: -0.5px;
                 }
                 
+                /* Updated datetime styling to match image */
                 .header-datetime {
-                    background: rgba(255, 255, 255, 0.15);
-                    color: white;
+                    background: rgba(255, 255, 255, 0.9);
+                    color: #666;
                     padding: 12px 24px;
                     border-radius: 25px;
                     font-family: 'Prompt', sans-serif;
                     font-size: 16px;
                     font-weight: 400;
                     backdrop-filter: blur(10px);
-                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    border: none;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
                 }
                 
-                /* Main Content Area - REDUCED PADDING */
+                /* Main Content Area */
                 .main-content {
-                    padding: 40px 60px 60px 60px; /* Reduced top padding from 80px to 40px */
+                    padding: 60px 60px 60px 60px;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                     max-width: 1400px;
                     margin: 0 auto;
-                    min-height: 70vh;
+                    min-height: 75vh;
                     gap: 80px;
                 }
                 
@@ -182,22 +186,21 @@ def run_desktop_app():
                     max-width: 600px;
                 }
                 
-                /* Main Title - FIXED for single line and better sizing */
+                /* Main Title - Updated to match image */
                 .main-title {
                     font-family: 'Prompt', sans-serif;
-                    font-size: 64px; /* Reduced from 72px to prevent overflow */
-                    font-weight: 700;
+                    font-size: 64px;
+                    font-weight: 400;
                     color: #2d2d2d;
-                    line-height: 1.1;
-                    margin-bottom: 50px; /* Reduced from 60px */
+                    line-height: 1.2;
+                    margin-bottom: 50px;
                     margin-top: 0;
                     letter-spacing: -1px;
-                    white-space: nowrap; /* Prevent line breaks */
                 }
                 
                 .title-highlight {
                     color: #6A1B9A;
-                    font-weight: 800;
+                    font-weight: 700;
                 }
                 
                 /* Button Container */
@@ -208,7 +211,7 @@ def run_desktop_app():
                     align-items: flex-start;
                 }
                 
-                /* Enhanced Button Styles - FIXED with Higher Specificity */
+                /* Enhanced Button Styles - Updated to match image */
                 div.stButton > button, 
                 [data-testid="stButton"] > button,
                 .stButton button[kind="primary"],
@@ -219,7 +222,7 @@ def run_desktop_app():
                     font-size: 32px !important;
                     padding: 20px 60px !important;
                     border-radius: 60px !important;
-                    font-weight: 800 !important;
+                    font-weight: 600 !important;
                     font-family: 'Prompt', sans-serif !important;
                     min-width: 320px !important;
                     height: 75px !important;
@@ -237,7 +240,7 @@ def run_desktop_app():
                     line-height: 1.2 !important;
                 }
                 
-                /* Primary Button - First column */
+                /* Primary Button - Updated colors to match image */
                 div[data-testid="column"]:first-child div.stButton > button,
                 .stButton:first-child > button {
                     background: linear-gradient(135deg, #1976D2 0%, #42A5F5 50%, #64B5F6 100%) !important;
@@ -253,7 +256,7 @@ def run_desktop_app():
                     background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #42A5F5 100%) !important;
                 }
                 
-                /* Secondary Button - Second column */
+                /* Secondary Button - Updated colors to match image */
                 div[data-testid="column"]:nth-child(2) div.stButton > button,
                 .stButton:nth-child(2) > button {
                     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%) !important;
@@ -273,7 +276,7 @@ def run_desktop_app():
                     transform: translateY(-1px) !important;
                 }
                 
-                /* Woman Image - Enhanced */
+                /* Woman Image - Enhanced to match image */
                 .woman-image {
                     width: 100%;
                     max-width: 520px;
@@ -351,8 +354,8 @@ def run_desktop_app():
                     .main-content {
                         flex-direction: column;
                         text-align: center;
-                        padding: 30px 40px 50px 40px; /* Reduced padding */
-                        gap: 50px; /* Reduced gap */
+                        padding: 40px 40px 60px 40px;
+                        gap: 50px;
                     }
                     
                     .content-left {
@@ -364,8 +367,8 @@ def run_desktop_app():
                     }
                     
                     .main-title {
-                        font-size: 48px; /* Smaller for mobile */
-                        white-space: normal; /* Allow wrapping on mobile */
+                        font-size: 48px;
+                        white-space: normal;
                     }
                     
                     .button-container {
@@ -383,8 +386,8 @@ def run_desktop_app():
                 
                 @media (max-width: 768px) {
                     .main-title {
-                        font-size: 40px; /* Even smaller for small screens */
-                        white-space: normal; /* Allow wrapping */
+                        font-size: 40px;
+                        white-space: normal;
                     }
                     
                     .header {
@@ -408,7 +411,7 @@ def run_desktop_app():
                     }
                     
                     .main-content {
-                        padding: 20px 20px 40px 20px; /* Further reduced padding */
+                        padding: 30px 20px 50px 20px;
                     }
                 }
                 
@@ -606,7 +609,7 @@ def run_desktop_app():
         """Display the enhanced header matching the image design"""
         logo_b64 = load_logo()
         current_time = datetime.now()
-        thai_datetime = current_time.strftime("%d/%m/%Y %H:%M")
+        thai_datetime = current_time.strftime("insert date and time here")
         
         logo_html = ""
         if logo_b64:
@@ -628,7 +631,7 @@ def run_desktop_app():
         st.markdown(header_html, unsafe_allow_html=True)
 
     def show_home_page():
-        """Display the enhanced home page with fixed layout and button font size"""
+        """Display the enhanced home page with updated layout to match image"""
         load_styles()
         show_header()
         
@@ -641,10 +644,10 @@ def run_desktop_app():
         left_col, right_col = st.columns([1, 1], gap="large")
         
         with left_col:
-            # Title - FIXED to be on one line
+            # Title - Updated to match image exactly
             st.markdown("""
                 <h1 class="main-title">
-                    ตรวจเช็คโรคพาร์กินสันทันทีด้วย <span class="title-highlight">SixtyScan</span>
+                    ตรวจเช็คโรคพาร์กินสัน<br>ทันทีด้วย <span class="title-highlight">SixtyScan</span>
                 </h1>
             """, unsafe_allow_html=True)
             
@@ -665,7 +668,7 @@ def run_desktop_app():
             # Image with proper styling
             if woman_image_b64:
                 st.markdown(f"""
-                    <div style="text-align: center; padding-top: 40px;">
+                    <div style="text-align: center; padding-top: 20px;">
                         <img src="data:image/jpg;base64,{woman_image_b64}" 
                              alt="Woman using phone"
                              class="woman-image">
@@ -674,7 +677,7 @@ def run_desktop_app():
             else:
                 # Enhanced placeholder
                 st.markdown("""
-                    <div style="text-align: center; padding-top: 40px;">
+                    <div style="text-align: center; padding-top: 20px;">
                         <div class="image-placeholder">
                             <div class="placeholder-content">
                                 <div class="placeholder-icon">📱</div>
