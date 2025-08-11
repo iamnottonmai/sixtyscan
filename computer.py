@@ -41,6 +41,45 @@ except ImportError:
     st.error("Could not import ResNet18Classifier from model.py. Make sure the file exists.")
     st.stop()
 
+# =============================
+# Utility Functions
+# =============================
+def initialize_session_state():
+    """Initialize all session state variables"""
+    defaults = {
+        'page': 'home',
+        'vowel_files': [],
+        'pataka_file': None,
+        'sentence_file': None,
+        'clear_clicked': False,
+        'temp_files': []  # Track all temp files for cleanup
+    }
+    
+    for key, default_value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = default_value
+
+def cleanup_temp_files(file_list):
+    """Clean up specific temporary files"""
+    for file_path in file_list:
+        try:
+            if file_path and os.path.exists(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            st.warning(f"Failed to delete temp file {file_path}: {str(e)}")
+
+def cleanup_all_temp_files():
+    """Clean up all temporary files stored in session state"""
+    if 'temp_files' in st.session_state:
+        cleanup_temp_files(st.session_state.temp_files)
+        st.session_state.temp_files = []
+
+def add_temp_file(file_path):
+    """Add a file to the temp files tracking list"""
+    if 'temp_files' not in st.session_state:
+        st.session_state.temp_files = []
+    st.session_state.temp_files.append(file_path)
+
 def run_desktop_app():
     """Main function to run the desktop version"""
     # Initialize Session State
@@ -48,25 +87,9 @@ def run_desktop_app():
     
     # Register cleanup function
     atexit.register(cleanup_all_temp_files)
-
     # =============================
-    # Utility Functions
+    # Page-specific Functions  
     # =============================
-    def initialize_session_state():
-        """Initialize all session state variables"""
-        defaults = {
-            'page': 'home',
-            'vowel_files': [],
-            'pataka_file': None,
-            'sentence_file': None,
-            'clear_clicked': False,
-            'temp_files': []  # Track all temp files for cleanup
-        }
-        
-        for key, default_value in defaults.items():
-            if key not in st.session_state:
-                st.session_state[key] = default_value
-
     def load_css():
         """Load external CSS file"""
         css_file = Path(CONFIG['CSS_FILE'])
@@ -107,26 +130,16 @@ def run_desktop_app():
             st.error(f"Error getting Thai time: {str(e)}")
             return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    def cleanup_temp_files(file_list):
-        """Clean up specific temporary files"""
-        for file_path in file_list:
-            try:
-                if file_path and os.path.exists(file_path):
-                    os.unlink(file_path)
-            except Exception as e:
-                st.warning(f"Failed to delete temp file {file_path}: {str(e)}")
-
-    def cleanup_all_temp_files():
-        """Clean up all temporary files stored in session state"""
-        if 'temp_files' in st.session_state:
-            cleanup_temp_files(st.session_state.temp_files)
-            st.session_state.temp_files = []
-
-    def add_temp_file(file_path):
-        """Add a file to the temp files tracking list"""
-        if 'temp_files' not in st.session_state:
-            st.session_state.temp_files = []
-        st.session_state.temp_files.append(file_path)
+    def save_uploaded_file(uploaded_file):
+        """Save uploaded file to temporary location"""
+        try:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded_file.name)[1]) as tmp:
+                tmp.write(uploaded_file.read())
+                add_temp_file(tmp.name)
+                return tmp.name
+        except Exception as e:
+            st.error(f"Error saving uploaded file: {str(e)}")
+            return None
 
     # =============================
     # Model and Analysis Functions
@@ -433,17 +446,6 @@ def run_desktop_app():
             </div>
         """
         st.markdown(guide_content, unsafe_allow_html=True)
-
-    def save_uploaded_file(uploaded_file):
-        """Save uploaded file to temporary location"""
-        try:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded_file.name)[1]) as tmp:
-                tmp.write(uploaded_file.read())
-                add_temp_file(tmp.name)
-                return tmp.name
-        except Exception as e:
-            st.error(f"Error saving uploaded file: {str(e)}")
-            return None
 
     def show_analysis_page():
         """Display the analysis page"""
