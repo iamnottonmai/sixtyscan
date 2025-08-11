@@ -14,14 +14,6 @@ import tempfile
 import gdown
 from datetime import datetime
 
-# Set page config at the very beginning to fix the title issue
-st.set_page_config(
-    page_title="SixtyScan - Parkinson Detection",
-    page_icon="🎤",
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
-
 # Import your model class
 try:
     from model import ResNet18Classifier
@@ -81,7 +73,7 @@ def run_desktop_app():
         return None
 
     # =============================
-    # Global Styles - Fixed CSS with title override
+    # Global Styles - Fixed CSS
     # =============================
     def load_styles():
         css_content = """
@@ -98,26 +90,11 @@ def run_desktop_app():
                     min-height: 100vh;
                 }
                 
-                /* Hide Streamlit elements and fix title */
+                /* Hide Streamlit elements */
                 .stDeployButton {display:none;}
                 footer {visibility: hidden;}
                 .stApp > header {visibility: hidden;}
                 #MainMenu {visibility: hidden;}
-                
-                /* Hide the problematic title element */
-                [data-testid="stAppViewContainer"] > .main > div > div > div > h1:first-child {
-                    display: none !important;
-                }
-                
-                /* Also try to hide any element containing keyboard_double_arrow_right */
-                *:contains("keyboard_double_arrow_right") {
-                    display: none !important;
-                }
-                
-                /* Alternative approach - hide first h1 in main content */
-                .main .block-container > div:first-child h1:first-child {
-                    display: none !important;
-                }
                 
                 /* Header Styles - Redesigned */
                 .header {
@@ -458,19 +435,6 @@ def run_desktop_app():
                     font-family: 'Prompt', sans-serif;
                 }
             </style>
-            
-            <script>
-                // JavaScript to remove any remaining title issues
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Remove any elements containing the problematic text
-                    const elements = document.querySelectorAll('*');
-                    elements.forEach(el => {
-                        if (el.textContent && el.textContent.includes('keyboard_double_arrow_right')) {
-                            el.style.display = 'none';
-                        }
-                    });
-                });
-            </script>
         """
         st.markdown(css_content, unsafe_allow_html=True)
 
