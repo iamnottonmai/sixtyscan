@@ -14,6 +14,18 @@ import tempfile
 import gdown
 from datetime import datetime
 import pytz
+import atexit
+from pathlib import Path
+
+# Configuration
+CONFIG = {
+    'MODEL_PATH': "best_resnet18.pth",
+    'MODEL_URL': "https://drive.google.com/uc?id=1_oHE9B-2PgSqpTQCC9HrG7yO0rsnZtqs",
+    'CSS_FILE': "deskstyle.css",
+    'LOGO_PATHS': ["logo.png", "./logo.png", "assets/logo.png", "images/logo.png"],
+    'IMAGE_PATHS': ["insert.jpg", "./insert.jpg", "assets/insert.jpg", "images/insert.jpg"],
+    'THAI_TIMEZONE': 'Asia/Bangkok'
+}
 
 st.set_page_config(
     page_title="SixtyScan - Parkinson Detection",
@@ -31,528 +43,175 @@ except ImportError:
 
 def run_desktop_app():
     """Main function to run the desktop version"""
-    # =============================
     # Initialize Session State
-    # =============================
-    if 'page' not in st.session_state:
-        st.session_state.page = 'home'
+    initialize_session_state()
+    
+    # Register cleanup function
+    atexit.register(cleanup_all_temp_files)
 
     # =============================
-    # Logo and Image Loading Functions
+    # Utility Functions
     # =============================
-    @st.cache_data
-    def load_logo():
-        """Load logo with fallback options for reliability"""
-        logo_paths = [
-            "logo.png",           # Same directory
-            "./logo.png",         # Explicit relative path
-            "assets/logo.png",    # If in assets folder
-            "images/logo.png"     # If in images folder
-        ]
+    def initialize_session_state():
+        """Initialize all session state variables"""
+        defaults = {
+            'page': 'home',
+            'vowel_files': [],
+            'pataka_file': None,
+            'sentence_file': None,
+            'clear_clicked': False,
+            'temp_files': []  # Track all temp files for cleanup
+        }
         
-        for path in logo_paths:
-            try:
-                if os.path.exists(path):
-                    with open(path, "rb") as f:
-                        return base64.b64encode(f.read()).decode()
-            except Exception as e:
-                continue
-        
-        return None
+        for key, default_value in defaults.items():
+            if key not in st.session_state:
+                st.session_state[key] = default_value
+
+    def load_css():
+        """Load external CSS file"""
+        css_file = Path(CONFIG['CSS_FILE'])
+        if css_file.exists():
+            with open(css_file, 'r', encoding='utf-8') as f:
+                st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+        else:
+            st.warning(f"CSS file '{CONFIG['CSS_FILE']}' not found. Using minimal styling.")
+            # Fallback minimal CSS
+            st.markdown("""
+                <style>
+                @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
+                * { font-family: 'Prompt', sans-serif !important; }
+                .stApp { background: linear-gradient(135deg, #f8f4ff 0%, #e8f4fd 100%) !important; }
+                </style>
+            """, unsafe_allow_html=True)
 
     @st.cache_data
-    def load_woman_image():
-        """Load the woman image"""
-        image_paths = [
-            "insert.jpg",           # Same directory
-            "./insert.jpg",         # Explicit relative path
-            "assets/insert.jpg",    # If in assets folder
-            "images/insert.jpg"     # If in images folder
-        ]
-        
+    def load_image_file(image_paths, alt_text="Image"):
+        """Generic function to load image files with fallback options"""
         for path in image_paths:
             try:
                 if os.path.exists(path):
                     with open(path, "rb") as f:
                         return base64.b64encode(f.read()).decode()
             except Exception as e:
+                st.warning(f"Failed to load {path}: {str(e)}")
                 continue
-        
         return None
 
-    # =============================
-    # Get Thai Time Function
-    # =============================
     def get_thai_time():
         """Get current Thai time formatted for display"""
-        thai_tz = pytz.timezone('Asia/Bangkok')
-        now = datetime.now(thai_tz)
-        return now.strftime("%d/%m/%Y %H:%M:%S")
+        try:
+            thai_tz = pytz.timezone(CONFIG['THAI_TIMEZONE'])
+            now = datetime.now(thai_tz)
+            return now.strftime("%d/%m/%Y %H:%M:%S")
+        except Exception as e:
+            st.error(f"Error getting Thai time: {str(e)}")
+            return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    # =============================
-    # Global Styles - Enhanced to match original design
-    # =============================
-    def load_styles():
-        css_content = """
-            <style>
-                /* Import Thai font */
-                @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
-                
-                /* Global Reset */
-                .stApp {
-                    background: linear-gradient(135deg, #f8f4ff 0%, #e8f4fd 100%) !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                    font-family: 'Prompt', sans-serif !important;
-                    min-height: 100vh;
-                }
-                
-                /* Remove default Streamlit padding */
-                .main .block-container {
-                    padding-top: 0 !important;
-                    padding-bottom: 1rem !important;
-                    max-width: none !important;
-                }
-                
-                /* Hide Streamlit elements */
-                #MainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
-                
-                .stApp > div:first-child {
-                    padding-top: 0;
-                }
-                
-                /* Header Styles - Matching the original image design */
-                .header-container {
-                    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%);
-                    padding: 20px 60px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    color: white;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-                }
-                
-                .logo-section {
-                    display: flex;
-                    align-items: center;
-                    gap: 15px;
-                }
-                
-                .logo-text {
-                    font-family: 'Prompt', sans-serif;
-                    font-size: 32px;
-                    font-weight: 700;
-                    color: white;
-                }
-                
-                .header-divider {
-                    width: 2px;
-                    height: 40px;
-                    background-color: rgba(255, 255, 255, 0.3);
-                    margin: 0 20px;
-                }
-                
-                .tagline {
-                    font-family: 'Prompt', sans-serif;
-                    font-size: 18px;
-                    font-weight: 400;
-                    color: white;
-                }
-                
-                .datetime-display {
-                    font-family: 'Prompt', sans-serif;
-                    font-size: 16px;
-                    font-weight: 400;
-                    background: rgba(255, 255, 255, 0.9);
-                    color: #666;
-                    padding: 12px 24px;
-                    border-radius: 25px;
-                    backdrop-filter: blur(10px);
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                }
-                
-                /* Main Content Area */
-                .main-content {
-                    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-                    min-height: calc(100vh - 100px);
-                    padding: 60px 40px;
-                }
-                
-                .content-wrapper {
-                    display: flex;
-                    align-items: center;
-                    gap: 80px;
-                    max-width: 1400px;
-                    margin: 0 auto;
-                    min-height: 75vh;
-                }
-                
-                .text-section {
-                    flex: 1;
-                    max-width: 600px;
-                }
-                
-                .image-section {
-                    flex: 1;
-                    display: flex;
-                    justify-content: center;
-                    max-width: 600px;
-                }
-                
-                /* Main Title - Matching original design */
-                .main-title {
-                    font-family: 'Prompt', sans-serif;
-                    font-size: 64px;
-                    font-weight: 400;
-                    color: #2d2d2d;
-                    line-height: 1.2;
-                    margin-bottom: 50px;
-                    margin-top: 0;
-                    letter-spacing: -1px;
-                }
-                
-                .highlight {
-                    color: #8b5cf6;
-                    font-weight: 700;
-                }
-                
-                /* Button Container */
-                .button-container {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 24px;
-                    width: 320px;
-                }
-                
-                /* Enhanced Button Styles - Matching original colors */
-                div.stButton > button, 
-                [data-testid="stButton"] > button {
-                    font-size: 32px !important;
-                    padding: 20px 60px !important;
-                    border-radius: 60px !important;
-                    font-weight: 600 !important;
-                    font-family: 'Prompt', sans-serif !important;
-                    min-width: 320px !important;
-                    height: 75px !important;
-                    margin: 0 !important;
-                    border: none !important;
-                    cursor: pointer !important;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-                    text-align: center !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    letter-spacing: 0.5px !important;
-                    position: relative !important;
-                    overflow: hidden !important;
-                    line-height: 1.2 !important;
-                }
-                
-                /* Primary Button - Blue gradient for "เริ่มใช้งาน" */
-                div[data-testid="column"]:first-child div.stButton > button,
-                .stButton[data-testid="primary"] > button {
-                    background: linear-gradient(135deg, #1976D2 0%, #42A5F5 50%, #64B5F6 100%) !important;
-                    color: white !important;
-                    box-shadow: 0 6px 25px rgba(25, 118, 210, 0.4) !important;
-                }
-                
-                div[data-testid="column"]:first-child div.stButton > button:hover {
-                    transform: translateY(-4px) !important;
-                    box-shadow: 0 12px 35px rgba(25, 118, 210, 0.5) !important;
-                    background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #42A5F5 100%) !important;
-                }
-                
-                /* Secondary Button - Purple gradient for "คู่มือ" */
-                div[data-testid="column"]:nth-child(2) div.stButton > button,
-                .stButton[data-testid="secondary"] > button {
-                    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%) !important;
-                    color: white !important;
-                    box-shadow: 0 6px 25px rgba(74, 20, 140, 0.4) !important;
-                }
-                
-                div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
-                    transform: translateY(-4px) !important;
-                    box-shadow: 0 12px 35px rgba(74, 20, 140, 0.5) !important;
-                    background: linear-gradient(135deg, #38006b 0%, #4A148C 50%, #6A1B9A 100%) !important;
-                }
-                
-                /* Woman Image */
-                .main-image {
-                    width: 100%;
-                    max-width: 520px;
-                    height: auto;
-                    border-radius: 24px;
-                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-                    transition: transform 0.3s ease;
-                }
-                
-                .main-image:hover {
-                    transform: translateY(-5px);
-                }
-                
-                /* Enhanced placeholder styling */
-                .image-placeholder {
-                    width: 100%;
-                    max-width: 520px;
-                    height: 400px;
-                    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 50%, #e8f5e8 100%);
-                    border-radius: 24px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-                    transition: transform 0.3s ease;
-                    border: 2px dashed rgba(106, 27, 154, 0.3);
-                }
-                
-                .image-placeholder:hover {
-                    transform: translateY(-5px);
-                }
-                
-                .placeholder-content {
-                    text-align: center;
-                    color: #666;
-                }
-                
-                .placeholder-icon {
-                    font-size: 64px;
-                    margin-bottom: 16px;
-                    opacity: 0.7;
-                }
-                
-                .placeholder-text {
-                    font-size: 20px;
-                    font-weight: 500;
-                    font-family: 'Prompt', sans-serif;
-                }
-                
-                /* Analysis page styles */
-                .card {
-                    background-color: #ffffff;
-                    border-radius: 20px;
-                    padding: 40px;
-                    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-                    margin-bottom: 32px;
-                    border: 1px solid rgba(255, 255, 255, 0.2);
-                    backdrop-filter: blur(10px);
-                }
-                
-                .card h2 {
-                    font-size: 48px;
-                    margin-bottom: 20px;
-                    color: #222;
-                    font-weight: 600;
-                    font-family: 'Prompt', sans-serif;
-                }
-                
-                .instructions {
-                    font-size: 26px !important;
-                    color: #444;
-                    margin-bottom: 24px;
-                    font-weight: 400;
-                    font-family: 'Prompt', sans-serif;
-                    line-height: 1.5;
-                }
-                
-                .pronounce {
-                    font-size: 24px !important;
-                    color: #000;
-                    font-weight: 500;
-                    margin-top: 0;
-                    margin-bottom: 20px;
-                    font-family: 'Prompt', sans-serif;
-                }
-                
-                .sentence-instruction {
-                    font-size: 26px !important;
-                    font-weight: 400 !important;
-                    color: #444 !important;
-                    margin-bottom: 24px !important;
-                    font-family: 'Prompt', sans-serif !important;
-                    display: block !important;
-                    line-height: 1.5 !important;
-                }
-                
-                /* Back button styling */
-                .stButton[data-testid="stButton"]:has(button:contains("←")) > button {
-                    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%) !important;
-                    color: white !important;
-                    font-size: 18px !important;
-                    padding: 12px 24px !important;
-                    min-width: auto !important;
-                    height: 45px !important;
-                    border-radius: 25px !important;
-                    margin-bottom: 20px !important;
-                }
-                
-                /* Responsive adjustments */
-                @media (max-width: 1200px) {
-                    .content-wrapper {
-                        flex-direction: column;
-                        text-align: center;
-                        padding: 40px 40px 60px 40px;
-                        gap: 50px;
-                    }
-                    
-                    .text-section, .image-section {
-                        max-width: none;
-                    }
-                    
-                    .main-title {
-                        font-size: 48px;
-                        white-space: normal;
-                    }
-                    
-                    .button-container {
-                        align-items: center;
-                        width: 100%;
-                    }
-                    
-                    .header-container {
-                        padding: 16px 40px;
-                        flex-direction: column;
-                        gap: 16px;
-                        text-align: center;
-                    }
-                    
-                    .logo-section {
-                        flex-direction: column;
-                        gap: 16px;
-                    }
-                    
-                    .header-divider {
-                        display: none;
-                    }
-                }
-                
-                @media (max-width: 768px) {
-                    .main-title {
-                        font-size: 40px;
-                    }
-                    
-                    .stButton > button {
-                        min-width: 280px !important;
-                        font-size: 24px !important;
-                    }
-                    
-                    .main-content {
-                        padding: 30px 20px 50px 20px;
-                    }
-                }
-                
-                /* Ensure all text elements use Prompt font */
-                * {
-                    font-family: 'Prompt', sans-serif !important;
-                }
-                
-                h1, h2, h3, h4, h5, h6, p, div, span, label {
-                    font-family: 'Prompt', sans-serif !important;
-                }
-            </style>
-        """
-        st.markdown(css_content, unsafe_allow_html=True)
-
-    # =============================
-    # Analysis Functions
-    # =============================
-    def cleanup_temp_files():
-        """Clean up all temporary files stored in session state"""
-        files_to_clean = []
-        
-        if 'vowel_files' in st.session_state:
-            files_to_clean.extend(st.session_state.vowel_files)
-        if 'pataka_file' in st.session_state:
-            files_to_clean.append(st.session_state.pataka_file)
-        if 'sentence_file' in st.session_state:
-            files_to_clean.append(st.session_state.sentence_file)
-        
-        for file_path in files_to_clean:
+    def cleanup_temp_files(file_list):
+        """Clean up specific temporary files"""
+        for file_path in file_list:
             try:
                 if file_path and os.path.exists(file_path):
                     os.unlink(file_path)
             except Exception as e:
-                pass
+                st.warning(f"Failed to delete temp file {file_path}: {str(e)}")
 
-    def initialize_analysis_session_state():
-        """Initialize session state variables for analysis"""
-        if 'vowel_files' not in st.session_state:
-            st.session_state.vowel_files = []
-        if 'pataka_file' not in st.session_state:
-            st.session_state.pataka_file = None
-        if 'sentence_file' not in st.session_state:
-            st.session_state.sentence_file = None
-        if 'clear_clicked' not in st.session_state:
-            st.session_state.clear_clicked = False
+    def cleanup_all_temp_files():
+        """Clean up all temporary files stored in session state"""
+        if 'temp_files' in st.session_state:
+            cleanup_temp_files(st.session_state.temp_files)
+            st.session_state.temp_files = []
 
+    def add_temp_file(file_path):
+        """Add a file to the temp files tracking list"""
+        if 'temp_files' not in st.session_state:
+            st.session_state.temp_files = []
+        st.session_state.temp_files.append(file_path)
+
+    # =============================
+    # Model and Analysis Functions
+    # =============================
     @st.cache_resource
     def load_model():
-        """Load the ResNet18 model"""
-        MODEL_PATH = "best_resnet18.pth"
-        if not os.path.exists(MODEL_PATH):
-            with st.spinner("Downloading model..."):
-                gdown.download(
-                    "https://drive.google.com/uc?id=1_oHE9B-2PgSqpTQCC9HrG7yO0rsnZtqs",
-                    MODEL_PATH,
-                    quiet=False
-                )
-        
-        model = ResNet18Classifier()
-        model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device("cpu")))
-        model.eval()
-        return model
-
-    def audio_to_mel_tensor(file_path):
-        """Convert audio file to mel spectrogram tensor"""
+        """Load the ResNet18 model with error handling"""
         try:
-            from pydub import AudioSegment
-        except ImportError:
-            st.error("pydub library is required. Please install it with: pip install pydub")
+            if not os.path.exists(CONFIG['MODEL_PATH']):
+                with st.spinner("Downloading model..."):
+                    gdown.download(
+                        CONFIG['MODEL_URL'],
+                        CONFIG['MODEL_PATH'],
+                        quiet=False
+                    )
+            
+            model = ResNet18Classifier()
+            model.load_state_dict(torch.load(CONFIG['MODEL_PATH'], map_location=torch.device("cpu")))
+            model.eval()
+            return model
+        except Exception as e:
+            st.error(f"Failed to load model: {str(e)}")
             return None
-        
-        # Convert to WAV if necessary
-        if not file_path.lower().endswith(".wav"):
-            audio = AudioSegment.from_file(file_path)
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-                audio.export(tmp.name, format="wav")
-                file_path = tmp.name
 
-        y, sr = librosa.load(file_path, sr=22050)
-        mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
-        mel_db = librosa.power_to_db(mel, ref=np.max)
-
-        fig, ax = plt.subplots(figsize=(2.24, 2.24), dpi=100)
-        ax.axis('off')
-        librosa.display.specshow(mel_db, sr=sr, ax=ax)
-
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
-        plt.close(fig)
-
-        buf.seek(0)
-        image = Image.open(buf).convert('RGB')
-
-        transform = transforms.Compose([
-            transforms.Resize((224, 224)),
-            transforms.ToTensor()
-        ])
-
-        return transform(image).unsqueeze(0)
-
-    def create_mel_spectrogram_display(file_path, title="Mel Spectrogram"):
-        """Create a mel spectrogram for display purposes"""
+    def convert_to_wav_if_needed(file_path):
+        """Convert audio file to WAV format if necessary"""
         try:
             from pydub import AudioSegment
             
-            # Convert to WAV if necessary
             if not file_path.lower().endswith(".wav"):
                 audio = AudioSegment.from_file(file_path)
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
                     audio.export(tmp.name, format="wav")
-                    file_path = tmp.name
+                    add_temp_file(tmp.name)
+                    return tmp.name
+            return file_path
+        except ImportError:
+            st.error("pydub library is required. Please install it with: pip install pydub")
+            return None
+        except Exception as e:
+            st.error(f"Error converting audio file: {str(e)}")
+            return None
 
-            y, sr = librosa.load(file_path, sr=22050)
+    def audio_to_mel_tensor(file_path):
+        """Convert audio file to mel spectrogram tensor"""
+        try:
+            # Convert to WAV if necessary
+            wav_file = convert_to_wav_if_needed(file_path)
+            if not wav_file:
+                return None
+
+            y, sr = librosa.load(wav_file, sr=22050)
+            mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
+            mel_db = librosa.power_to_db(mel, ref=np.max)
+
+            fig, ax = plt.subplots(figsize=(2.24, 2.24), dpi=100)
+            ax.axis('off')
+            librosa.display.specshow(mel_db, sr=sr, ax=ax)
+
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
+            plt.close(fig)
+
+            buf.seek(0)
+            image = Image.open(buf).convert('RGB')
+
+            transform = transforms.Compose([
+                transforms.Resize((224, 224)),
+                transforms.ToTensor()
+            ])
+
+            return transform(image).unsqueeze(0)
+        except Exception as e:
+            st.error(f"Error creating mel tensor: {str(e)}")
+            return None
+
+    def create_mel_spectrogram_display(file_path, title="Mel Spectrogram"):
+        """Create a mel spectrogram for display purposes"""
+        try:
+            # Convert to WAV if necessary
+            wav_file = convert_to_wav_if_needed(file_path)
+            if not wav_file:
+                return None
+
+            y, sr = librosa.load(wav_file, sr=22050)
             mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
             mel_db = librosa.power_to_db(mel, ref=np.max)
 
@@ -582,19 +241,48 @@ def run_desktop_app():
             return None
 
     def predict_from_model(vowel_paths, pataka_path, sentence_path, model):
-        """Make predictions from the model"""
-        inputs = [audio_to_mel_tensor(p) for p in vowel_paths]
-        inputs.append(audio_to_mel_tensor(pataka_path))
-        inputs.append(audio_to_mel_tensor(sentence_path))
-        with torch.no_grad():
-            return [F.softmax(model(x), dim=1)[0][1].item() for x in inputs]
+        """Make predictions from the model with error handling"""
+        try:
+            inputs = []
+            
+            # Process vowel files
+            for path in vowel_paths:
+                tensor = audio_to_mel_tensor(path)
+                if tensor is not None:
+                    inputs.append(tensor)
+                else:
+                    st.error(f"Failed to process vowel file: {path}")
+                    return None
+            
+            # Process pataka and sentence
+            for path in [pataka_path, sentence_path]:
+                tensor = audio_to_mel_tensor(path)
+                if tensor is not None:
+                    inputs.append(tensor)
+                else:
+                    st.error(f"Failed to process file: {path}")
+                    return None
+            
+            # Make predictions
+            with torch.no_grad():
+                predictions = []
+                for tensor in inputs:
+                    output = model(tensor)
+                    prob = F.softmax(output, dim=1)[0][1].item()
+                    predictions.append(prob)
+                
+                return predictions
+                
+        except Exception as e:
+            st.error(f"Error making predictions: {str(e)}")
+            return None
 
     # =============================
     # Page Functions
     # =============================
     def show_header():
-        """Display the enhanced header matching the image design"""
-        logo_b64 = load_logo()
+        """Display the header"""
+        logo_b64 = load_image_file(CONFIG['LOGO_PATHS'], "SixtyScan Logo")
         current_time = get_thai_time()
         
         logo_html = ""
@@ -615,11 +303,11 @@ def run_desktop_app():
         st.markdown(header_html, unsafe_allow_html=True)
 
     def show_home_page():
-        """Display the enhanced home page with updated layout to match image"""
-        load_styles()
+        """Display the home page"""
+        load_css()
         show_header()
         
-        woman_image_b64 = load_woman_image()
+        woman_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "Woman using phone")
         
         # Create the main container
         st.markdown('<div class="main-content">', unsafe_allow_html=True)
@@ -631,7 +319,7 @@ def run_desktop_app():
         with left_col:
             st.markdown('<div class="text-section">', unsafe_allow_html=True)
             
-            # Title - Updated to match image exactly
+            # Title
             st.markdown("""
                 <h1 class="main-title">
                     ตรวจเช็คโรคพาร์กินสัน<br>ทันทีด้วย <span class="highlight">SixtyScan</span>
@@ -685,8 +373,8 @@ def run_desktop_app():
         st.markdown('</div>', unsafe_allow_html=True)  # Close main-content
 
     def show_guide_page():
-        """Display the guide/manual page with enhanced styling"""
-        load_styles()
+        """Display the guide/manual page"""
+        load_css()
         show_header()
         
         # Back button
@@ -746,12 +434,20 @@ def run_desktop_app():
         """
         st.markdown(guide_content, unsafe_allow_html=True)
 
+    def save_uploaded_file(uploaded_file):
+        """Save uploaded file to temporary location"""
+        try:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded_file.name)[1]) as tmp:
+                tmp.write(uploaded_file.read())
+                add_temp_file(tmp.name)
+                return tmp.name
+        except Exception as e:
+            st.error(f"Error saving uploaded file: {str(e)}")
+            return None
+
     def show_analysis_page():
-        """Display the analysis page with consistent styling"""
-        load_styles()
-        initialize_analysis_session_state()
-        
-        # Header
+        """Display the analysis page"""
+        load_css()
         show_header()
         
         # Back button
@@ -761,12 +457,15 @@ def run_desktop_app():
         
         # Load model
         model = load_model()
+        if not model:
+            st.error("Cannot proceed without model. Please check your internet connection and try again.")
+            return
         
         st.markdown("<h1 style='text-align: center; font-size: 56px; color: #4A148C; margin: 30px 0; font-family: \"Prompt\", sans-serif; font-weight: 700;'>การวิเคราะห์เสียง</h1>", unsafe_allow_html=True)
 
         # Clear button logic
         if 'clear_button_clicked' in st.session_state and st.session_state.clear_button_clicked:
-            cleanup_temp_files()
+            cleanup_all_temp_files()
             st.session_state.vowel_files = []
             st.session_state.pataka_file = None
             st.session_state.sentence_file = None
@@ -794,6 +493,7 @@ def run_desktop_app():
                 if audio_bytes:
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
                         tmp.write(audio_bytes.read())
+                        add_temp_file(tmp.name)
                         while len(st.session_state.vowel_files) <= i:
                             st.session_state.vowel_files.append(None)
                         if st.session_state.vowel_files[i] and os.path.exists(st.session_state.vowel_files[i]):
@@ -812,12 +512,12 @@ def run_desktop_app():
         # File uploader for vowels
         uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
         if uploaded_vowels and len([f for f in st.session_state.vowel_files if f is not None]) < 7:
-            cleanup_temp_files()
+            cleanup_all_temp_files()
             st.session_state.vowel_files = []
             for file in uploaded_vowels[:7]:
-                with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-                    tmp.write(file.read())
-                    st.session_state.vowel_files.append(tmp.name)
+                saved_path = save_uploaded_file(file)
+                if saved_path:
+                    st.session_state.vowel_files.append(saved_path)
 
         # Pataka recording
         pataka_card_html = """
@@ -833,6 +533,7 @@ def run_desktop_app():
             if pataka_bytes:
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
                     tmp.write(pataka_bytes.read())
+                    add_temp_file(tmp.name)
                     if st.session_state.pataka_file and os.path.exists(st.session_state.pataka_file):
                         os.unlink(st.session_state.pataka_file)
                     st.session_state.pataka_file = tmp.name
@@ -849,9 +550,9 @@ def run_desktop_app():
         # File uploader for pataka
         uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
         if uploaded_pataka and not st.session_state.pataka_file:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-                tmp.write(uploaded_pataka.read())
-                st.session_state.pataka_file = tmp.name
+            saved_path = save_uploaded_file(uploaded_pataka)
+            if saved_path:
+                st.session_state.pataka_file = saved_path
 
         # Sentence recording
         sentence_card_html = """
@@ -867,6 +568,7 @@ def run_desktop_app():
             if sentence_bytes:
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
                     tmp.write(sentence_bytes.read())
+                    add_temp_file(tmp.name)
                     if st.session_state.sentence_file and os.path.exists(st.session_state.sentence_file):
                         os.unlink(st.session_state.sentence_file)
                     st.session_state.sentence_file = tmp.name
@@ -883,11 +585,11 @@ def run_desktop_app():
         # File uploader for sentence
         uploaded_sentence = st.file_uploader("อัปโหลดไฟล์เสียงประโยค", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
         if uploaded_sentence and not st.session_state.sentence_file:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-                tmp.write(uploaded_sentence.read())
-                st.session_state.sentence_file = tmp.name
+            saved_path = save_uploaded_file(uploaded_sentence)
+            if saved_path:
+                st.session_state.sentence_file = saved_path
 
-        # Action buttons with enhanced styling
+        # Action buttons
         col1, col2 = st.columns([1, 1])
         with col1:
             predict_btn = st.button("🔍 วิเคราะห์", key="predict", type="primary", use_container_width=True)
@@ -907,10 +609,21 @@ def run_desktop_app():
             if len(valid_vowel_files) == 7 and st.session_state.pataka_file and st.session_state.sentence_file:
                 with st.spinner("กำลังวิเคราะห์..."):
                     try:
-                        all_probs = predict_from_model(valid_vowel_files, st.session_state.pataka_file, st.session_state.sentence_file, model)
+                        all_probs = predict_from_model(
+                            valid_vowel_files, 
+                            st.session_state.pataka_file, 
+                            st.session_state.sentence_file, 
+                            model
+                        )
+                        
+                        if all_probs is None:
+                            st.error("การวิเคราะห์ล้มเหลว กรุณาลองใหม่อีกครั้ง")
+                            return
+                            
                         final_prob = np.mean(all_probs)
                         percent = int(final_prob * 100)
 
+                        # Determine risk level and advice
                         if percent <= 50:
                             level = "ระดับต่ำ (Low)"
                             label = "Non Parkinson"
@@ -951,6 +664,7 @@ def run_desktop_app():
                             </ul>
                             """
 
+                        # Display results
                         results_html = f"""
                             <div style='background-color:{box_color}; padding: 40px; border-radius: 20px; font-size: 28px; color: #000000; font-family: "Prompt", sans-serif; border-left: 8px solid {border_color}; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin: 30px 0;'>
                                 <div style='text-align: center; font-size: 48px; font-weight: 700; margin-bottom: 30px; color: {border_color};'>{label}</div>
@@ -996,6 +710,7 @@ def run_desktop_app():
                                 st.markdown("<div style='color: black; font-size: 16px; margin-bottom: 10px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"ประโยค\"</b></div>", unsafe_allow_html=True)
                                 st.image(spec_image, use_container_width=True)
                         
+                        # Information about spectrograms
                         info_html = """
                         <div style='margin-top: 30px; padding: 30px; background-color: #f8f9fa; border-radius: 16px; border-left: 6px solid #6A1B9A;'>
                             <h4 style='color: #4A148C; margin-bottom: 20px; font-family: "Prompt", sans-serif; font-size: 24px; font-weight: 600;'>💡 เกี่ยวกับ Mel Spectrogram</h4>
