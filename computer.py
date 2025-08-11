@@ -201,12 +201,18 @@ def run_desktop_app():
                     align-items: flex-start;
                 }
                 
-                /* Enhanced Button Styles */
-                .stButton > button {
-                    font-size: 28px !important;
+                /* Enhanced Button Styles - FIXED with Higher Specificity */
+                div.stButton > button, 
+                [data-testid="stButton"] > button,
+                .stButton button[kind="primary"],
+                .stButton button[kind="secondary"],
+                div[data-testid="column"] div.stButton > button,
+                section[data-testid="stSidebar"] div.stButton > button,
+                .main div.stButton > button {
+                    font-size: 32px !important;
                     padding: 20px 60px !important;
                     border-radius: 60px !important;
-                    font-weight: 700 !important;
+                    font-weight: 800 !important;
                     font-family: 'Prompt', sans-serif !important;
                     min-width: 320px !important;
                     height: 75px !important;
@@ -221,28 +227,35 @@ def run_desktop_app():
                     letter-spacing: 0.5px !important;
                     position: relative !important;
                     overflow: hidden !important;
+                    line-height: 1.2 !important;
                 }
                 
-                /* Primary Button */
+                /* Primary Button - First column */
+                div[data-testid="column"]:first-child div.stButton > button,
                 .stButton:first-child > button {
                     background: linear-gradient(135deg, #1976D2 0%, #42A5F5 50%, #64B5F6 100%) !important;
                     color: white !important;
                     box-shadow: 0 6px 25px rgba(25, 118, 210, 0.4) !important;
+                    font-size: 32px !important;
                 }
                 
+                div[data-testid="column"]:first-child div.stButton > button:hover,
                 .stButton:first-child > button:hover {
                     transform: translateY(-4px) !important;
                     box-shadow: 0 12px 35px rgba(25, 118, 210, 0.5) !important;
                     background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #42A5F5 100%) !important;
                 }
                 
-                /* Secondary Button */
+                /* Secondary Button - Second column */
+                div[data-testid="column"]:nth-child(2) div.stButton > button,
                 .stButton:nth-child(2) > button {
                     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%) !important;
                     color: white !important;
                     box-shadow: 0 6px 25px rgba(74, 20, 140, 0.4) !important;
+                    font-size: 32px !important;
                 }
                 
+                div[data-testid="column"]:nth-child(2) div.stButton > button:hover,
                 .stButton:nth-child(2) > button:hover {
                     transform: translateY(-4px) !important;
                     box-shadow: 0 12px 35px rgba(74, 20, 140, 0.5) !important;
@@ -602,63 +615,74 @@ def run_desktop_app():
         st.markdown(header_html, unsafe_allow_html=True)
 
     def show_home_page():
-        """Display the enhanced home page matching the design image"""
+        """Display the enhanced home page with fixed layout and button font size"""
         load_styles()
         show_header()
         
         woman_image_b64 = load_woman_image()
         
-        # Main content area
-        main_content_start = """
-            <div class="main-content">
-                <div class="content-left">
-                    <h1 class="main-title">
-                        ตรวจเช็คโรคพาร์กินสัน<br>
-                        ทันทีด้วย <span class="title-highlight">SixtyScan</span>
-                    </h1>
-        """
-        st.markdown(main_content_start, unsafe_allow_html=True)
+        # Create the main container
+        st.markdown('<div style="padding: 80px 60px; min-height: 70vh;">', unsafe_allow_html=True)
         
-        # Button container with enhanced styling
-        col1, col2 = st.columns([1, 1], gap="medium")
+        # Use Streamlit columns for proper layout
+        left_col, right_col = st.columns([1, 1], gap="large")
         
-        with col1:
-            if st.button("เริ่มใช้งาน", key="start_analysis", use_container_width=True):
-                st.session_state.page = 'analysis'
-                st.rerun()
+        with left_col:
+            # Title
+            st.markdown("""
+                <h1 class="main-title" style="font-family: 'Prompt', sans-serif; font-size: 72px; font-weight: 700; color: #2d2d2d; line-height: 1.1; margin-bottom: 60px; margin-top: 0; letter-spacing: -1px;">
+                    ตรวจเช็คโรคพาร์กินสัน<br>
+                    ทันทีด้วย <span style="color: #6A1B9A; font-weight: 800;">SixtyScan</span>
+                </h1>
+            """, unsafe_allow_html=True)
+            
+            # Create button columns
+            btn_col1, btn_col2 = st.columns([1, 1], gap="medium")
+            
+            with btn_col1:
+                if st.button("เริ่มใช้งาน", key="start_analysis", use_container_width=True):
+                    st.session_state.page = 'analysis'
+                    st.rerun()
+            
+            with btn_col2:
+                if st.button("คู่มือ", key="guide_manual", use_container_width=True):
+                    st.session_state.page = 'guide'
+                    st.rerun()
         
-        with col2:
-            if st.button("คู่มือ", key="guide_manual", use_container_width=True):
-                st.session_state.page = 'guide'
-                st.rerun()
-        
-        content_right_start = """
-                </div>
-                <div class="content-right">
-        """
-        st.markdown(content_right_start, unsafe_allow_html=True)
-        
-        # Display woman image with enhanced styling
-        if woman_image_b64:
-            image_html = f'<img src="data:image/jpg;base64,{woman_image_b64}" class="woman-image" alt="Woman using phone">'
-            st.markdown(image_html, unsafe_allow_html=True)
-        else:
-            # Enhanced placeholder
-            placeholder_html = """
-                <div class="image-placeholder">
-                    <div class="placeholder-content">
-                        <div class="placeholder-icon">📱</div>
-                        <div class="placeholder-text">insert.jpg<br>not found</div>
+        with right_col:
+            # Image with proper styling
+            if woman_image_b64:
+                st.markdown(f"""
+                    <div style="text-align: center; padding-top: 40px;">
+                        <img src="data:image/jpg;base64,{woman_image_b64}" 
+                             alt="Woman using phone"
+                             style="width: 100%; max-width: 520px; height: auto; 
+                                    border-radius: 24px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+                                    transition: transform 0.3s ease;"
+                             onmouseover="this.style.transform='translateY(-5px)'"
+                             onmouseout="this.style.transform='translateY(0)'">
                     </div>
-                </div>
-            """
-            st.markdown(placeholder_html, unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
+            else:
+                # Enhanced placeholder
+                st.markdown("""
+                    <div style="text-align: center; padding-top: 40px;">
+                        <div style="width: 100%; max-width: 520px; height: 400px; margin: 0 auto;
+                                    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 50%, #e8f5e8 100%);
+                                    border-radius: 24px; display: flex; align-items: center; justify-content: center;
+                                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+                                    border: 2px dashed rgba(106, 27, 154, 0.3);">
+                            <div style="text-align: center; color: #666;">
+                                <div style="font-size: 64px; margin-bottom: 16px; opacity: 0.7;">📱</div>
+                                <div style="font-size: 20px; font-weight: 500; font-family: 'Prompt', sans-serif;">
+                                    insert.jpg<br>not found
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
         
-        main_content_end = """
-                </div>
-            </div>
-        """
-        st.markdown(main_content_end, unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
     def show_guide_page():
         """Display the guide/manual page with enhanced styling"""
