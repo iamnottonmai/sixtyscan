@@ -386,66 +386,74 @@ def run_desktop_app():
         st.markdown('</div>', unsafe_allow_html=True)  # Close main-content
 
     def show_guide_page():
-        """Display the guide/manual page"""
-        load_css()
-        show_header()
-        
-        # Back button
-        if st.button("← กลับหน้าแรก", key="back_to_home_from_guide"):
-            st.session_state.page = 'home'
-            st.rerun()
-        
-        guide_content = """
-            <div style="max-width: 1000px; margin: 40px auto; padding: 0 40px;">
-                <h1 style="text-align: center; color: #4A148C; font-size: 56px; margin-bottom: 50px; font-family: 'Prompt', sans-serif; font-weight: 700;">คู่มือการใช้งาน SixtyScan</h1>
-                
-                <div style="background: white; padding: 50px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 40px;">
-                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 30px; font-family: 'Prompt', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
-                    <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif;">
-                        <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
-                        <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
-                        <li>นั่งหรือยืนในท่าที่สบาย</li>
-                        <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
-                    </ul>
-                </div>
-                
-                <div style="background: white; padding: 50px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 40px;">
-                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 30px; font-family: 'Prompt', sans-serif;">ขั้นตอนการตรวจ</h2>
-                    <div style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif;">
-                        <h3 style="color: #666; font-size: 28px; margin-top: 30px;">1. การออกเสียงสระ</h3>
-                        <ul>
-                            <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
-                            <li>ออกเสียงให้ชัดเจนและคงที่</li>
-                            <li>ไม่ต้องออกเสียงดังเกินไป</li>
-                        </ul>
-                        
-                        <h3 style="color: #666; font-size: 28px; margin-top: 30px;">2. การออกเสียงพยางค์</h3>
-                        <ul>
-                            <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
-                            <li>ใช้เวลาประมาณ 6 วินาที</li>
-                            <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
-                        </ul>
-                        
-                        <h3 style="color: #666; font-size: 28px; margin-top: 30px;">3. การอ่านประโยค</h3>
-                        <ul>
-                            <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
-                            <li>ไม่ต้องรีบร้อน</li>
-                            <li>ออกเสียงให้ชัดเจน</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div style="background: white; padding: 50px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08);">
-                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 30px; font-family: 'Prompt', sans-serif;">ข้อควรระวัง</h2>
-                    <ul style="font-size: 22px; line-height: 1.7; color: #d32f2f; font-family: 'Prompt', sans-serif;">
-                        <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
-                        <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
-                        <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
-                    </ul>
-                </div>
-            </div>
-        """
-        st.markdown(guide_content, unsafe_allow_html=True)
+    """Display the guide/manual page with proper styling"""
+    load_css()
+    show_header()
+    
+    # Back button
+    if st.button("← กลับหน้าแรก", key="back_to_home_from_guide"):
+        st.session_state.page = 'home'
+        st.rerun()
+    
+    # Use the CSS classes for proper styling
+    st.markdown('<div class="guide-container">', unsafe_allow_html=True)
+    
+    # Title with proper class
+    st.markdown('<h1 class="guide-title">คู่มือการใช้งาน SixtyScan</h1>', unsafe_allow_html=True)
+    
+    # Preparation section
+    st.markdown("""
+        <div class="guide-section">
+            <h2>การเตรียมตัวก่อนการตรวจ</h2>
+            <ul>
+                <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
+                <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
+                <li>นั่งหรือยืนในท่าที่สบาย</li>
+                <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
+            </ul>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Steps section
+    st.markdown("""
+        <div class="guide-section">
+            <h2>ขั้นตอนการตรวจ</h2>
+            <h3>1. การออกเสียงสระ</h3>
+            <ul>
+                <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
+                <li>ออกเสียงให้ชัดเจนและคงที่</li>
+                <li>ไม่ต้องออกเสียงดังเกินไป</li>
+            </ul>
+            
+            <h3>2. การออกเสียงพยางค์</h3>
+            <ul>
+                <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
+                <li>ใช้เวลาประมาณ 6 วินาที</li>
+                <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
+            </ul>
+            
+            <h3>3. การอ่านประโยค</h3>
+            <ul>
+                <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
+                <li>ไม่ต้องรีบร้อน</li>
+                <li>ออกเสียงให้ชัดเจน</li>
+            </ul>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Warning section
+    st.markdown("""
+        <div class="guide-warning">
+            <h2>ข้อควรระวัง</h2>
+            <ul>
+                <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
+                <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
+                <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
+            </ul>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)  # Close guide-container
 
     def show_analysis_page():
         """Display the analysis page"""
@@ -462,8 +470,6 @@ def run_desktop_app():
         if not model:
             st.error("Cannot proceed without model. Please check your internet connection and try again.")
             return
-        
-        st.markdown("<h1 style='text-align: center; font-size: 56px; color: #4A148C; margin: 30px 0; font-family: \"Prompt\", sans-serif; font-weight: 700;'>การวิเคราะห์เสียง</h1>", unsafe_allow_html=True)
 
         # Clear button logic
         if 'clear_button_clicked' in st.session_state and st.session_state.clear_button_clicked:
