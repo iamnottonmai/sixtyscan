@@ -10,11 +10,23 @@
     min-height: 100vh;
 }
 
-/* Remove default Streamlit padding */
+/* CRITICAL: Remove all default Streamlit spacing and padding */
 .main .block-container {
     padding-top: 0 !important;
     padding-bottom: 1rem !important;
     max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Remove Streamlit's default container spacing */
+.stApp > header,
+.stApp > div[data-testid="stHeader"] {
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: none !important;
 }
 
 /* Hide Streamlit elements */
@@ -22,31 +34,40 @@
 footer {visibility: hidden;}
 header {visibility: hidden;}
 
-.stApp > div:first-child {
-    padding-top: 0;
+/* Remove ALL padding and margin from main containers */
+div[data-testid="main"] {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
-/* TARGETED FIX: Remove space between header and main content only */
+div[data-testid="main"] > div {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 div[data-testid="main"] .block-container {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Remove Streamlit's top spacing */
+.stApp > div:first-child {
     padding-top: 0 !important;
     margin-top: 0 !important;
 }
 
-/* Force main content to start immediately after header */
-.main-content {
-    margin-top: -1rem !important;
-}
-
-/* Header Styles - RESTORED original size */
+/* Header Styles - Compact version */
 .header-container {
     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%);
-    padding: 30px 50px;
+    padding: 20px 50px; /* Reduced from 30px to 20px */
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: white;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    margin-bottom: 0 !important; /* Remove any margin below header */
+    margin: 0 !important;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .logo-section {
@@ -57,43 +78,43 @@ div[data-testid="main"] .block-container {
 
 .logo-text {
     font-family: 'Prompt', sans-serif;
-    font-size: 32px;
+    font-size: 28px; /* Reduced from 32px */
     font-weight: 700;
     color: white;
 }
 
 .header-divider {
     width: 2px;
-    height: 40px;
+    height: 35px; /* Reduced from 40px */
     background-color: rgba(255, 255, 255, 0.3);
-    margin: 0 20px;
+    margin: 0 15px; /* Reduced from 20px */
 }
 
 .tagline {
     font-family: 'Prompt', sans-serif;
-    font-size: 18px;
+    font-size: 16px; /* Reduced from 18px */
     font-weight: 400;
     color: white;
 }
 
 .datetime-display {
     font-family: 'Prompt', sans-serif;
-    font-size: 16px;
+    font-size: 14px; /* Reduced from 16px */
     font-weight: 400;
     background: rgba(255, 255, 255, 0.9);
     color: #666;
-    padding: 12px 24px;
+    padding: 10px 20px; /* Reduced from 12px 24px */
     border-radius: 25px;
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Main Content Area - Fixed spacing */
+/* Main Content Area - FIXED: No space after header */
 .main-content {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    min-height: calc(100vh - 100px);
-    padding: 0px 0px 0px 0px; /* Reduced top padding from 30px to 20px */
-    margin-top: 0 !important; /* Ensure no top margin */
+    min-height: calc(100vh - 80px); /* Adjusted for smaller header */
+    padding: 40px 0px 0px 0px; /* Added top padding for content breathing room */
+    margin: 0 !important;
 }
 
 .content-wrapper {
@@ -102,8 +123,8 @@ div[data-testid="main"] .block-container {
     gap: 80px;
     max-width: 1400px;
     margin: 0 auto;
-    min-height: 75vh;
-    padding-top: 0 !important; /* Remove any top padding */
+    min-height: 70vh;
+    padding: 0 40px; /* Add side padding */
 }
 
 .text-section {
@@ -118,15 +139,14 @@ div[data-testid="main"] .block-container {
     max-width: 600px;
 }
 
-/* Main Title - Fixed spacing */
+/* Main Title */
 .main-title {
     font-family: 'Prompt', sans-serif;
     font-size: 64px;
     font-weight: 400;
     color: #2d2d2d;
     line-height: 1.2;
-    margin-bottom: 40px; /* Reduced from 50px to 40px */
-    margin-top: 0 !important; /* Ensure no top margin */
+    margin: 0 0 40px 0 !important; /* Remove all top margin */
     letter-spacing: -1px;
 }
 
@@ -289,10 +309,10 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     line-height: 1.5 !important;
 }
 
-/* Guide page styles - NEW */
+/* Guide page styles */
 .guide-container {
     max-width: 1000px;
-    margin: 20px auto 40px auto; /* Reduced top margin from 40px to 20px */
+    margin: 20px auto 40px auto;
     padding: 0 40px;
 }
 
@@ -300,33 +320,30 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     text-align: center;
     color: #4A148C;
     font-size: 56px;
-    margin-bottom: 40px; /* Reduced from 50px to 40px */
-    margin-top: 0 !important; /* Remove any top margin */
+    margin: 0 0 40px 0 !important; /* Remove top margin */
     font-family: 'Prompt', sans-serif;
     font-weight: 700;
 }
 
 .guide-section {
     background: white;
-    padding: 40px; /* Reduced from 50px to 40px */
+    padding: 40px;
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    margin-bottom: 32px; /* Reduced from 40px to 32px */
+    margin-bottom: 32px;
 }
 
 .guide-section h2 {
     color: #4A148C;
     font-size: 36px;
-    margin-bottom: 24px; /* Reduced from 30px to 24px */
-    margin-top: 0 !important; /* Remove any top margin */
+    margin: 0 0 24px 0 !important; /* Remove top margin */
     font-family: 'Prompt', sans-serif;
 }
 
 .guide-section h3 {
     color: #666;
     font-size: 28px;
-    margin-top: 24px; /* Reduced from 30px to 24px */
-    margin-bottom: 16px;
+    margin: 24px 0 16px 0 !important; /* Control all margins */
     font-family: 'Prompt', sans-serif;
 }
 
@@ -352,8 +369,7 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
 .guide-warning h2 {
     color: #4A148C;
     font-size: 36px;
-    margin-bottom: 24px;
-    margin-top: 0 !important;
+    margin: 0 0 24px 0 !important; /* Remove top margin */
     font-family: 'Prompt', sans-serif;
 }
 
@@ -383,17 +399,13 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     min-width: auto !important;
     height: 45px !important;
     border-radius: 25px !important;
-    margin-bottom: 16px !important; /* Reduced from 20px to 16px */
+    margin-bottom: 16px !important;
 }
 
-/* Analysis page title - Fixed spacing */
-.analysis-title {
-    text-align: center;
-    font-size: 56px;
-    color: #4A148C;
-    margin: 20px 0 30px 0 !important; /* Reduced top margin from 30px to 20px */
-    font-family: 'Prompt', sans-serif;
-    font-weight: 700;
+/* Analysis page container - Remove spacing */
+.analysis-container {
+    padding: 20px 40px;
+    margin: 0 !important;
 }
 
 /* Responsive Design */
@@ -401,7 +413,7 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     .content-wrapper {
         flex-direction: column;
         text-align: center;
-        padding: 30px 40px 50px 40px; /* Reduced top padding from 40px to 30px */
+        padding: 30px 40px 50px 40px;
         gap: 50px;
     }
     
@@ -437,12 +449,12 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
 
     .guide-container {
         padding: 0 20px;
-        margin-top: 16px; /* Reduced from default */
+        margin-top: 16px;
     }
 
     .guide-title {
         font-size: 44px;
-        margin-bottom: 32px; /* Reduced */
+        margin-bottom: 32px;
     }
 }
 
@@ -457,7 +469,7 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     }
     
     .main-content {
-        padding: 20px 20px 40px 20px; /* Reduced top padding from 30px to 20px */
+        padding: 30px 20px 40px 20px;
     }
 
     .guide-title {
@@ -465,19 +477,15 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     }
 
     .guide-section {
-        padding: 30px; /* Reduced from 40px */
+        padding: 30px;
     }
 
     .guide-warning {
-        padding: 30px; /* Reduced from 40px */
+        padding: 30px;
     }
 }
 
 /* Font enforcement */
 * {
-    font-family: 'Prompt', sans-serif !important;
-}
-
-h1, h2, h3, h4, h5, h6, p, div, span, label {
     font-family: 'Prompt', sans-serif !important;
 }
