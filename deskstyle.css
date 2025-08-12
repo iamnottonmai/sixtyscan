@@ -81,7 +81,7 @@ header {visibility: hidden;}
 .main-content {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     min-height: calc(100vh - 100px);
-    padding: 20px 20px 30px 20px; /* Reduced top padding from 30px to 20px */
+    padding: 0px 0px 0px 0px; /* Reduced top padding from 30px to 20px */
     margin-top: 0 !important; /* Ensure no top margin */
 }
 
