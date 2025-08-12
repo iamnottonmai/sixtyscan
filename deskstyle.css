@@ -29,7 +29,7 @@ header {visibility: hidden;}
 /* Header Styles */
 .header-container {
     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%);
-    padding: 40px 60px;
+    padding: 30px 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
