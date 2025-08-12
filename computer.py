@@ -87,6 +87,7 @@ def run_desktop_app():
     
     # Register cleanup function
     atexit.register(cleanup_all_temp_files)
+    
     # =============================
     # Page-specific Functions  
     # =============================
@@ -386,74 +387,74 @@ def run_desktop_app():
         st.markdown('</div>', unsafe_allow_html=True)  # Close main-content
 
     def show_guide_page():
-    """Display the guide/manual page with proper styling"""
-    load_css()
-    show_header()
+        """Display the guide/manual page with proper styling"""
+        load_css()
+        show_header()
     
-    # Back button
-    if st.button("← กลับหน้าแรก", key="back_to_home_from_guide"):
-        st.session_state.page = 'home'
-        st.rerun()
+        # Back button
+        if st.button("← กลับหน้าแรก", key="back_to_home_from_guide"):
+            st.session_state.page = 'home'
+            st.rerun()
     
-    # Use the CSS classes for proper styling
-    st.markdown('<div class="guide-container">', unsafe_allow_html=True)
+        # Use the CSS classes for proper styling
+        st.markdown('<div class="guide-container">', unsafe_allow_html=True)
     
-    # Title with proper class
-    st.markdown('<h1 class="guide-title">คู่มือการใช้งาน SixtyScan</h1>', unsafe_allow_html=True)
+        # Title with proper class
+        st.markdown('<h1 class="guide-title">คู่มือการใช้งาน SixtyScan</h1>', unsafe_allow_html=True)
     
-    # Preparation section
-    st.markdown("""
-        <div class="guide-section">
-            <h2>การเตรียมตัวก่อนการตรวจ</h2>
-            <ul>
-                <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
-                <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
-                <li>นั่งหรือยืนในท่าที่สบาย</li>
-                <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
-            </ul>
-        </div>
-    """, unsafe_allow_html=True)
+        # Preparation section
+        st.markdown("""
+            <div class="guide-section">
+                <h2>การเตรียมตัวก่อนการตรวจ</h2>
+                <ul>
+                    <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
+                    <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
+                    <li>นั่งหรือยืนในท่าที่สบาย</li>
+                    <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
+                </ul>
+            </div>
+        """, unsafe_allow_html=True)
     
-    # Steps section
-    st.markdown("""
-        <div class="guide-section">
-            <h2>ขั้นตอนการตรวจ</h2>
-            <h3>1. การออกเสียงสระ</h3>
-            <ul>
-                <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
-                <li>ออกเสียงให้ชัดเจนและคงที่</li>
-                <li>ไม่ต้องออกเสียงดังเกินไป</li>
-            </ul>
+        # Steps section
+        st.markdown("""
+            <div class="guide-section">
+                <h2>ขั้นตอนการตรวจ</h2>
+                <h3>1. การออกเสียงสระ</h3>
+                <ul>
+                    <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
+                    <li>ออกเสียงให้ชัดเจนและคงที่</li>
+                    <li>ไม่ต้องออกเสียงดังเกินไป</li>
+                </ul>
             
-            <h3>2. การออกเสียงพยางค์</h3>
-            <ul>
-                <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
-                <li>ใช้เวลาประมาณ 6 วินาที</li>
-                <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
-            </ul>
+                <h3>2. การออกเสียงพยางค์</h3>
+                <ul>
+                    <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
+                    <li>ใช้เวลาประมาณ 6 วินาที</li>
+                    <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
+                </ul>
             
-            <h3>3. การอ่านประโยค</h3>
-            <ul>
-                <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
-                <li>ไม่ต้องรีบร้อน</li>
-                <li>ออกเสียงให้ชัดเจน</li>
-            </ul>
-        </div>
-    """, unsafe_allow_html=True)
+                <h3>3. การอ่านประโยค</h3>
+                <ul>
+                    <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
+                    <li>ไม่ต้องรีบร้อน</li>
+                    <li>ออกเสียงให้ชัดเจน</li>
+                </ul>
+            </div>
+        """, unsafe_allow_html=True)
     
-    # Warning section
-    st.markdown("""
-        <div class="guide-warning">
-            <h2>ข้อควรระวัง</h2>
-            <ul>
-                <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
-                <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
-                <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
-            </ul>
-        </div>
-    """, unsafe_allow_html=True)
+        # Warning section
+        st.markdown("""
+            <div class="guide-warning">
+                <h2>ข้อควรระวัง</h2>
+                <ul>
+                    <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
+                    <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
+                    <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
+                </ul>
+            </div>
+        """, unsafe_allow_html=True)
     
-    st.markdown('</div>', unsafe_allow_html=True)  # Close guide-container
+        st.markdown('</div>', unsafe_allow_html=True)  # Close guide-container
 
     def show_analysis_page():
         """Display the analysis page"""
