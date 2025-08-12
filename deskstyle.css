@@ -26,15 +26,31 @@ header {visibility: hidden;}
     padding-top: 0;
 }
 
-/* TARGETED FIX: Remove space between header and main content only */
-div[data-testid="main"] .block-container {
+/* TARGET THE GREY CONTAINER - This is the culprit! */
+div[data-testid="main"] {
+    background: transparent !important;
     padding-top: 0 !important;
     margin-top: 0 !important;
 }
 
-/* Force main content to start immediately after header */
-.main-content {
-    margin-top: -1rem !important;
+/* Remove the grey background from Streamlit's main wrapper */
+.main {
+    background: transparent !important;
+    padding-top: 0 !important;
+}
+
+/* Target any container with grey background */
+div[data-testid="stVerticalBlock"] {
+    background: transparent !important;
+    padding-top: 0 !important;
+    gap: 0 !important;
+}
+
+/* Eliminate the space completely */
+div[data-testid="main"] .block-container {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    background: transparent !important;
 }
 
 /* Header Styles - RESTORED original size */
