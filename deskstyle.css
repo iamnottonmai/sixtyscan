@@ -35,6 +35,7 @@ header {visibility: hidden;}
     align-items: center;
     color: white;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 0 !important; /* Remove any margin below header */
 }
 
 .logo-section {
@@ -76,11 +77,12 @@ header {visibility: hidden;}
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Main Content Area */
+/* Main Content Area - Fixed spacing */
 .main-content {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     min-height: calc(100vh - 100px);
-    padding: 30px 20px;
+    padding: 20px 20px 30px 20px; /* Reduced top padding from 30px to 20px */
+    margin-top: 0 !important; /* Ensure no top margin */
 }
 
 .content-wrapper {
@@ -90,6 +92,7 @@ header {visibility: hidden;}
     max-width: 1400px;
     margin: 0 auto;
     min-height: 75vh;
+    padding-top: 0 !important; /* Remove any top padding */
 }
 
 .text-section {
@@ -104,15 +107,15 @@ header {visibility: hidden;}
     max-width: 600px;
 }
 
-/* Main Title */
+/* Main Title - Fixed spacing */
 .main-title {
     font-family: 'Prompt', sans-serif;
     font-size: 64px;
     font-weight: 400;
     color: #2d2d2d;
     line-height: 1.2;
-    margin-bottom: 50px;
-    margin-top: 0;
+    margin-bottom: 40px; /* Reduced from 50px to 40px */
+    margin-top: 0 !important; /* Ensure no top margin */
     letter-spacing: -1px;
 }
 
@@ -275,6 +278,91 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     line-height: 1.5 !important;
 }
 
+/* Guide page styles - NEW */
+.guide-container {
+    max-width: 1000px;
+    margin: 20px auto 40px auto; /* Reduced top margin from 40px to 20px */
+    padding: 0 40px;
+}
+
+.guide-title {
+    text-align: center;
+    color: #4A148C;
+    font-size: 56px;
+    margin-bottom: 40px; /* Reduced from 50px to 40px */
+    margin-top: 0 !important; /* Remove any top margin */
+    font-family: 'Prompt', sans-serif;
+    font-weight: 700;
+}
+
+.guide-section {
+    background: white;
+    padding: 40px; /* Reduced from 50px to 40px */
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    margin-bottom: 32px; /* Reduced from 40px to 32px */
+}
+
+.guide-section h2 {
+    color: #4A148C;
+    font-size: 36px;
+    margin-bottom: 24px; /* Reduced from 30px to 24px */
+    margin-top: 0 !important; /* Remove any top margin */
+    font-family: 'Prompt', sans-serif;
+}
+
+.guide-section h3 {
+    color: #666;
+    font-size: 28px;
+    margin-top: 24px; /* Reduced from 30px to 24px */
+    margin-bottom: 16px;
+    font-family: 'Prompt', sans-serif;
+}
+
+.guide-section ul {
+    font-size: 22px;
+    line-height: 1.7;
+    font-family: 'Prompt', sans-serif;
+    margin-top: 0;
+    padding-left: 24px;
+}
+
+.guide-section li {
+    margin-bottom: 8px;
+}
+
+.guide-warning {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+
+.guide-warning h2 {
+    color: #4A148C;
+    font-size: 36px;
+    margin-bottom: 24px;
+    margin-top: 0 !important;
+    font-family: 'Prompt', sans-serif;
+}
+
+.guide-warning ul {
+    font-size: 22px;
+    line-height: 1.7;
+    color: #d32f2f;
+    font-family: 'Prompt', sans-serif;
+    margin-top: 0;
+    padding-left: 24px;
+}
+
+.guide-warning li {
+    margin-bottom: 12px;
+}
+
+.guide-warning strong {
+    font-weight: 600;
+}
+
 /* Back button styling */
 .stButton[data-testid="stButton"]:has(button:contains("←")) > button {
     background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%) !important;
@@ -284,7 +372,17 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     min-width: auto !important;
     height: 45px !important;
     border-radius: 25px !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 16px !important; /* Reduced from 20px to 16px */
+}
+
+/* Analysis page title - Fixed spacing */
+.analysis-title {
+    text-align: center;
+    font-size: 56px;
+    color: #4A148C;
+    margin: 20px 0 30px 0 !important; /* Reduced top margin from 30px to 20px */
+    font-family: 'Prompt', sans-serif;
+    font-weight: 700;
 }
 
 /* Responsive Design */
@@ -292,7 +390,7 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     .content-wrapper {
         flex-direction: column;
         text-align: center;
-        padding: 40px 40px 60px 40px;
+        padding: 30px 40px 50px 40px; /* Reduced top padding from 40px to 30px */
         gap: 50px;
     }
     
@@ -325,6 +423,16 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     .header-divider {
         display: none;
     }
+
+    .guide-container {
+        padding: 0 20px;
+        margin-top: 16px; /* Reduced from default */
+    }
+
+    .guide-title {
+        font-size: 44px;
+        margin-bottom: 32px; /* Reduced */
+    }
 }
 
 @media (max-width: 768px) {
@@ -338,7 +446,19 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     }
     
     .main-content {
-        padding: 30px 20px 50px 20px;
+        padding: 20px 20px 40px 20px; /* Reduced top padding from 30px to 20px */
+    }
+
+    .guide-title {
+        font-size: 36px;
+    }
+
+    .guide-section {
+        padding: 30px; /* Reduced from 40px */
+    }
+
+    .guide-warning {
+        padding: 30px; /* Reduced from 40px */
     }
 }
 
