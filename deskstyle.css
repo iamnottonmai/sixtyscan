@@ -143,6 +143,7 @@ div[data-testid="main"] .block-container {
     gap: 30px;
     width: 400px;
     margin: 20px 0 0 60px; /* Align with text section padding */
+    max-width: 400px; /* Prevent stretching */
 }
 
 /* Button Styles - Updated for vertical stack */
@@ -154,6 +155,7 @@ div.stButton > button,
     font-weight: 700 !important;
     font-family: 'Prompt', sans-serif !important;
     min-width: 400px !important;
+    max-width: 400px !important; /* Prevent stretching */
     height: 85px !important;
     margin: 0 !important;
     border: none !important;
@@ -175,6 +177,8 @@ div.stButton > button,
     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%) !important;
     color: white !important;
     box-shadow: 0 8px 30px rgba(74, 20, 140, 0.4) !important;
+    width: 400px !important;
+    max-width: 400px !important;
 }
 
 .homepage-button-container div.stButton > button:first-of-type:hover,
@@ -189,6 +193,8 @@ div.stButton > button,
     background: linear-gradient(135deg, #1976D2 0%, #42A5F5 50%, #64B5F6 100%) !important;
     color: white !important;
     box-shadow: 0 8px 30px rgba(25, 118, 210, 0.4) !important;
+    width: 400px !important;
+    max-width: 400px !important;
 }
 
 .homepage-button-container div.stButton > button:last-of-type:hover,
@@ -453,6 +459,11 @@ div.stButton > button,
         max-width: 400px;
     }
     
+    .homepage-button-container div.stButton > button {
+        width: 100% !important;
+        max-width: 400px !important;
+    }
+    
     .main-title {
         font-size: 48px;
         white-space: normal;
@@ -504,6 +515,11 @@ div.stButton > button,
         margin: 20px auto 0 auto;
         width: 100%;
         max-width: 320px;
+    }
+    
+    .homepage-button-container div.stButton > button {
+        width: 100% !important;
+        max-width: 320px !important;
     }
     
     .main-content {
