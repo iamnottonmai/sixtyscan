@@ -350,8 +350,8 @@ def run_desktop_app():
         # Render the combined HTML (no gap between header and content!)
         st.markdown(combined_html, unsafe_allow_html=True)
         
-        # Now add the interactive buttons using Streamlit columns - VERTICAL STACK
-        st.markdown('<div class="button-container" style="margin: -50px auto 0 auto; max-width: 400px;">', unsafe_allow_html=True)
+        # Now add the interactive buttons positioned below the text
+        st.markdown('<div class="homepage-button-container">', unsafe_allow_html=True)
         
         # First button - เริ่มใช้งาน (Start Analysis)
         if st.button("เริ่มใช้งาน", key="start_analysis", use_container_width=True):
