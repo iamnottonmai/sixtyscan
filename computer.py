@@ -294,8 +294,8 @@ def run_desktop_app():
     # =============================
     # Page Functions
     # =============================
-    def show_header():
-        """Display the header"""
+    def get_header_html():
+        """Get the header HTML without rendering it"""
         logo_b64 = load_image_file(CONFIG['LOGO_PATHS'], "SixtyScan Logo")
         current_time = get_thai_time()
         
@@ -303,7 +303,7 @@ def run_desktop_app():
         if logo_b64:
             logo_html = f'<img src="data:image/png;base64,{logo_b64}" class="header-logo" style="height: 56px; width: auto; margin-right: 24px;" alt="SixtyScan Logo">'
         
-        header_html = f"""
+        return f"""
             <div class="header-container">
                 <div class="logo-section">
                     {logo_html}
@@ -314,152 +314,136 @@ def run_desktop_app():
                 <div class="datetime-display">{current_time}</div>
             </div>
         """
-        st.markdown(header_html, unsafe_allow_html=True)
 
     def show_home_page():
-        """Display the home page"""
+        """Display the home page - FIXED VERSION"""
         load_css()
-        show_header()
         
         woman_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "Woman using phone")
         
-        # Create the main container
-        st.markdown('<div class="main-content">', unsafe_allow_html=True)
-        st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
-        
-        # Use Streamlit columns for proper layout
-        left_col, right_col = st.columns([1, 1], gap="large")
-        
-        with left_col:
-            st.markdown('<div class="text-section">', unsafe_allow_html=True)
-            
-            # Title
-            st.markdown("""
-                <h1 class="main-title">
-                    ตรวจเช็คโรคพาร์กินสัน<br>ทันทีด้วย <span class="highlight">SixtyScan</span>
-                </h1>
-            """, unsafe_allow_html=True)
-            
-            st.markdown('<div class="button-container">', unsafe_allow_html=True)
-            
-            # Create button columns for side-by-side layout
-            btn_col1, btn_col2 = st.columns([1, 1], gap="medium")
-            
-            with btn_col1:
-                if st.button("เริ่มใช้งาน", key="start_analysis", use_container_width=True):
-                    st.session_state.page = 'analysis'
-                    st.rerun()
-            
-            with btn_col2:
-                if st.button("คู่มือ", key="guide_manual", use_container_width=True):
-                    st.session_state.page = 'guide'
-                    st.rerun()
-            
-            st.markdown('</div>', unsafe_allow_html=True)  # Close button-container
-            st.markdown('</div>', unsafe_allow_html=True)  # Close text-section
-        
-        with right_col:
-            st.markdown('<div class="image-section">', unsafe_allow_html=True)
-            
-            # Image with proper styling
-            if woman_image_b64:
-                st.markdown(f"""
-                    <img src="data:image/jpg;base64,{woman_image_b64}" 
-                         alt="Woman using phone"
-                         class="main-image">
-                """, unsafe_allow_html=True)
-            else:
-                # Enhanced placeholder
-                st.markdown("""
-                    <div class="image-placeholder">
-                        <div class="placeholder-content">
-                            <div class="placeholder-icon">📱</div>
-                            <div class="placeholder-text">
-                                insert.jpg<br>not found
+        # SOLUTION: Combine header and main content in ONE st.markdown call
+        combined_html = f"""
+            {get_header_html()}
+            <div class="main-content">
+                <div class="content-wrapper">
+                    <div class="text-section">
+                        <h1 class="main-title">
+                            ตรวจเช็คโรคพาร์กินสัน<br>ทันทีด้วย <span class="highlight">SixtyScan</span>
+                        </h1>
+                    </div>
+                    <div class="image-section">
+                        {f'<img src="data:image/jpg;base64,{woman_image_b64}" alt="Woman using phone" class="main-image">' if woman_image_b64 else '''
+                        <div class="image-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">📱</div>
+                                <div class="placeholder-text">
+                                    insert.jpg<br>not found
+                                </div>
                             </div>
                         </div>
+                        '''}
                     </div>
-                """, unsafe_allow_html=True)
-            
-            st.markdown('</div>', unsafe_allow_html=True)  # Close image-section
+                </div>
+            </div>
+        """
         
-        st.markdown('</div>', unsafe_allow_html=True)  # Close content-wrapper
-        st.markdown('</div>', unsafe_allow_html=True)  # Close main-content
+        # Render the combined HTML (no gap between header and content!)
+        st.markdown(combined_html, unsafe_allow_html=True)
+        
+        # Now add the interactive buttons using Streamlit columns
+        st.markdown('<div class="button-container" style="margin: -50px auto 0 auto; max-width: 600px;">', unsafe_allow_html=True)
+        
+        btn_col1, btn_col2 = st.columns([1, 1], gap="medium")
+        
+        with btn_col1:
+            if st.button("เริ่มใช้งาน", key="start_analysis", use_container_width=True):
+                st.session_state.page = 'analysis'
+                st.rerun()
+        
+        with btn_col2:
+            if st.button("คู่มือ", key="guide_manual", use_container_width=True):
+                st.session_state.page = 'guide'
+                st.rerun()
+        
+        st.markdown('</div>', unsafe_allow_html=True)
 
     def show_guide_page():
         """Display the guide/manual page with proper styling"""
         load_css()
-        show_header()
-    
+        
+        # FIXED: Combine header with back button and title
+        guide_html = f"""
+            {get_header_html()}
+            <div class="guide-container">
+                <h1 class="guide-title">คู่มือการใช้งาน SixtyScan</h1>
+            </div>
+        """
+        
+        st.markdown(guide_html, unsafe_allow_html=True)
+        
         # Back button
         if st.button("← กลับหน้าแรก", key="back_to_home_from_guide"):
             st.session_state.page = 'home'
             st.rerun()
     
-        # Use the CSS classes for proper styling
-        st.markdown('<div class="guide-container">', unsafe_allow_html=True)
-    
-        # Title with proper class
-        st.markdown('<h1 class="guide-title">คู่มือการใช้งาน SixtyScan</h1>', unsafe_allow_html=True)
-    
-        # Preparation section
+        # Guide content
         st.markdown("""
-            <div class="guide-section">
-                <h2>การเตรียมตัวก่อนการตรวจ</h2>
-                <ul>
-                    <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
-                    <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
-                    <li>นั่งหรือยืนในท่าที่สบาย</li>
-                    <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
-                </ul>
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
+                <div class="guide-section">
+                    <h2>การเตรียมตัวก่อนการตรวจ</h2>
+                    <ul>
+                        <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
+                        <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
+                        <li>นั่งหรือยืนในท่าที่สบาย</li>
+                        <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
+                    </ul>
+                </div>
+                
+                <div class="guide-section">
+                    <h2>ขั้นตอนการตรวจ</h2>
+                    <h3>1. การออกเสียงสระ</h3>
+                    <ul>
+                        <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
+                        <li>ออกเสียงให้ชัดเจนและคงที่</li>
+                        <li>ไม่ต้องออกเสียงดังเกินไป</li>
+                    </ul>
+                
+                    <h3>2. การออกเสียงพยางค์</h3>
+                    <ul>
+                        <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
+                        <li>ใช้เวลาประมาณ 6 วินาที</li>
+                        <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
+                    </ul>
+                
+                    <h3>3. การอ่านประโยค</h3>
+                    <ul>
+                        <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
+                        <li>ไม่ต้องรีบร้อน</li>
+                        <li>ออกเสียงให้ชัดเจน</li>
+                    </ul>
+                </div>
+                
+                <div class="guide-warning">
+                    <h2>ข้อควรระวัง</h2>
+                    <ul>
+                        <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
+                        <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
+                        <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
+                    </ul>
+                </div>
             </div>
         """, unsafe_allow_html=True)
-    
-        # Steps section
-        st.markdown("""
-            <div class="guide-section">
-                <h2>ขั้นตอนการตรวจ</h2>
-                <h3>1. การออกเสียงสระ</h3>
-                <ul>
-                    <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
-                    <li>ออกเสียงให้ชัดเจนและคงที่</li>
-                    <li>ไม่ต้องออกเสียงดังเกินไป</li>
-                </ul>
-            
-                <h3>2. การออกเสียงพยางค์</h3>
-                <ul>
-                    <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
-                    <li>ใช้เวลาประมาณ 6 วินาที</li>
-                    <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
-                </ul>
-            
-                <h3>3. การอ่านประโยค</h3>
-                <ul>
-                    <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
-                    <li>ไม่ต้องรีบร้อน</li>
-                    <li>ออกเสียงให้ชัดเจน</li>
-                </ul>
-            </div>
-        """, unsafe_allow_html=True)
-    
-        # Warning section
-        st.markdown("""
-            <div class="guide-warning">
-                <h2>ข้อควรระวัง</h2>
-                <ul>
-                    <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
-                    <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
-                    <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
-                </ul>
-            </div>
-        """, unsafe_allow_html=True)
-    
-        st.markdown('</div>', unsafe_allow_html=True)  # Close guide-container
 
     def show_analysis_page():
         """Display the analysis page"""
         load_css()
-        show_header()
+        
+        # FIXED: Combine header with analysis content
+        analysis_html = f"""
+            {get_header_html()}
+        """
+        
+        st.markdown(analysis_html, unsafe_allow_html=True)
         
         # Back button
         if st.button("← กลับหน้าแรก", key="back_to_home"):
