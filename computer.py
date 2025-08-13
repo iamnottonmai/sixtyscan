@@ -316,56 +316,113 @@ def run_desktop_app():
         """
 
     def show_home_page():
-        """Display the home page - FIXED VERSION"""
+        """Display the home page with improved layout matching the reference image"""
         load_css()
-        
+    
         woman_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "Woman using phone")
-        
-        # SOLUTION: Combine header and main content in ONE st.markdown call
+    
+    # Combined header and main content
         combined_html = f"""
             {get_header_html()}
             <div class="main-content">
-                <div class="content-wrapper">
-                    <div class="text-section">
-                        <h1 class="main-title">
-                            ตรวจเช็คโรคพาร์กินสัน<br>ทันทีด้วย <span class="highlight">SixtyScan</span>
+                <div class="content-wrapper" style="display: flex; align-items: center; gap: 60px; max-width: 1400px; margin: 0 auto; padding: 40px 60px;">
+                    <div class="text-section" style="flex: 1; max-width: 600px;">
+                        <h1 class="main-title" style="font-size: 64px; font-weight: 700; line-height: 1.2; margin-bottom: 40px; color: #2D1B4E; font-family: 'Prompt', sans-serif;">
+                            ตรวจเช็คโรคพาร์กินสัน<br>ทันทีด้วย <span style="color: #6A4C93;">SixtyScan</span>
                         </h1>
                     </div>
-                    <div class="image-section">
-                        {f'<img src="data:image/jpg;base64,{woman_image_b64}" alt="Woman using phone" class="main-image">' if woman_image_b64 else '''
-                        <div class="image-placeholder">
-                            <div class="placeholder-content">
-                                <div class="placeholder-icon">📱</div>
-                                <div class="placeholder-text">
-                                    insert.jpg<br>not found
-                                </div>
+                    <div class="image-section" style="flex: 1; display: flex; justify-content: center; align-items: center;">
+                        {f'<img src="data:image/jpg;base64,{woman_image_b64}" alt="Woman using phone" style="max-width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.1);">' if woman_image_b64 else '''
+                        <div style="width: 500px; height: 400px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 60px rgba(0,0,0,0.1);">
+                            <div style="font-size: 80px; margin-bottom: 20px; opacity: 0.6;">📱</div>
+                            <div style="color: #666; font-size: 18px; font-family: 'Prompt', sans-serif; text-align: center;">
+                                insert.jpg<br>not found
                             </div>
                         </div>
                         '''}
                     </div>
                 </div>
             </div>
+        
+            <style>
+            @media (max-width: 768px) {
+                .content-wrapper {
+                    flex-direction: column !important;
+                    text-align: center !important;
+                    padding: 20px !important;
+                    gap: 40px !important;
+                }
+                .main-title {
+                    font-size: 42px !important;
+                }
+            }
+            </style>
         """
-        
-        # Render the combined HTML (no gap between header and content!)
+    
+    # Render the combined HTML
         st.markdown(combined_html, unsafe_allow_html=True)
-        
-        # Now add the interactive buttons using Streamlit columns
-        st.markdown('<div class="button-container" style="margin: -50px auto 0 auto; max-width: 600px;">', unsafe_allow_html=True)
-        
-        btn_col1, btn_col2 = st.columns([1, 1], gap="medium")
-        
-        with btn_col1:
-            if st.button("เริ่มใช้งาน", key="start_analysis", use_container_width=True):
+    
+    # Add spacing before buttons
+        st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
+    
+    # Create a container for buttons positioned under the text
+        col1, col2, col_spacer = st.columns([1.2, 1.2, 2])
+    
+        with col1:
+            if st.button("เริ่มใช้งาน", 
+                        key="start_analysis", 
+                        use_container_width=True,
+                        help="เริ่มการวิเคราะห์เสียงเพื่อตรวจหาความเสี่ยงพาร์กินสัน"):
                 st.session_state.page = 'analysis'
                 st.rerun()
-        
-        with btn_col2:
-            if st.button("คู่มือ", key="guide_manual", use_container_width=True):
+    
+        with col2:
+            if st.button("คู่มือ", 
+                        key="guide_manual", 
+                        use_container_width=True,
+                        help="ดูคู่มือการใช้งานและคำแนะนำ"):
                 st.session_state.page = 'guide'
                 st.rerun()
+    
+    # Custom button styling
+        st.markdown("""
+            <style>
+            /* Custom button styling */
+            div[data-testid="stButton"] > button {
+                height: 60px;
+                border-radius: 30px;
+                font-size: 24px;
+                font-weight: 600;
+                font-family: 'Prompt', sans-serif;
+                border: none;
+                color: white;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                margin-bottom: 20px;
+            }
         
-        st.markdown('</div>', unsafe_allow_html=True)
+            div[data-testid="stButton"] > button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+            }
+        
+            div[data-testid="stButton"] > button:focus {
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.4);
+            }
+        
+            /* Different gradient for second button */
+            div[data-testid="column"]:nth-child(2) div[data-testid="stButton"] > button {
+                background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+                box-shadow: 0 8px 25px rgba(118, 75, 162, 0.3);
+            }
+        
+            div[data-testid="column"]:nth-child(2) div[data-testid="stButton"] > button:hover {
+                box-shadow: 0 12px 35px rgba(118, 75, 162, 0.4);
+            }
+            </style>
+        """, unsafe_allow_html=True)
 
     def show_guide_page():
         """Display the guide/manual page with proper styling"""
