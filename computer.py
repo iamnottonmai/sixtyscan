@@ -318,10 +318,10 @@ def run_desktop_app():
     def show_home_page():
         """Display the home page with improved layout matching the reference image"""
         load_css()
-    
+        
         woman_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "Woman using phone")
-    
-    # Combined header and main content
+        
+        # Combined header and main content
         combined_html = f"""
             {get_header_html()}
             <div class="main-content">
@@ -343,7 +343,7 @@ def run_desktop_app():
                     </div>
                 </div>
             </div>
-        
+            
             <style>
             @media (max-width: 768px) {
                 .content-wrapper {
@@ -358,16 +358,16 @@ def run_desktop_app():
             }
             </style>
         """
-    
-    # Render the combined HTML
+        
+        # Render the combined HTML
         st.markdown(combined_html, unsafe_allow_html=True)
-    
-    # Add spacing before buttons
+        
+        # Add spacing before buttons
         st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
-    
-    # Create a container for buttons positioned under the text
+        
+        # Create a container for buttons positioned under the text
         col1, col2, col_spacer = st.columns([1.2, 1.2, 2])
-    
+        
         with col1:
             if st.button("เริ่มใช้งาน", 
                         key="start_analysis", 
@@ -375,7 +375,7 @@ def run_desktop_app():
                         help="เริ่มการวิเคราะห์เสียงเพื่อตรวจหาความเสี่ยงพาร์กินสัน"):
                 st.session_state.page = 'analysis'
                 st.rerun()
-    
+        
         with col2:
             if st.button("คู่มือ", 
                         key="guide_manual", 
@@ -383,8 +383,8 @@ def run_desktop_app():
                         help="ดูคู่มือการใช้งานและคำแนะนำ"):
                 st.session_state.page = 'guide'
                 st.rerun()
-    
-    # Custom button styling
+        
+        # Custom button styling
         st.markdown("""
             <style>
             /* Custom button styling */
@@ -401,23 +401,23 @@ def run_desktop_app():
                 transition: all 0.3s ease;
                 margin-bottom: 20px;
             }
-        
+            
             div[data-testid="stButton"] > button:hover {
                 transform: translateY(-3px);
                 box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
             }
-        
+            
             div[data-testid="stButton"] > button:focus {
                 outline: none;
                 box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.4);
             }
-        
+            
             /* Different gradient for second button */
             div[data-testid="column"]:nth-child(2) div[data-testid="stButton"] > button {
                 background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
                 box-shadow: 0 8px 25px rgba(118, 75, 162, 0.3);
             }
-        
+            
             div[data-testid="column"]:nth-child(2) div[data-testid="stButton"] > button:hover {
                 box-shadow: 0 12px 35px rgba(118, 75, 162, 0.4);
             }
@@ -540,6 +540,81 @@ def run_desktop_app():
             
             if not st.session_state.clear_clicked:
                 audio_bytes = st.audio_input(f"🎤 บันทึกเสียง {sound}", key=f"vowel_{i}")
+                if audio_bytes:
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+                        tmp.write(audio_bytes.read())
+                        add_temp_file(tmp.name)
+                        while len(st.session_state.vowel_files) <= i:
+                            st.session_state.vowel_files.append(None)
+                        if st.session_state.vowel_files[i] and os.path.exists(st.session_state.vowel_files[i]):
+                            os.unlink(st.session_state.vowel_files[i])
+                        st.session_state.vowel_files[i] = tmp.name
+                    st.success(f"บันทึกเสียง \"{sound}\" สำเร็จ", icon="✅")
+            else:
+                st.audio_input(f"🎤 บันทึกเสียง {sound}", key=f"vowel_{i}_new")
+            
+            if i < len(st.session_state.vowel_files) and st.session_state.vowel_files[i]:
+                spec_image = create_mel_spectrogram_display(st.session_state.vowel_files[i], f"สระ \"{sound}\"")
+                if spec_image:
+                    st.markdown(f"<div style='color: black; font-size: 18px; margin-bottom: 12px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"{sound}\"</b></div>", unsafe_allow_html=True)
+                    st.image(spec_image, use_container_width=True)
+
+        # File uploader for vowels
+        uploaded_vowels = st.file_uploader("อัปโหลดไฟล์เสียงสระ (7 ไฟล์)", type=["wav", "mp3", "m4a"], accept_multiple_files=True)
+        if uploaded_vowels and len([f for f in st.session_state.vowel_files if f is not None]) < 7:
+            cleanup_all_temp_files()
+            st.session_state.vowel_files = []
+            for file in uploaded_vowels[:7]:
+                saved_path = save_uploaded_file(file)
+                if saved_path:
+                    st.session_state.vowel_files.append(saved_path)
+
+        # Pataka recording
+        pataka_card_html = """
+        <div class='card'>
+            <h2>2. พยางค์</h2>
+            <p class='instructions'>กรุณาออกเสียงคำว่า <b>"พา - ทา - คา"</b> ให้จบภายใน 6 วินาที</p>
+        </div>
+        """
+        st.markdown(pataka_card_html, unsafe_allow_html=True)
+
+        if not st.session_state.clear_clicked:
+            pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka")
+            if pataka_bytes:
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+                    tmp.write(pataka_bytes.read())
+                    add_temp_file(tmp.name)
+                    if st.session_state.pataka_file and os.path.exists(st.session_state.pataka_file):
+                        os.unlink(st.session_state.pataka_file)
+                    st.session_state.pataka_file = tmp.name
+                st.success("บันทึกพยางค์สำเร็จ", icon="✅")
+        else:
+            pataka_bytes = st.audio_input("🎤 บันทึกเสียงพยางค์", key="pataka_new")
+
+        if st.session_state.pataka_file:
+            spec_image = create_mel_spectrogram_display(st.session_state.pataka_file, "พยางค์")
+            if spec_image:
+                st.markdown("<div style='color: black; font-size: 18px; margin-bottom: 12px; text-align: center; font-family: \"Prompt\", sans-serif; font-weight: 500;'>Mel Spectrogram: <b>\"พา-ทา-คา\"</b></div>", unsafe_allow_html=True)
+                st.image(spec_image, use_container_width=True)
+
+        # File uploader for pataka
+        uploaded_pataka = st.file_uploader("อัปโหลดไฟล์เสียงพยางค์", type=["wav", "mp3", "m4a"], accept_multiple_files=False)
+        if uploaded_pataka and not st.session_state.pataka_file:
+            saved_path = save_uploaded_file(uploaded_pataka)
+            if saved_path:
+                st.session_state.pataka_file = saved_path
+
+        # Sentence recording
+        sentence_card_html = """
+        <div class='card'>
+            <h2>3. ประโยค</h2>
+            <p class='sentence-instruction'>กรุณาอ่านประโยค <b>"วันนี้อากาศแจ่มใสนกร้องเสียงดังเป็นจังหวะ"</b></p>
+        </div>
+        """
+        st.markdown(sentence_card_html, unsafe_allow_html=True)
+
+        if not st.session_state.clear_clicked:
+            sentence_bytes = st.audio_input("🎤 บันทึกเสียง {sound}", key=f"vowel_{i}")
                 if audio_bytes:
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
                         tmp.write(audio_bytes.read())
