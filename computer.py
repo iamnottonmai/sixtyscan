@@ -423,12 +423,84 @@ def run_desktop_app():
                     </ul>
                 </div>
                 
+                <div class="guide-section">
+                    <h2>ตัวอย่างเสียงที่ถูกต้อง</h2>
+                    <p style="font-size: 18px; margin-bottom: 20px; color: #666;">ฟังตัวอย่างเสียงเพื่อเป็นแนวทางในการออกเสียงที่ถูกต้อง</p>
+                </div>
+                
                 <div class="guide-warning">
                     <h2>ข้อควรระวัง</h2>
                     <ul>
                         <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
                         <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
                         <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
+                    </ul>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Sample audio section
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 20px; padding: 30px; margin: 30px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                    <h3 style="color: #495057; margin-bottom: 25px; font-family: 'Prompt', sans-serif; font-size: 24px; font-weight: 600; text-align: center;">🎵 ตัวอย่างเสียงที่ถูกต้อง</h3>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Sample audio files in order according to analysis page
+        sample_audio_files = [
+            ("อา", "sampleaudio/no/อา 1(1) pd.m4a"),
+            ("อี", "sampleaudio/no/E 1(1) pd.m4a"),
+            ("อือ", "sampleaudio/no/อือ 1(1) pd.m4a"),
+            ("อู", "sampleaudio/no/อู 1(1) pd.m4a"),
+            ("ไอ", "sampleaudio/no/ไอ 1(1) pd.m4a"),
+            ("อำ", "sampleaudio/no/อำ 1(1) pd.m4a"),
+            ("เอา", "sampleaudio/no/เอา 1(1) pd.m4a"),
+            ("พยางค์ (พา-ทา-คา)", "sampleaudio/no/Pa-ta-ka 1(1) pd.m4a"),
+            ("ประโยค", "sampleaudio/no/Sentence 1(1) pd.m4a")
+        ]
+        
+        # Create columns for audio display
+        audio_cols = st.columns(3)
+        
+        for i, (title, file_path) in enumerate(sample_audio_files):
+            with audio_cols[i % 3]:
+                try:
+                    if os.path.exists(file_path):
+                        with open(file_path, "rb") as audio_file:
+                            audio_bytes = audio_file.read()
+                            st.markdown(f"""
+                                <div style="background: white; border-radius: 15px; padding: 20px; margin: 10px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 4px solid #6A1B9A;">
+                                    <h4 style="color: #4A148C; margin-bottom: 15px; font-family: 'Prompt', sans-serif; font-size: 18px; font-weight: 600; text-align: center;">{title}</h4>
+                                </div>
+                            """, unsafe_allow_html=True)
+                            st.audio(audio_bytes, format="audio/m4a")
+                    else:
+                        st.markdown(f"""
+                            <div style="background: #fff3cd; border-radius: 15px; padding: 20px; margin: 10px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 4px solid #ffc107;">
+                                <h4 style="color: #856404; margin-bottom: 15px; font-family: 'Prompt', sans-serif; font-size: 18px; font-weight: 600; text-align: center;">{title}</h4>
+                                <p style="color: #856404; text-align: center; font-size: 14px;">ไฟล์เสียงไม่พบ</p>
+                            </div>
+                        """, unsafe_allow_html=True)
+                except Exception as e:
+                    st.markdown(f"""
+                        <div style="background: #f8d7da; border-radius: 15px; padding: 20px; margin: 10px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 4px solid #dc3545;">
+                            <h4 style="color: #721c24; margin-bottom: 15px; font-family: 'Prompt', sans-serif; font-size: 18px; font-weight: 600; text-align: center;">{title}</h4>
+                            <p style="color: #721c24; text-align: center; font-size: 14px;">เกิดข้อผิดพลาดในการโหลดไฟล์</p>
+                        </div>
+                    """, unsafe_allow_html=True)
+        
+        # Additional information about sample audio
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
+                <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 20px; padding: 25px; margin: 30px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border-left: 6px solid #1976d2;">
+                    <h4 style="color: #1565c0; margin-bottom: 15px; font-family: 'Prompt', sans-serif; font-size: 20px; font-weight: 600;">💡 คำแนะนำเพิ่มเติม</h4>
+                    <ul style="font-size: 16px; font-family: 'Prompt', sans-serif; line-height: 1.6; color: #2e7d32;">
+                        <li>ฟังตัวอย่างเสียงก่อนเริ่มการตรวจเพื่อเข้าใจรูปแบบการออกเสียงที่ถูกต้อง</li>
+                        <li>พยายามออกเสียงให้เหมือนกับตัวอย่างให้มากที่สุด</li>
+                        <li>หากไม่แน่ใจ สามารถฟังตัวอย่างซ้ำได้หลายครั้ง</li>
+                        <li>ตัวอย่างเสียงเหล่านี้เป็นเสียงจากผู้ที่ไม่เป็นโรคพาร์กินสัน</li>
                     </ul>
                 </div>
             </div>
