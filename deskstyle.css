@@ -136,12 +136,13 @@ div[data-testid="main"] .block-container {
     font-weight: 700;
 }
 
-/* Button Container */
-.button-container {
+/* Homepage Button Container - Positioned below text */
+.homepage-button-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
     width: 400px;
+    margin: 20px 0 0 60px; /* Align with text section padding */
 }
 
 /* Button Styles - Updated for vertical stack */
@@ -168,31 +169,59 @@ div.stButton > button,
     line-height: 1.2 !important;
 }
 
-/* First Button (เริ่มใช้งาน) - Green gradient */
-div.stButton > button:first-of-type,
-[data-testid="stButton"] > button:first-of-type {
+/* Homepage Buttons - Purple/Blue gradient */
+.homepage-button-container div.stButton > button:first-of-type,
+.homepage-button-container [data-testid="stButton"] > button:first-of-type {
+    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%) !important;
+    color: white !important;
+    box-shadow: 0 8px 30px rgba(74, 20, 140, 0.4) !important;
+}
+
+.homepage-button-container div.stButton > button:first-of-type:hover,
+.homepage-button-container [data-testid="stButton"] > button:first-of-type:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 15px 40px rgba(74, 20, 140, 0.5) !important;
+    background: linear-gradient(135deg, #38006b 0%, #4A148C 50%, #6A1B9A 100%) !important;
+}
+
+.homepage-button-container div.stButton > button:last-of-type,
+.homepage-button-container [data-testid="stButton"] > button:last-of-type {
+    background: linear-gradient(135deg, #1976D2 0%, #42A5F5 50%, #64B5F6 100%) !important;
+    color: white !important;
+    box-shadow: 0 8px 30px rgba(25, 118, 210, 0.4) !important;
+}
+
+.homepage-button-container div.stButton > button:last-of-type:hover,
+.homepage-button-container [data-testid="stButton"] > button:last-of-type:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 15px 40px rgba(25, 118, 210, 0.5) !important;
+    background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #42A5F5 100%) !important;
+}
+
+/* Other pages buttons - Keep original colors */
+.button-container div.stButton > button:first-of-type,
+.button-container [data-testid="stButton"] > button:first-of-type {
     background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 50%, #66BB6A 100%) !important;
     color: white !important;
     box-shadow: 0 8px 30px rgba(46, 125, 50, 0.4) !important;
 }
 
-div.stButton > button:first-of-type:hover,
-[data-testid="stButton"] > button:first-of-type:hover {
+.button-container div.stButton > button:first-of-type:hover,
+.button-container [data-testid="stButton"] > button:first-of-type:hover {
     transform: translateY(-4px) !important;
     box-shadow: 0 15px 40px rgba(46, 125, 50, 0.5) !important;
     background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #4CAF50 100%) !important;
 }
 
-/* Second Button (คู่มือ) - Orange gradient */
-div.stButton > button:last-of-type,
-[data-testid="stButton"] > button:last-of-type {
+.button-container div.stButton > button:last-of-type,
+.button-container [data-testid="stButton"] > button:last-of-type {
     background: linear-gradient(135deg, #F57C00 0%, #FF9800 50%, #FFB74D 100%) !important;
     color: white !important;
     box-shadow: 0 8px 30px rgba(245, 124, 0, 0.4) !important;
 }
 
-div.stButton > button:last-of-type:hover,
-[data-testid="stButton"] > button:last-of-type:hover {
+.button-container div.stButton > button:last-of-type:hover,
+.button-container [data-testid="stButton"] > button:last-of-type:hover {
     transform: translateY(-4px) !important;
     box-shadow: 0 15px 40px rgba(245, 124, 0, 0.5) !important;
     background: linear-gradient(135deg, #E65100 0%, #F57C00 50%, #FF9800 100%) !important;
@@ -418,6 +447,12 @@ div.stButton > button:last-of-type:hover,
         padding-left: 0; /* Remove left padding on smaller screens */
     }
     
+    .homepage-button-container {
+        margin: 20px auto 0 auto; /* Center buttons on smaller screens */
+        width: 100%;
+        max-width: 400px;
+    }
+    
     .main-title {
         font-size: 48px;
         white-space: normal;
@@ -463,6 +498,12 @@ div.stButton > button:last-of-type:hover,
     .stButton > button {
         min-width: 280px !important;
         font-size: 24px !important;
+    }
+    
+    .homepage-button-container {
+        margin: 20px auto 0 auto;
+        width: 100%;
+        max-width: 320px;
     }
     
     .main-content {
