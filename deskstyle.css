@@ -172,8 +172,18 @@ div.stButton > button,
     line-height: 1.2 !important;
 }
 
+/* Homepage Buttons Wrapper - Positioned within text section */
+.homepage-buttons-wrapper {
+    margin-left: 60px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 400px;
+}
+
 /* Homepage Buttons - Purple-Blue gradient for both */
-div[style*="margin-left: 60px"] div.stButton > button {
+.homepage-buttons-wrapper div.stButton > button {
     font-size: 42px !important; /* Bigger text for homepage buttons */
     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #1976D2 100%) !important;
     color: white !important;
@@ -181,10 +191,10 @@ div[style*="margin-left: 60px"] div.stButton > button {
     width: 400px !important;
     max-width: 400px !important;
     border: none !important;
-    margin-bottom: 20px !important;
+    margin: 0 !important;
 }
 
-div[style*="margin-left: 60px"] div.stButton > button:hover {
+.homepage-buttons-wrapper div.stButton > button:hover {
     transform: translateY(-4px) !important;
     box-shadow: 0 15px 40px rgba(74, 20, 140, 0.5) !important;
     background: linear-gradient(135deg, #38006b 0%, #4A148C 50%, #1565C0 100%) !important;
@@ -439,13 +449,13 @@ div[style*="margin-left: 60px"] div.stButton > button:hover {
         padding-left: 0; /* Remove left padding on smaller screens */
     }
     
-    .homepage-button-container {
+    .homepage-buttons-wrapper {
         margin: 20px auto 0 auto; /* Center buttons on smaller screens */
         width: 100%;
         max-width: 400px;
     }
     
-    .homepage-button-container div.stButton > button {
+    .homepage-buttons-wrapper div.stButton > button {
         width: 100% !important;
         max-width: 400px !important;
     }
@@ -497,13 +507,13 @@ div[style*="margin-left: 60px"] div.stButton > button:hover {
         font-size: 24px !important;
     }
     
-    .homepage-button-container {
+    .homepage-buttons-wrapper {
         margin: 20px auto 0 auto;
         width: 100%;
         max-width: 320px;
     }
     
-    .homepage-button-container div.stButton > button {
+    .homepage-buttons-wrapper div.stButton > button {
         width: 100% !important;
         max-width: 320px !important;
     }

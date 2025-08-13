@@ -351,7 +351,7 @@ def run_desktop_app():
         st.markdown(combined_html, unsafe_allow_html=True)
         
         # Add buttons positioned within the text section area
-        st.markdown('<div style="margin-left: 60px; margin-top: 20px;">', unsafe_allow_html=True)
+        st.markdown('<div class="homepage-buttons-wrapper">', unsafe_allow_html=True)
         
         # First button - เริ่มใช้งาน (Start Analysis)
         if st.button("เริ่มใช้งาน", key="start_analysis"):
