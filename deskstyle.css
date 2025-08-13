@@ -172,21 +172,22 @@ div.stButton > button,
     line-height: 1.2 !important;
 }
 
-/* Homepage Buttons - Blue-Purple gradient for both */
-.homepage-button-container div.stButton > button {
+/* Homepage Buttons - Purple-Blue gradient for both */
+div[style*="margin-left: 60px"] div.stButton > button {
     font-size: 42px !important; /* Bigger text for homepage buttons */
-    background: linear-gradient(135deg, #1976D2 0%, #6A1B9A 50%, #8E24AA 100%) !important;
+    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #1976D2 100%) !important;
     color: white !important;
-    box-shadow: 0 8px 30px rgba(25, 118, 210, 0.4) !important;
+    box-shadow: 0 8px 30px rgba(74, 20, 140, 0.4) !important;
     width: 400px !important;
     max-width: 400px !important;
     border: none !important;
+    margin-bottom: 20px !important;
 }
 
-.homepage-button-container div.stButton > button:hover {
+div[style*="margin-left: 60px"] div.stButton > button:hover {
     transform: translateY(-4px) !important;
-    box-shadow: 0 15px 40px rgba(25, 118, 210, 0.5) !important;
-    background: linear-gradient(135deg, #1565C0 0%, #4A148C 50%, #6A1B9A 100%) !important;
+    box-shadow: 0 15px 40px rgba(74, 20, 140, 0.5) !important;
+    background: linear-gradient(135deg, #38006b 0%, #4A148C 50%, #1565C0 100%) !important;
 }
 
 /* Other pages buttons - Keep original colors */

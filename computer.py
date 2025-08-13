@@ -350,8 +350,8 @@ def run_desktop_app():
         # Render the combined HTML (no gap between header and content!)
         st.markdown(combined_html, unsafe_allow_html=True)
         
-        # Now add the interactive buttons positioned below the text
-        st.markdown('<div class="homepage-button-container">', unsafe_allow_html=True)
+        # Add buttons positioned within the text section area
+        st.markdown('<div style="margin-left: 60px; margin-top: 20px;">', unsafe_allow_html=True)
         
         # First button - เริ่มใช้งาน (Start Analysis)
         if st.button("เริ่มใช้งาน", key="start_analysis"):
