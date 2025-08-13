@@ -316,49 +316,36 @@ def run_desktop_app():
         """
 
     def show_home_page():
-        """Display the home page with improved layout matching the reference image"""
+        """Display the home page - FIXED VERSION"""
         load_css()
         
         woman_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "Woman using phone")
         
-        # Combined header and main content
+        # SOLUTION: Combine header and main content in ONE st.markdown call
         combined_html = f"""
             {get_header_html()}
             <div class="main-content">
-                <div class="content-wrapper" style="display: flex; align-items: center; gap: 60px; max-width: 1400px; margin: 0 auto; padding: 40px 60px;">
-                    <div class="text-section" style="flex: 1; max-width: 600px;">
-                        <h1 class="main-title" style="font-size: 64px; font-weight: 700; line-height: 1.2; margin-bottom: 40px; color: #2D1B4E; font-family: 'Prompt', sans-serif;">
-                            ตรวจเช็คโรคพาร์กินสัน<br>ทันทีด้วย <span style="color: #6A4C93;">SixtyScan</span>
+                <div class="content-wrapper">
+                    <div class="text-section">
+                        <h1 class="main-title">
+                            ตรวจเช็คโรคพาร์กินสัน<br>ทันทีด้วย <span class="highlight">SixtyScan</span>
                         </h1>
                     </div>
-                    <div class="image-section" style="flex: 1; display: flex; justify-content: center; align-items: center;">
-                        {f'<img src="data:image/jpg;base64,{woman_image_b64}" alt="Woman using phone" style="max-width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.1);">' if woman_image_b64 else '''
-                        <div style="width: 500px; height: 400px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 60px rgba(0,0,0,0.1);">
-                            <div style="font-size: 80px; margin-bottom: 20px; opacity: 0.6;">📱</div>
-                            <div style="color: #666; font-size: 18px; font-family: 'Prompt', sans-serif; text-align: center;">
-                                insert.jpg<br>not found
+                    <div class="image-section">
+                        {f'<img src="data:image/jpg;base64,{woman_image_b64}" alt="Woman using phone" class="main-image">' if woman_image_b64 else '''
+                        <div class="image-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">📱</div>
+                                <div class="placeholder-text">
+                                    insert.jpg<br>not found
+                                </div>
                             </div>
                         </div>
                         '''}
                     </div>
                 </div>
             </div>
-            
-            <style>
-            @media (max-width: 768px) {
-                .content-wrapper {
-                    flex-direction: column !important;
-                    text-align: center !important;
-                    padding: 20px !important;
-                    gap: 40px !important;
-                }
-                .main-title {
-                    font-size: 42px !important;
-                }
-            }
-            </style>
         """
-        
         # Render the combined HTML
         st.markdown(combined_html, unsafe_allow_html=True)
         
