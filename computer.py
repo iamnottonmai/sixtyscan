@@ -354,12 +354,12 @@ def run_desktop_app():
         st.markdown('<div class="homepage-button-container">', unsafe_allow_html=True)
         
         # First button - เริ่มใช้งาน (Start Analysis)
-        if st.button("เริ่มใช้งาน", key="start_analysis", use_container_width=True):
+        if st.button("เริ่มใช้งาน", key="start_analysis"):
             st.session_state.page = 'analysis'
             st.rerun()
         
         # Second button - คู่มือ (Guide)
-        if st.button("คู่มือ", key="guide_manual", use_container_width=True):
+        if st.button("คู่มือ", key="guide_manual"):
             st.session_state.page = 'guide'
             st.rerun()
         
