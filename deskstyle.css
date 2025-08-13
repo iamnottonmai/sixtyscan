@@ -155,8 +155,8 @@ div.stButton > button,
     border-radius: 70px !important;
     font-weight: 700 !important;
     font-family: 'Prompt', sans-serif !important;
-    min-width: 400px !important;
-    max-width: 400px !important; /* Prevent stretching */
+    min-width: 1000px !important;
+    max-width: 1000px !important; /* Prevent stretching */
     height: 85px !important;
     margin: 0 !important;
     border: none !important;
@@ -178,8 +178,8 @@ div.stButton > button,
     background: linear-gradient(135deg, #1976D2 0%, #6A1B9A 50%, #8E24AA 100%) !important;
     color: white !important;
     box-shadow: 0 8px 30px rgba(25, 118, 210, 0.4) !important;
-    width: 400px !important;
-    max-width: 400px !important;
+    width: 1000px !important;
+    max-width: 1000px !important;
     border: none !important;
 }
 
