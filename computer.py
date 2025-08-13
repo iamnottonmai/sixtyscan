@@ -1,3 +1,7 @@
+ong perfect
+
+before:
+
 import streamlit as st
 import base64
 import os
@@ -346,70 +350,26 @@ def run_desktop_app():
                 </div>
             </div>
         """
-        # Render the combined HTML
+        
+        # Render the combined HTML (no gap between header and content!)
         st.markdown(combined_html, unsafe_allow_html=True)
         
-        # Add spacing before buttons
-        st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
+        # Now add the interactive buttons using Streamlit columns
+        st.markdown('<div class="button-container" style="margin: -50px auto 0 auto; max-width: 600px;">', unsafe_allow_html=True)
         
-        # Create a container for buttons positioned under the text
-        col1, col2, col_spacer = st.columns([1.2, 1.2, 2])
+        btn_col1, btn_col2 = st.columns([1, 1], gap="medium")
         
-        with col1:
-            if st.button("เริ่มใช้งาน", 
-                        key="start_analysis", 
-                        use_container_width=True,
-                        help="เริ่มการวิเคราะห์เสียงเพื่อตรวจหาความเสี่ยงพาร์กินสัน"):
+        with btn_col1:
+            if st.button("เริ่มใช้งาน", key="start_analysis", use_container_width=True):
                 st.session_state.page = 'analysis'
                 st.rerun()
         
-        with col2:
-            if st.button("คู่มือ", 
-                        key="guide_manual", 
-                        use_container_width=True,
-                        help="ดูคู่มือการใช้งานและคำแนะนำ"):
+        with btn_col2:
+            if st.button("คู่มือ", key="guide_manual", use_container_width=True):
                 st.session_state.page = 'guide'
                 st.rerun()
         
-        # Custom button styling
-        st.markdown("""
-            <style>
-            /* Custom button styling */
-            div[data-testid="stButton"] > button {
-                height: 60px;
-                border-radius: 30px;
-                font-size: 24px;
-                font-weight: 600;
-                font-family: 'Prompt', sans-serif;
-                border: none;
-                color: white;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                margin-bottom: 20px;
-            }
-            
-            div[data-testid="stButton"] > button:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
-            }
-            
-            div[data-testid="stButton"] > button:focus {
-                outline: none;
-                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.4);
-            }
-            
-            /* Different gradient for second button */
-            div[data-testid="column"]:nth-child(2) div[data-testid="stButton"] > button {
-                background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-                box-shadow: 0 8px 25px rgba(118, 75, 162, 0.3);
-            }
-            
-            div[data-testid="column"]:nth-child(2) div[data-testid="stButton"] > button:hover {
-                box-shadow: 0 12px 35px rgba(118, 75, 162, 0.4);
-            }
-            </style>
-        """, unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
     def show_guide_page():
         """Display the guide/manual page with proper styling"""
