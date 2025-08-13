@@ -386,54 +386,66 @@ def run_desktop_app():
             st.session_state.page = 'home'
             st.rerun()
     
-        # Guide content
+        # Guide content - Fixed version with proper HTML structure
         st.markdown("""
             <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
-                <div class="guide-section">
-                    <h2>การเตรียมตัวก่อนการตรวจ</h2>
-                    <ul>
-                        <li>หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
-                        <li>ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
-                        <li>นั่งหรือยืนในท่าที่สบาย</li>
-                        <li>พักผ่อนเพียงพอก่อนการตรวจ</li>
+                <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 32px;">
+                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 24px; margin-top: 0; font-family: 'Prompt', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
+                    <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
+                        <li style="margin-bottom: 8px;">หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
+                        <li style="margin-bottom: 8px;">ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
+                        <li style="margin-bottom: 8px;">นั่งหรือยืนในท่าที่สบาย</li>
+                        <li style="margin-bottom: 8px;">พักผ่อนเพียงพอก่อนการตรวจ</li>
                     </ul>
                 </div>
-                
-                <div class="guide-section">
-                    <h2>ขั้นตอนการตรวจ</h2>
-                    <h3>1. การออกเสียงสระ</h3>
-                    <ul>
-                        <li>ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
-                        <li>ออกเสียงให้ชัดเจนและคงที่</li>
-                        <li>ไม่ต้องออกเสียงดังเกินไป</li>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
+                <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 32px;">
+                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 24px; margin-top: 0; font-family: 'Prompt', sans-serif;">ขั้นตอนการตรวจ</h2>
+                    <h3 style="color: #666; font-size: 28px; margin-top: 24px; margin-bottom: 16px; font-family: 'Prompt', sans-serif;">1. การออกเสียงสระ</h3>
+                    <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
+                        <li style="margin-bottom: 8px;">ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
+                        <li style="margin-bottom: 8px;">ออกเสียงให้ชัดเจนและคงที่</li>
+                        <li style="margin-bottom: 8px;">ไม่ต้องออกเสียงดังเกินไป</li>
                     </ul>
                 
-                    <h3>2. การออกเสียงพยางค์</h3>
-                    <ul>
-                        <li>ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
-                        <li>ใช้เวลาประมาณ 6 วินาที</li>
-                        <li>พยายามออกเสียงให้เร็วและชัดเจน</li>
+                    <h3 style="color: #666; font-size: 28px; margin-top: 24px; margin-bottom: 16px; font-family: 'Prompt', sans-serif;">2. การออกเสียงพยางค์</h3>
+                    <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
+                        <li style="margin-bottom: 8px;">ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
+                        <li style="margin-bottom: 8px;">ใช้เวลาประมาณ 6 วินาที</li>
+                        <li style="margin-bottom: 8px;">พยายามออกเสียงให้เร็วและชัดเจน</li>
                     </ul>
                 
-                    <h3>3. การอ่านประโยค</h3>
-                    <ul>
-                        <li>อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
-                        <li>ไม่ต้องรีบร้อน</li>
-                        <li>ออกเสียงให้ชัดเจน</li>
+                    <h3 style="color: #666; font-size: 28px; margin-top: 24px; margin-bottom: 16px; font-family: 'Prompt', sans-serif;">3. การอ่านประโยค</h3>
+                    <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
+                        <li style="margin-bottom: 8px;">อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
+                        <li style="margin-bottom: 8px;">ไม่ต้องรีบร้อน</li>
+                        <li style="margin-bottom: 8px;">ออกเสียงให้ชัดเจน</li>
                     </ul>
                 </div>
-                
-                <div class="guide-section">
-                    <h2>ตัวอย่างเสียงที่ถูกต้อง</h2>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
+                <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 32px;">
+                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 24px; margin-top: 0; font-family: 'Prompt', sans-serif;">ตัวอย่างเสียงที่ถูกต้อง</h2>
                     <p style="font-size: 18px; margin-bottom: 20px; color: #666;">ฟังตัวอย่างเสียงเพื่อเป็นแนวทางในการออกเสียงที่ถูกต้อง</p>
                 </div>
-                
-                <div class="guide-warning">
-                    <h2>ข้อควรระวัง</h2>
-                    <ul>
-                        <li><strong>ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
-                        <li><strong>ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
-                        <li><strong>หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
+                <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08);">
+                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 24px; margin-top: 0; font-family: 'Prompt', sans-serif;">ข้อควรระวัง</h2>
+                    <ul style="font-size: 22px; line-height: 1.7; color: #d32f2f; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
+                        <li style="margin-bottom: 12px;"><strong style="font-weight: 600;">ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
+                        <li style="margin-bottom: 12px;"><strong style="font-weight: 600;">ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
+                        <li style="margin-bottom: 12px;"><strong style="font-weight: 600;">หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
                     </ul>
                 </div>
             </div>
