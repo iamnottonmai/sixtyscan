@@ -1,7 +1,3 @@
-ong perfect
-
-before:
-
 import streamlit as st
 import base64
 import os
