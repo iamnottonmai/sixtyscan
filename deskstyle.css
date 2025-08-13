@@ -141,9 +141,9 @@ div[data-testid="main"] .block-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    width: 400px;
+    width: 1000px;
     margin: 20px 0 0 60px; /* Align with text section padding */
-    max-width: 400px; /* Prevent stretching */
+    max-width: 1000px; /* Prevent stretching */
     align-items: flex-start; /* Align buttons to the left edge of text section */
 }
 
