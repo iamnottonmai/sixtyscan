@@ -147,15 +147,6 @@ div[data-testid="main"] .block-container {
     align-items: flex-start; /* Align buttons to the left edge of text section */
 }
 
-/* Homepage Buttons Wrapper - Full width container */
-.homepage-buttons-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    align-items: stretch;
-}
-
 /* Button Styles - Updated for vertical stack */
 div.stButton > button, 
 [data-testid="stButton"] > button {
@@ -181,38 +172,21 @@ div.stButton > button,
     line-height: 1.2 !important;
 }
 
-/* Homepage Buttons - Full width with different gradients */
-.homepage-buttons-wrapper div.stButton > button {
-    font-size: 38px !important; /* Adjusted font size */
-    width: 100% !important;
-    max-width: none !important;
-    border: none !important;
+/* Homepage Buttons - Blue-Purple gradient for both */
+.homepage-button-container div.stButton > button {
+    font-size: 42px !important; /* Bigger text for homepage buttons */
+    background: linear-gradient(135deg, #1976D2 0%, #6A1B9A 50%, #8E24AA 100%) !important;
     color: white !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Start Analysis Button - Purple gradient */
-.homepage-buttons-wrapper div.stButton > button:first-of-type {
-    background: linear-gradient(135deg, #8E24AA 0%, #6A1B9A 50%, #4A148C 100%) !important;
-    box-shadow: 0 8px 30px rgba(142, 36, 170, 0.4) !important;
-}
-
-.homepage-buttons-wrapper div.stButton > button:first-of-type:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 15px 40px rgba(142, 36, 170, 0.5) !important;
-    background: linear-gradient(135deg, #6A1B9A 0%, #4A148C 50%, #311B92 100%) !important;
-}
-
-/* Guide Button - Blue gradient */
-.homepage-buttons-wrapper div.stButton > button:last-of-type {
-    background: linear-gradient(135deg, #1976D2 0%, #1565C0 50%, #0D47A1 100%) !important;
     box-shadow: 0 8px 30px rgba(25, 118, 210, 0.4) !important;
+    width: 1000px !important;
+    max-width: 1000px !important;
+    border: none !important;
 }
 
-.homepage-buttons-wrapper div.stButton > button:last-of-type:hover {
+.homepage-button-container div.stButton > button:hover {
     transform: translateY(-4px) !important;
     box-shadow: 0 15px 40px rgba(25, 118, 210, 0.5) !important;
-    background: linear-gradient(135deg, #1565C0 0%, #0D47A1 50%, #002171 100%) !important;
+    background: linear-gradient(135deg, #1565C0 0%, #4A148C 50%, #6A1B9A 100%) !important;
 }
 
 /* Other pages buttons - Keep original colors */
@@ -475,17 +449,6 @@ div.stButton > button,
         max-width: 400px !important;
     }
     
-    .homepage-buttons-wrapper {
-        width: 100%;
-        padding: 0 20px;
-    }
-    
-    .homepage-buttons-wrapper div.stButton > button {
-        width: 100% !important;
-        max-width: none !important;
-        font-size: 32px !important;
-    }
-    
     .main-title {
         font-size: 48px;
         white-space: normal;
@@ -542,17 +505,6 @@ div.stButton > button,
     .homepage-button-container div.stButton > button {
         width: 100% !important;
         max-width: 320px !important;
-    }
-    
-    .homepage-buttons-wrapper {
-        width: 100%;
-        padding: 0 15px;
-    }
-    
-    .homepage-buttons-wrapper div.stButton > button {
-        width: 100% !important;
-        max-width: none !important;
-        font-size: 28px !important;
     }
     
     .main-content {
