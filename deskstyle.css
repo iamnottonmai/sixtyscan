@@ -109,6 +109,7 @@ div[data-testid="main"] .block-container {
 .text-section {
     flex: 1;
     max-width: 600px;
+    padding-left: 60px; /* Move text to the right to center between left edge and image */
 }
 
 .image-section {
@@ -139,20 +140,20 @@ div[data-testid="main"] .block-container {
 .button-container {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    width: 320px;
+    gap: 30px;
+    width: 400px;
 }
 
-/* Button Styles */
+/* Button Styles - Updated for vertical stack */
 div.stButton > button, 
 [data-testid="stButton"] > button {
-    font-size: 32px !important;
-    padding: 20px 60px !important;
-    border-radius: 60px !important;
-    font-weight: 600 !important;
+    font-size: 36px !important;
+    padding: 25px 70px !important;
+    border-radius: 70px !important;
+    font-weight: 700 !important;
     font-family: 'Prompt', sans-serif !important;
-    min-width: 320px !important;
-    height: 75px !important;
+    min-width: 400px !important;
+    height: 85px !important;
     margin: 0 !important;
     border: none !important;
     cursor: pointer !important;
@@ -167,30 +168,34 @@ div.stButton > button,
     line-height: 1.2 !important;
 }
 
-/* Primary Button - Blue gradient */
-div[data-testid="column"]:first-child div.stButton > button {
-    background: linear-gradient(135deg, #1976D2 0%, #42A5F5 50%, #64B5F6 100%) !important;
+/* First Button (เริ่มใช้งาน) - Green gradient */
+div.stButton > button:first-of-type,
+[data-testid="stButton"] > button:first-of-type {
+    background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 50%, #66BB6A 100%) !important;
     color: white !important;
-    box-shadow: 0 6px 25px rgba(25, 118, 210, 0.4) !important;
+    box-shadow: 0 8px 30px rgba(46, 125, 50, 0.4) !important;
 }
 
-div[data-testid="column"]:first-child div.stButton > button:hover {
+div.stButton > button:first-of-type:hover,
+[data-testid="stButton"] > button:first-of-type:hover {
     transform: translateY(-4px) !important;
-    box-shadow: 0 12px 35px rgba(25, 118, 210, 0.5) !important;
-    background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #42A5F5 100%) !important;
+    box-shadow: 0 15px 40px rgba(46, 125, 50, 0.5) !important;
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #4CAF50 100%) !important;
 }
 
-/* Secondary Button - Purple gradient */
-div[data-testid="column"]:nth-child(2) div.stButton > button {
-    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%) !important;
+/* Second Button (คู่มือ) - Orange gradient */
+div.stButton > button:last-of-type,
+[data-testid="stButton"] > button:last-of-type {
+    background: linear-gradient(135deg, #F57C00 0%, #FF9800 50%, #FFB74D 100%) !important;
     color: white !important;
-    box-shadow: 0 6px 25px rgba(74, 20, 140, 0.4) !important;
+    box-shadow: 0 8px 30px rgba(245, 124, 0, 0.4) !important;
 }
 
-div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
+div.stButton > button:last-of-type:hover,
+[data-testid="stButton"] > button:last-of-type:hover {
     transform: translateY(-4px) !important;
-    box-shadow: 0 12px 35px rgba(74, 20, 140, 0.5) !important;
-    background: linear-gradient(135deg, #38006b 0%, #4A148C 50%, #6A1B9A 100%) !important;
+    box-shadow: 0 15px 40px rgba(245, 124, 0, 0.5) !important;
+    background: linear-gradient(135deg, #E65100 0%, #F57C00 50%, #FF9800 100%) !important;
 }
 
 /* Images */
@@ -407,6 +412,10 @@ div[data-testid="column"]:nth-child(2) div.stButton > button:hover {
     
     .text-section, .image-section {
         max-width: none;
+    }
+    
+    .text-section {
+        padding-left: 0; /* Remove left padding on smaller screens */
     }
     
     .main-title {
