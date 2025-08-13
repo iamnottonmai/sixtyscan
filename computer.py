@@ -405,38 +405,16 @@ def run_desktop_app():
             <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
                 <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 32px;">
                     <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 24px; margin-top: 0; font-family: 'Prompt', sans-serif;">ขั้นตอนการตรวจ</h2>
-                    <h3 style="color: #666; font-size: 28px; margin-top: 24px; margin-bottom: 16px; font-family: 'Prompt', sans-serif;">1. การออกเสียงสระ</h3>
                     <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
-                        <li style="margin-bottom: 8px;">ออกเสียงสระแต่ละตัว 5-8 วินาที</li>
-                        <li style="margin-bottom: 8px;">ออกเสียงให้ชัดเจนและคงที่</li>
-                        <li style="margin-bottom: 8px;">ไม่ต้องออกเสียงดังเกินไป</li>
-                    </ul>
-                
-                    <h3 style="color: #666; font-size: 28px; margin-top: 24px; margin-bottom: 16px; font-family: 'Prompt', sans-serif;">2. การออกเสียงพยางค์</h3>
-                    <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
-                        <li style="margin-bottom: 8px;">ออกเสียง "พา-ทา-คา" ซ้ำๆ</li>
-                        <li style="margin-bottom: 8px;">ใช้เวลาประมาณ 6 วินาที</li>
-                        <li style="margin-bottom: 8px;">พยายามออกเสียงให้เร็วและชัดเจน</li>
-                    </ul>
-                
-                    <h3 style="color: #666; font-size: 28px; margin-top: 24px; margin-bottom: 16px; font-family: 'Prompt', sans-serif;">3. การอ่านประโยค</h3>
-                    <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
-                        <li style="margin-bottom: 8px;">อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติ</li>
-                        <li style="margin-bottom: 8px;">ไม่ต้องรีบร้อน</li>
-                        <li style="margin-bottom: 8px;">ออกเสียงให้ชัดเจน</li>
+                        <li style="margin-bottom: 16px;"><strong>1. การออกเสียงสระ:</strong> ออกเสียงสระแต่ละตัว 5-8 วินาที ให้ชัดเจนและคงที่</li>
+                        <li style="margin-bottom: 16px;"><strong>2. การออกเสียงพยางค์:</strong> ออกเสียง "พา-ทา-คา" ซ้ำๆ ประมาณ 6 วินาที</li>
+                        <li style="margin-bottom: 16px;"><strong>3. การอ่านประโยค:</strong> อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติและชัดเจน</li>
                     </ul>
                 </div>
             </div>
         """, unsafe_allow_html=True)
         
-        st.markdown("""
-            <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
-                <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 32px;">
-                    <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 24px; margin-top: 0; font-family: 'Prompt', sans-serif;">ตัวอย่างเสียงที่ถูกต้อง</h2>
-                    <p style="font-size: 18px; margin-bottom: 20px; color: #666;">ฟังตัวอย่างเสียงเพื่อเป็นแนวทางในการออกเสียงที่ถูกต้อง</p>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
+
         
         st.markdown("""
             <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
