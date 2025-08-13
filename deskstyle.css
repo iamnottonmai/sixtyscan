@@ -144,6 +144,7 @@ div[data-testid="main"] .block-container {
     width: 400px;
     margin: 20px 0 0 60px; /* Align with text section padding */
     max-width: 400px; /* Prevent stretching */
+    align-items: flex-start; /* Align buttons to the left edge of text section */
 }
 
 /* Button Styles - Updated for vertical stack */
@@ -171,37 +172,21 @@ div.stButton > button,
     line-height: 1.2 !important;
 }
 
-/* Homepage Buttons - Purple/Blue gradient */
-.homepage-button-container div.stButton > button:first-of-type,
-.homepage-button-container [data-testid="stButton"] > button:first-of-type {
-    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%) !important;
-    color: white !important;
-    box-shadow: 0 8px 30px rgba(74, 20, 140, 0.4) !important;
-    width: 400px !important;
-    max-width: 400px !important;
-}
-
-.homepage-button-container div.stButton > button:first-of-type:hover,
-.homepage-button-container [data-testid="stButton"] > button:first-of-type:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 15px 40px rgba(74, 20, 140, 0.5) !important;
-    background: linear-gradient(135deg, #38006b 0%, #4A148C 50%, #6A1B9A 100%) !important;
-}
-
-.homepage-button-container div.stButton > button:last-of-type,
-.homepage-button-container [data-testid="stButton"] > button:last-of-type {
-    background: linear-gradient(135deg, #1976D2 0%, #42A5F5 50%, #64B5F6 100%) !important;
+/* Homepage Buttons - Blue-Purple gradient for both */
+.homepage-button-container div.stButton > button {
+    font-size: 42px !important; /* Bigger text for homepage buttons */
+    background: linear-gradient(135deg, #1976D2 0%, #6A1B9A 50%, #8E24AA 100%) !important;
     color: white !important;
     box-shadow: 0 8px 30px rgba(25, 118, 210, 0.4) !important;
     width: 400px !important;
     max-width: 400px !important;
+    border: none !important;
 }
 
-.homepage-button-container div.stButton > button:last-of-type:hover,
-.homepage-button-container [data-testid="stButton"] > button:last-of-type:hover {
+.homepage-button-container div.stButton > button:hover {
     transform: translateY(-4px) !important;
     box-shadow: 0 15px 40px rgba(25, 118, 210, 0.5) !important;
-    background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #42A5F5 100%) !important;
+    background: linear-gradient(135deg, #1565C0 0%, #4A148C 50%, #6A1B9A 100%) !important;
 }
 
 /* Other pages buttons - Keep original colors */
