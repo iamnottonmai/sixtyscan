@@ -67,7 +67,7 @@ header {visibility: hidden;}
 
 .mobile-tagline {
     font-family: 'Prompt', sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 400;
     color: white;
     margin-bottom: 12px;
@@ -122,7 +122,7 @@ header {visibility: hidden;}
 /* Mobile Title */
 .mobile-main-title {
     font-family: 'Prompt', sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 400;
     color: #2d2d2d;
     line-height: 1.2;
@@ -142,7 +142,7 @@ header {visibility: hidden;}
     flex-direction: column;
     gap: 16px;
     width: 100%;
-    max-width: 320px;
+    max-width: 100%;
     margin: 20px auto 0 auto;
     align-items: center;
     justify-content: center;
@@ -157,7 +157,7 @@ div.stButton > button,
     font-weight: 600 !important;
     font-family: 'Prompt', sans-serif !important;
     width: 100% !important;
-    max-width: 320px !important;
+    max-width: 100% !important;
     height: 56px !important;
     margin: 0 !important;
     border: none !important;
@@ -178,6 +178,7 @@ div.stButton > button,
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
     color: white !important;
     box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3) !important;
+    max-width: 100% !important;
 }
 
 .mobile-homepage-buttons-wrapper div.stButton > button:hover {
@@ -536,7 +537,7 @@ div.stButton > button,
 /* Mobile Responsive Design */
 @media (max-width: 480px) {
     .mobile-main-title {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .mobile-logo-text {
@@ -544,7 +545,7 @@ div.stButton > button,
     }
     
     .mobile-tagline {
-        font-size: 12px;
+        font-size: 16px;
     }
     
     .mobile-main-image {
@@ -557,11 +558,11 @@ div.stButton > button,
     }
     
     .mobile-homepage-buttons-wrapper {
-        max-width: 280px;
+        max-width: 100%;
     }
     
     .mobile-homepage-buttons-wrapper div.stButton > button {
-        max-width: 280px !important;
+        max-width: 100% !important;
     }
 }
 
