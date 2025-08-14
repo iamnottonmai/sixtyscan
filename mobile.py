@@ -299,7 +299,6 @@ def run_mobile_app():
     def get_header_html():
         """Get the mobile-optimized header HTML"""
         logo_b64 = load_image_file(CONFIG['LOGO_PATHS'], "SixtyScan Logo")
-        current_time = get_thai_time()
         
         logo_html = ""
         if logo_b64:
@@ -312,7 +311,6 @@ def run_mobile_app():
                     <div class="mobile-logo-text">SixtyScan</div>
                 </div>
                 <div class="mobile-tagline">นวัตกรรมคัดกรองโรคพาร์กินสันจากเสียง</div>
-                <div class="mobile-datetime-display">{current_time}</div>
             </div>
         """
 
