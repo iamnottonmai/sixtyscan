@@ -7,7 +7,7 @@ DeviceType = Literal['mobile', 'desktop']
 class DeviceDetector:
     """Enhanced device detection for Streamlit applications"""
     
-    @staticmethod
+    @staticmethoda
     def detect_from_headers() -> Optional[DeviceType]:
         """Try to detect device from HTTP headers (multiple methods)"""
         try:
@@ -138,11 +138,36 @@ def show_device_info(device_type: DeviceType, detection_method: str):
     # Add some spacing before the bottom section
     st.markdown("<br><hr>", unsafe_allow_html=True)
     
-    # Small device indicator at the bottom
+    # Load TAMDAI logo
+    def load_tamdai_image():
+        """Load TAMDAI logo from multiple possible locations"""
+        tamdai_paths = ["tamdai.png", "./tamdai.png", "assets/tamdai.png", "images/tamdai.png"]
+        for path in tamdai_paths:
+            try:
+                import os
+                import base64
+                if os.path.exists(path):
+                    with open(path, "rb") as f:
+                        return base64.b64encode(f.read()).decode()
+            except:
+                continue
+        return None
+    
+    tamdai_b64 = load_tamdai_image()
+    
+    # Create the powered by section HTML
+    tamdai_html = ""
+    if tamdai_b64:
+        tamdai_html = f'<img src="data:image/png;base64,{tamdai_b64}" style="height: 16px; width: auto; margin-left: 8px; vertical-align: middle;" alt="TAMDAI Logo">'
+    
+    # Device indicator with powered by section at the bottom
     st.markdown(f"""
     <div style="text-align: center; font-size: 11px; color: #999; 
-                padding: 10px; margin-top: 20px;">
-        {device_emoji} {device_name} Version
+                padding: 10px; margin-top: 20px; display: flex; 
+                justify-content: center; align-items: center; gap: 12px;">
+        <span>{device_emoji} {device_name} Version</span>
+        <div style="width: 1px; height: 16px; background-color: #ccc;"></div>
+        <span>Powered by{tamdai_html}</span>
     </div>
     """, unsafe_allow_html=True)
 
