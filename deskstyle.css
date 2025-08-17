@@ -152,124 +152,140 @@ button {
     justify-content: center !important;
 }
 
-/* 1. HOMEPAGE BUTTONS - Extra large, full width */
+/* 1. HOMEPAGE BUTTONS - Full screen width, extra large */
 div.stButton > button[data-testid*="start_analysis"],
 div.stButton > button[data-testid*="guide_manual"] {
-    font-size: 56px !important;
-    padding: 40px 80px !important;
-    border-radius: 80px !important;
-    font-weight: 800 !important;
-    width: 100vw !important;
-    max-width: calc(100vw - 120px) !important;
-    min-width: calc(100vw - 120px) !important;
-    height: 120px !important;
-    letter-spacing: 1px !important;
+    font-size: 72px !important;
+    padding: 50px 100px !important;
+    border-radius: 100px !important;
+    font-weight: 900 !important;
+    width: calc(100vw - 60px) !important;
+    max-width: calc(100vw - 60px) !important;
+    min-width: calc(100vw - 60px) !important;
+    height: 150px !important;
+    letter-spacing: 2px !important;
     position: relative !important;
     overflow: hidden !important;
+    margin: 15px 0 !important;
 }
 
-/* เริ่มใช้งาน button - More prominent with animated gradient */
+/* เริ่มใช้งาน button - Super prominent with animated gradient and pulsing effect */
 div.stButton > button[data-testid*="start_analysis"] {
-    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 25%, #FFD23F 50%, #06FFA5 75%, #1976D2 100%) !important;
-    background-size: 400% 400% !important;
-    animation: gradientShift 3s ease infinite !important;
+    background: linear-gradient(135deg, #FF1744 0%, #FF5722 20%, #FF9800 40%, #FFC107 60%, #8BC34A 80%, #2196F3 100%) !important;
+    background-size: 600% 600% !important;
+    animation: gradientPulse 2s ease infinite, buttonGlow 1.5s ease-in-out infinite alternate !important;
     color: white !important;
-    box-shadow: 0 15px 50px rgba(255, 107, 53, 0.6) !important;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
-    border: 3px solid rgba(255,255,255,0.3) !important;
+    box-shadow: 0 20px 80px rgba(255, 23, 68, 0.8), inset 0 0 30px rgba(255,255,255,0.2) !important;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5) !important;
+    border: 4px solid rgba(255,255,255,0.4) !important;
+    transform: scale(1.05) !important;
 }
 
 div.stButton > button[data-testid*="start_analysis"]:hover {
-    transform: translateY(-8px) scale(1.02) !important;
-    box-shadow: 0 25px 60px rgba(255, 107, 53, 0.8) !important;
-    animation: gradientShift 1s ease infinite !important;
+    transform: translateY(-12px) scale(1.08) !important;
+    box-shadow: 0 35px 100px rgba(255, 23, 68, 1), inset 0 0 40px rgba(255,255,255,0.3) !important;
+    animation: gradientPulse 0.8s ease infinite, buttonGlow 0.8s ease-in-out infinite alternate !important;
 }
 
-/* คู่มือ button - Secondary but still prominent */
+/* คู่มือ button - Bigger and more prominent */
 div.stButton > button[data-testid*="guide_manual"] {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8E24AA 100%) !important;
+    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 30%, #8E24AA 60%, #AB47BC 100%) !important;
     color: white !important;
-    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5) !important;
-    border: 2px solid rgba(255,255,255,0.2) !important;
+    box-shadow: 0 20px 70px rgba(74, 20, 140, 0.6), inset 0 0 20px rgba(255,255,255,0.1) !important;
+    border: 3px solid rgba(255,255,255,0.3) !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
 }
 
 div.stButton > button[data-testid*="guide_manual"]:hover {
-    transform: translateY(-8px) scale(1.02) !important;
-    box-shadow: 0 25px 60px rgba(102, 126, 234, 0.7) !important;
-    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 50%, #7c3aed 100%) !important;
+    transform: translateY(-10px) scale(1.06) !important;
+    box-shadow: 0 30px 90px rgba(74, 20, 140, 0.8), inset 0 0 30px rgba(255,255,255,0.2) !important;
+    background: linear-gradient(135deg, #3A0E6B 0%, #5A1B7A 30%, #7E1F9A 60%, #9B37BC 100%) !important;
 }
 
-/* Animation for เริ่มใช้งาน button */
-@keyframes gradientShift {
+/* Enhanced animations for เริ่มใช้งาน button */
+@keyframes gradientPulse {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* 2. BACK BUTTONS - Bigger, more prominent */
+@keyframes buttonGlow {
+    0% { 
+        box-shadow: 0 20px 80px rgba(255, 23, 68, 0.8), inset 0 0 30px rgba(255,255,255,0.2);
+    }
+    100% { 
+        box-shadow: 0 25px 100px rgba(255, 23, 68, 1), inset 0 0 50px rgba(255,255,255,0.4);
+    }
+}
+
+/* 2. BACK BUTTONS - Much bigger and more prominent */
 div.stButton > button[data-testid*="back_to_home"],
 div.stButton > button[data-testid*="back_to_home_from_guide"] {
-    background: linear-gradient(135deg, #495057 0%, #343a40 50%, #212529 100%) !important;
+    background: linear-gradient(135deg, #37474F 0%, #455A64 30%, #546E7A 60%, #607D8B 100%) !important;
     color: white !important;
-    font-size: 24px !important;
-    padding: 20px 40px !important;
-    min-width: 250px !important;
-    max-width: 350px !important;
-    height: 65px !important;
-    border-radius: 35px !important;
-    margin-bottom: 25px !important;
-    box-shadow: 0 8px 25px rgba(73, 80, 87, 0.4) !important;
-    font-weight: 600 !important;
+    font-size: 36px !important;
+    padding: 30px 60px !important;
+    min-width: 400px !important;
+    max-width: 500px !important;
+    height: 90px !important;
+    border-radius: 50px !important;
+    margin-bottom: 40px !important;
+    box-shadow: 0 15px 40px rgba(55, 71, 79, 0.5), inset 0 0 20px rgba(255,255,255,0.1) !important;
+    font-weight: 700 !important;
+    border: 3px solid rgba(255,255,255,0.2) !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
 }
 
 div.stButton > button[data-testid*="back_to_home"]:hover,
 div.stButton > button[data-testid*="back_to_home_from_guide"]:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: 0 12px 35px rgba(73, 80, 87, 0.6) !important;
-    background: linear-gradient(135deg, #343a40 0%, #212529 50%, #000000 100%) !important;
+    transform: translateY(-6px) scale(1.05) !important;
+    box-shadow: 0 20px 50px rgba(55, 71, 79, 0.7), inset 0 0 30px rgba(255,255,255,0.2) !important;
+    background: linear-gradient(135deg, #263238 0%, #37474F 30%, #455A64 60%, #546E7A 100%) !important;
 }
 
-/* 3. ANALYSIS PAGE BUTTONS - Much bigger, more prominent */
+/* 3. ANALYSIS PAGE BUTTONS - Much bigger and more prominent */
 div.stButton > button[data-testid*="predict"] {
-    background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 25%, #66BB6A 50%, #81C784 100%) !important;
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 20%, #388E3C 40%, #4CAF50 60%, #66BB6A 80%, #81C784 100%) !important;
     color: white !important;
-    box-shadow: 0 12px 40px rgba(46, 125, 50, 0.5) !important;
-    font-size: 32px !important;
-    padding: 25px 60px !important;
-    min-width: 350px !important;
-    max-width: 450px !important;
-    height: 85px !important;
-    border-radius: 45px !important;
-    font-weight: 700 !important;
-    border: 2px solid rgba(255,255,255,0.2) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2) !important;
+    box-shadow: 0 18px 60px rgba(27, 94, 32, 0.6), inset 0 0 25px rgba(255,255,255,0.15) !important;
+    font-size: 44px !important;
+    padding: 35px 80px !important;
+    min-width: 500px !important;
+    max-width: 600px !important;
+    height: 110px !important;
+    border-radius: 60px !important;
+    font-weight: 800 !important;
+    border: 4px solid rgba(255,255,255,0.25) !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+    letter-spacing: 1px !important;
 }
 
 div.stButton > button[data-testid*="predict"]:hover {
-    transform: translateY(-6px) scale(1.05) !important;
-    box-shadow: 0 20px 50px rgba(46, 125, 50, 0.7) !important;
-    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 25%, #4CAF50 50%, #66BB6A 100%) !important;
+    transform: translateY(-8px) scale(1.08) !important;
+    box-shadow: 0 25px 80px rgba(27, 94, 32, 0.8), inset 0 0 35px rgba(255,255,255,0.2) !important;
+    background: linear-gradient(135deg, #0D4E12 0%, #1B5E20 20%, #2E7D32 40%, #388E3C 60%, #4CAF50 80%, #66BB6A 100%) !important;
 }
 
 div.stButton > button[data-testid*="clear"] {
-    background: linear-gradient(135deg, #E65100 0%, #FF9800 25%, #FFB74D 50%, #FFCC02 100%) !important;
+    background: linear-gradient(135deg, #BF360C 0%, #D84315 20%, #E65100 40%, #F57C00 60%, #FF9800 80%, #FFB74D 100%) !important;
     color: white !important;
-    box-shadow: 0 12px 40px rgba(245, 124, 0, 0.5) !important;
-    font-size: 32px !important;
-    padding: 25px 60px !important;
-    min-width: 350px !important;
-    max-width: 450px !important;
-    height: 85px !important;
-    border-radius: 45px !important;
-    font-weight: 700 !important;
-    border: 2px solid rgba(255,255,255,0.2) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2) !important;
+    box-shadow: 0 18px 60px rgba(191, 54, 12, 0.6), inset 0 0 25px rgba(255,255,255,0.15) !important;
+    font-size: 44px !important;
+    padding: 35px 80px !important;
+    min-width: 500px !important;
+    max-width: 600px !important;
+    height: 110px !important;
+    border-radius: 60px !important;
+    font-weight: 800 !important;
+    border: 4px solid rgba(255,255,255,0.25) !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+    letter-spacing: 1px !important;
 }
 
 div.stButton > button[data-testid*="clear"]:hover {
-    transform: translateY(-6px) scale(1.05) !important;
-    box-shadow: 0 20px 50px rgba(245, 124, 0, 0.7) !important;
-    background: linear-gradient(135deg, #BF360C 0%, #E65100 25%, #FF9800 50%, #FFB74D 100%) !important;
+    transform: translateY(-8px) scale(1.08) !important;
+    box-shadow: 0 25px 80px rgba(191, 54, 12, 0.8), inset 0 0 35px rgba(255,255,255,0.2) !important;
+    background: linear-gradient(135deg, #9C2D08 0%, #BF360C 20%, #D84315 40%, #E65100 60%, #F57C00 80%, #FF9800 100%) !important;
 }
 
 /* Images */
@@ -483,28 +499,30 @@ div.stButton > button[data-testid*="clear"]:hover {
     /* Responsive homepage buttons */
     div.stButton > button[data-testid*="start_analysis"],
     div.stButton > button[data-testid*="guide_manual"] {
-        width: calc(100vw - 80px) !important;
-        max-width: calc(100vw - 80px) !important;
-        min-width: calc(100vw - 80px) !important;
-        font-size: 48px !important;
-        height: 110px !important;
+        width: calc(100vw - 60px) !important;
+        max-width: calc(100vw - 60px) !important;
+        min-width: calc(100vw - 60px) !important;
+        font-size: 60px !important;
+        height: 130px !important;
+        padding: 40px 80px !important;
     }
     
     /* Responsive back buttons */
     div.stButton > button[data-testid*="back_to_home"],
     div.stButton > button[data-testid*="back_to_home_from_guide"] {
-        min-width: 220px !important;
-        max-width: 300px !important;
-        font-size: 22px !important;
+        min-width: 350px !important;
+        max-width: 450px !important;
+        font-size: 32px !important;
+        height: 85px !important;
     }
     
     /* Responsive analysis buttons */
     div.stButton > button[data-testid*="predict"],
     div.stButton > button[data-testid*="clear"] {
-        min-width: 300px !important;
-        max-width: 400px !important;
-        font-size: 28px !important;
-        height: 80px !important;
+        min-width: 450px !important;
+        max-width: 550px !important;
+        font-size: 40px !important;
+        height: 100px !important;
     }
     
     .main-title {
@@ -550,28 +568,28 @@ div.stButton > button[data-testid*="clear"]:hover {
         width: calc(100vw - 40px) !important;
         max-width: calc(100vw - 40px) !important;
         min-width: calc(100vw - 40px) !important;
-        font-size: 32px !important;
-        height: 90px !important;
-        padding: 25px 40px !important;
+        font-size: 48px !important;
+        height: 110px !important;
+        padding: 35px 50px !important;
     }
     
     /* Mobile back buttons */
     div.stButton > button[data-testid*="back_to_home"],
     div.stButton > button[data-testid*="back_to_home_from_guide"] {
-        min-width: 200px !important;
-        max-width: 280px !important;
-        font-size: 20px !important;
-        height: 60px !important;
+        min-width: 300px !important;
+        max-width: 400px !important;
+        font-size: 28px !important;
+        height: 80px !important;
     }
     
     /* Mobile analysis buttons */
     div.stButton > button[data-testid*="predict"],
     div.stButton > button[data-testid*="clear"] {
-        min-width: 250px !important;
-        max-width: 350px !important;
-        font-size: 24px !important;
-        height: 75px !important;
-        padding: 20px 50px !important;
+        min-width: 350px !important;
+        max-width: 450px !important;
+        font-size: 36px !important;
+        height: 95px !important;
+        padding: 30px 60px !important;
     }
     
     .main-content {
