@@ -137,7 +137,7 @@ div[data-testid="main"] .block-container {
 }
 
 /* =================================
-   BUTTON STYLES - FIXED APPROACH
+   BUTTON STYLES - NEW DESIGN
    ================================= */
 
 /* Base button styles - REMOVED broad selectors, only basic styling */
@@ -152,61 +152,51 @@ button {
     justify-content: center !important;
 }
 
-/* 1. HOMEPAGE BUTTONS - Extra large, full width */
+/* 1. HOMEPAGE BUTTONS - New sleek design matching the image */
 div.stButton > button[data-testid*="start_analysis"],
 div.stButton > button[data-testid*="guide_manual"] {
-    font-size: 56px !important;
-    padding: 40px 80px !important;
-    border-radius: 80px !important;
-    font-weight: 800 !important;
+    font-size: 48px !important;
+    padding: 32px 80px !important;
+    border-radius: 100px !important;
+    font-weight: 600 !important;
     width: 100vw !important;
     max-width: calc(100vw - 120px) !important;
     min-width: calc(100vw - 120px) !important;
-    height: 120px !important;
-    letter-spacing: 1px !important;
+    height: 100px !important;
+    letter-spacing: 0.5px !important;
     position: relative !important;
     overflow: hidden !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+    margin-bottom: 24px !important;
 }
 
-/* เริ่มใช้งาน button - More prominent with animated gradient */
+/* เริ่มใช้งาน button - Clean coral/red design */
 div.stButton > button[data-testid*="start_analysis"] {
-    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 25%, #FFD23F 50%, #06FFA5 75%, #1976D2 100%) !important;
-    background-size: 400% 400% !important;
-    animation: gradientShift 3s ease infinite !important;
+    background: #FF6B6B !important;
     color: white !important;
-    box-shadow: 0 15px 50px rgba(255, 107, 53, 0.6) !important;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
-    border: 3px solid rgba(255,255,255,0.3) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 div.stButton > button[data-testid*="start_analysis"]:hover {
-    transform: translateY(-8px) scale(1.02) !important;
-    box-shadow: 0 25px 60px rgba(255, 107, 53, 0.8) !important;
-    animation: gradientShift 1s ease infinite !important;
+    transform: translateY(-4px) scale(1.02) !important;
+    box-shadow: 0 16px 48px rgba(255, 107, 107, 0.4) !important;
+    background: #FF5252 !important;
 }
 
-/* คู่มือ button - Secondary but still prominent */
+/* คู่มือ button - Clean light gray design */
 div.stButton > button[data-testid*="guide_manual"] {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8E24AA 100%) !important;
-    color: white !important;
-    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5) !important;
-    border: 2px solid rgba(255,255,255,0.2) !important;
+    background: #F8F9FA !important;
+    color: #333333 !important;
+    border: 2px solid rgba(0, 0, 0, 0.1) !important;
 }
 
 div.stButton > button[data-testid*="guide_manual"]:hover {
-    transform: translateY(-8px) scale(1.02) !important;
-    box-shadow: 0 25px 60px rgba(102, 126, 234, 0.7) !important;
-    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 50%, #7c3aed 100%) !important;
+    transform: translateY(-4px) scale(1.02) !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15) !important;
+    background: #E9ECEF !important;
 }
 
-/* Animation for เริ่มใช้งาน button */
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* 2. BACK BUTTONS - Bigger, more prominent */
+/* 2. BACK BUTTONS - Keep existing style */
 div.stButton > button[data-testid*="back_to_home"],
 div.stButton > button[data-testid*="back_to_home_from_guide"] {
     background: linear-gradient(135deg, #495057 0%, #343a40 50%, #212529 100%) !important;
@@ -229,7 +219,7 @@ div.stButton > button[data-testid*="back_to_home_from_guide"]:hover {
     background: linear-gradient(135deg, #343a40 0%, #212529 50%, #000000 100%) !important;
 }
 
-/* 3. ANALYSIS PAGE BUTTONS - Much bigger, more prominent */
+/* 3. ANALYSIS PAGE BUTTONS - Keep existing style */
 div.stButton > button[data-testid*="predict"] {
     background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 25%, #66BB6A 50%, #81C784 100%) !important;
     color: white !important;
@@ -486,8 +476,8 @@ div.stButton > button[data-testid*="clear"]:hover {
         width: calc(100vw - 80px) !important;
         max-width: calc(100vw - 80px) !important;
         min-width: calc(100vw - 80px) !important;
-        font-size: 48px !important;
-        height: 110px !important;
+        font-size: 40px !important;
+        height: 90px !important;
     }
     
     /* Responsive back buttons */
@@ -550,8 +540,8 @@ div.stButton > button[data-testid*="clear"]:hover {
         width: calc(100vw - 40px) !important;
         max-width: calc(100vw - 40px) !important;
         min-width: calc(100vw - 40px) !important;
-        font-size: 32px !important;
-        height: 90px !important;
+        font-size: 28px !important;
+        height: 80px !important;
         padding: 25px 40px !important;
     }
     
