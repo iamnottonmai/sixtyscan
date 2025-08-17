@@ -296,6 +296,229 @@ def save_uploaded_file(uploaded_file):
     except:
         return None
 
+def inject_critical_css():
+    """Inject critical CSS with maximum specificity to override Streamlit defaults"""
+    critical_css = """
+    <style>
+    /* CRITICAL CSS INJECTION - Maximum Specificity Override */
+    
+    /* Reset all button styling completely */
+    div[data-testid="stVerticalBlock"] div.element-container div.stButton button,
+    div[data-testid="column"] div[data-testid="stVerticalBlock"] div.element-container div.stButton button,
+    .stApp div.stButton button,
+    .stApp button[kind],
+    button[data-testid*="start_analysis"],
+    button[data-testid*="guide_manual"],
+    button[data-testid*="back_to_home"],
+    button[data-testid*="back_to_home_from_guide"],
+    button[data-testid*="predict"],
+    button[data-testid*="clear"] {
+        /* Nuclear reset */
+        all: unset !important;
+        
+        /* Base properties */
+        font-family: 'Prompt', sans-serif !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        border: none !important;
+        outline: none !important;
+        text-decoration: none !important;
+    }
+    
+    /* HOMEPAGE BUTTONS - เริ่มใช้งาน */
+    button[data-testid*="start_analysis"] {
+        font-size: 72px !important;
+        padding: 50px 100px !important;
+        border-radius: 100px !important;
+        font-weight: 900 !important;
+        width: calc(100vw - 60px) !important;
+        height: 150px !important;
+        background: linear-gradient(135deg, #FF1744 0%, #FF5722 20%, #FF9800 40%, #FFC107 60%, #8BC34A 80%, #2196F3 100%) !important;
+        background-size: 600% 600% !important;
+        animation: gradientPulse 2s ease infinite, buttonGlow 1.5s ease-in-out infinite alternate !important;
+        color: white !important;
+        box-shadow: 0 20px 80px rgba(255, 23, 68, 0.8), inset 0 0 30px rgba(255,255,255,0.2) !important;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.5) !important;
+        border: 4px solid rgba(255,255,255,0.4) !important;
+        transform: scale(1.05) !important;
+        margin: 15px 0 !important;
+    }
+    
+    button[data-testid*="start_analysis"]:hover {
+        transform: translateY(-12px) scale(1.08) !important;
+        box-shadow: 0 35px 100px rgba(255, 23, 68, 1), inset 0 0 40px rgba(255,255,255,0.3) !important;
+    }
+    
+    /* HOMEPAGE BUTTONS - คู่มือ */
+    button[data-testid*="guide_manual"] {
+        font-size: 72px !important;
+        padding: 50px 100px !important;
+        border-radius: 100px !important;
+        font-weight: 900 !important;
+        width: calc(100vw - 60px) !important;
+        height: 150px !important;
+        background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 30%, #8E24AA 60%, #AB47BC 100%) !important;
+        color: white !important;
+        box-shadow: 0 20px 70px rgba(74, 20, 140, 0.6), inset 0 0 20px rgba(255,255,255,0.1) !important;
+        border: 3px solid rgba(255,255,255,0.3) !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+        margin: 15px 0 !important;
+    }
+    
+    button[data-testid*="guide_manual"]:hover {
+        transform: translateY(-10px) scale(1.06) !important;
+        box-shadow: 0 30px 90px rgba(74, 20, 140, 0.8), inset 0 0 30px rgba(255,255,255,0.2) !important;
+        background: linear-gradient(135deg, #3A0E6B 0%, #5A1B7A 30%, #7E1F9A 60%, #9B37BC 100%) !important;
+    }
+    
+    /* BACK BUTTONS */
+    button[data-testid*="back_to_home"],
+    button[data-testid*="back_to_home_from_guide"] {
+        background: linear-gradient(135deg, #37474F 0%, #455A64 30%, #546E7A 60%, #607D8B 100%) !important;
+        color: white !important;
+        font-size: 36px !important;
+        padding: 30px 60px !important;
+        min-width: 400px !important;
+        max-width: 500px !important;
+        height: 90px !important;
+        border-radius: 50px !important;
+        margin-bottom: 40px !important;
+        box-shadow: 0 15px 40px rgba(55, 71, 79, 0.5), inset 0 0 20px rgba(255,255,255,0.1) !important;
+        font-weight: 700 !important;
+        border: 3px solid rgba(255,255,255,0.2) !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+    }
+    
+    button[data-testid*="back_to_home"]:hover,
+    button[data-testid*="back_to_home_from_guide"]:hover {
+        transform: translateY(-6px) scale(1.05) !important;
+        box-shadow: 0 20px 50px rgba(55, 71, 79, 0.7), inset 0 0 30px rgba(255,255,255,0.2) !important;
+        background: linear-gradient(135deg, #263238 0%, #37474F 30%, #455A64 60%, #546E7A 100%) !important;
+    }
+    
+    /* ANALYSIS BUTTONS - วิเคราะห์ */
+    button[data-testid*="predict"] {
+        background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 20%, #388E3C 40%, #4CAF50 60%, #66BB6A 80%, #81C784 100%) !important;
+        color: white !important;
+        box-shadow: 0 18px 60px rgba(27, 94, 32, 0.6), inset 0 0 25px rgba(255,255,255,0.15) !important;
+        font-size: 44px !important;
+        padding: 35px 80px !important;
+        min-width: 500px !important;
+        max-width: 600px !important;
+        height: 110px !important;
+        border-radius: 60px !important;
+        font-weight: 800 !important;
+        border: 4px solid rgba(255,255,255,0.25) !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+        letter-spacing: 1px !important;
+    }
+    
+    button[data-testid*="predict"]:hover {
+        transform: translateY(-8px) scale(1.08) !important;
+        box-shadow: 0 25px 80px rgba(27, 94, 32, 0.8), inset 0 0 35px rgba(255,255,255,0.2) !important;
+        background: linear-gradient(135deg, #0D4E12 0%, #1B5E20 20%, #2E7D32 40%, #388E3C 60%, #4CAF50 80%, #66BB6A 100%) !important;
+    }
+    
+    /* ANALYSIS BUTTONS - ลบข้อมูล */
+    button[data-testid*="clear"] {
+        background: linear-gradient(135deg, #BF360C 0%, #D84315 20%, #E65100 40%, #F57C00 60%, #FF9800 80%, #FFB74D 100%) !important;
+        color: white !important;
+        box-shadow: 0 18px 60px rgba(191, 54, 12, 0.6), inset 0 0 25px rgba(255,255,255,0.15) !important;
+        font-size: 44px !important;
+        padding: 35px 80px !important;
+        min-width: 500px !important;
+        max-width: 600px !important;
+        height: 110px !important;
+        border-radius: 60px !important;
+        font-weight: 800 !important;
+        border: 4px solid rgba(255,255,255,0.25) !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+        letter-spacing: 1px !important;
+    }
+    
+    button[data-testid*="clear"]:hover {
+        transform: translateY(-8px) scale(1.08) !important;
+        box-shadow: 0 25px 80px rgba(191, 54, 12, 0.8), inset 0 0 35px rgba(255,255,255,0.2) !important;
+        background: linear-gradient(135deg, #9C2D08 0%, #BF360C 20%, #D84315 40%, #E65100 60%, #F57C00 80%, #FF9800 100%) !important;
+    }
+    
+    /* Animations */
+    @keyframes gradientPulse {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes buttonGlow {
+        0% { 
+            box-shadow: 0 20px 80px rgba(255, 23, 68, 0.8), inset 0 0 30px rgba(255,255,255,0.2) !important;
+        }
+        100% { 
+            box-shadow: 0 25px 100px rgba(255, 23, 68, 1), inset 0 0 50px rgba(255,255,255,0.4) !important;
+        }
+    }
+    
+    /* Responsive */
+    @media (max-width: 1200px) {
+        button[data-testid*="start_analysis"],
+        button[data-testid*="guide_manual"] {
+            font-size: 60px !important;
+            height: 130px !important;
+            padding: 40px 80px !important;
+        }
+        
+        button[data-testid*="back_to_home"],
+        button[data-testid*="back_to_home_from_guide"] {
+            font-size: 32px !important;
+            height: 85px !important;
+            min-width: 350px !important;
+            max-width: 450px !important;
+        }
+        
+        button[data-testid*="predict"],
+        button[data-testid*="clear"] {
+            font-size: 40px !important;
+            height: 100px !important;
+            min-width: 450px !important;
+            max-width: 550px !important;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        button[data-testid*="start_analysis"],
+        button[data-testid*="guide_manual"] {
+            width: calc(100vw - 40px) !important;
+            font-size: 48px !important;
+            height: 110px !important;
+            padding: 35px 50px !important;
+        }
+        
+        button[data-testid*="back_to_home"],
+        button[data-testid*="back_to_home_from_guide"] {
+            font-size: 28px !important;
+            height: 80px !important;
+            min-width: 300px !important;
+            max-width: 400px !important;
+        }
+        
+        button[data-testid*="predict"],
+        button[data-testid*="clear"] {
+            font-size: 36px !important;
+            height: 95px !important;
+            min-width: 350px !important;
+            max-width: 450px !important;
+            padding: 30px 60px !important;
+        }
+    }
+    </style>
+    """
+    st.markdown(critical_css, unsafe_allow_html=True)
+
 def load_css():
     """Load external CSS file"""
     css_file = Path(CONFIG['CSS_FILE'])
@@ -497,6 +720,10 @@ def load_css():
             }
             </style>
         """, unsafe_allow_html=True)
+        pass
+    
+    # CRITICAL: Inject override CSS AFTER main CSS
+    inject_critical_css()
 
 # =============================
 # Audio Processing Functions
@@ -643,6 +870,7 @@ def get_header_html():
 def show_home_page():
     """Display the home page"""
     load_css()
+    inject_critical_css()
 
     woman_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "Woman using phone")
 
@@ -693,6 +921,7 @@ def show_home_page():
 def show_guide_page():
     """Display the guide/manual page with proper styling"""
     load_css()
+    inject_critical_css()
 
     # Combine header with back button and title
     guide_html = f"""
@@ -820,6 +1049,7 @@ def show_guide_page():
 def show_analysis_page():
     """Display the analysis page"""
     load_css()
+    inject_critical_css()
 
     # Header
     analysis_html = f"""
