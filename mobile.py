@@ -20,7 +20,7 @@ from pathlib import Path
 # Configuration for mobile
 CONFIG = {
     'MODEL_PATH': "best_resnet18.pth",
-    'MODEL_URL': "https://drive.google.com/file/d/1CrvAqTrBGvTau3vTvgac8NAspv5xFKkA/view?usp=sharing",
+    'MODEL_URL': "https://drive.google.com/uc?id=1CrvAqTrBGvTau3vTvgac8NAspv5xFKkA",
     'CSS_FILE': "mobilestyle.css",
     'LOGO_PATHS': ["logo.png", "./logo.png", "assets/logo.png", "images/logo.png"],
     'IMAGE_PATHS': ["insert.jpg", "./insert.jpg", "assets/insert.jpg", "images/insert.jpg"],
