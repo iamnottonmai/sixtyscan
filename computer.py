@@ -69,8 +69,8 @@ def cleanup_temp_files(file_list):
         try:
             if file_path and os.path.exists(file_path):
                 os.unlink(file_path)
-        except Exception as e:
-            st.warning(f"Failed to delete temp file {file_path}: {str(e)}")
+        except:
+            pass
 
 def cleanup_all_temp_files():
     """Clean up all temporary files stored in session state"""
@@ -91,45 +91,22 @@ def validate_downloaded_file(file_path):
     """Validate that the downloaded file is actually a PyTorch model"""
     try:
         if not os.path.exists(file_path):
-            st.error(f"❌ File {file_path} does not exist")
             return False
         
         file_size = os.path.getsize(file_path)
-        st.info(f"📁 Downloaded file size: {file_size / (1024*1024):.1f} MB")
         
         # Check if file is too small (likely an error page)
         if file_size < 1024 * 1024:  # Less than 1MB
-            st.error("❌ Downloaded file is too small - likely an error page")
-            
-            # Show file content for debugging
-            with open(file_path, 'r', errors='ignore') as f:
-                content_preview = f.read(200)
-                st.error(f"File content preview: {content_preview}")
             return False
         
         # Try to load as PyTorch model
         try:
-            with st.spinner("🔍 Validating model file..."):
-                checkpoint = torch.load(file_path, map_location='cpu')
-                st.success("✅ File is a valid PyTorch model")
-                
-                # Show model info
-                if isinstance(checkpoint, dict):
-                    st.info(f"📊 Checkpoint keys: {list(checkpoint.keys())}")
-                
-                return True
-                
-        except Exception as e:
-            st.error(f"❌ File is not a valid PyTorch model: {str(e)}")
-            
-            # Show first few bytes for debugging
-            with open(file_path, 'rb') as f:
-                first_bytes = f.read(50)
-                st.error(f"First 50 bytes: {first_bytes}")
+            checkpoint = torch.load(file_path, map_location='cpu')
+            return True
+        except:
             return False
             
-    except Exception as e:
-        st.error(f"❌ Error validating file: {str(e)}")
+    except:
         return False
 
 def download_large_file_from_gdrive(file_id, destination):
@@ -143,27 +120,10 @@ def download_large_file_from_gdrive(file_id, destination):
 
     def save_response_content(response, destination):
         CHUNK_SIZE = 32768
-        total_size = int(response.headers.get('content-length', 0))
-        
-        if total_size > 0:
-            progress_bar = st.progress(0)
-            status_text = st.empty()
-        
         with open(destination, "wb") as f:
-            downloaded = 0
             for chunk in response.iter_content(CHUNK_SIZE):
                 if chunk:
                     f.write(chunk)
-                    downloaded += len(chunk)
-                    
-                    if total_size > 0:
-                        progress = downloaded / total_size
-                        progress_bar.progress(progress)
-                        status_text.text(f"Downloaded: {downloaded / (1024*1024):.1f}MB / {total_size / (1024*1024):.1f}MB")
-        
-        if total_size > 0:
-            progress_bar.empty()
-            status_text.empty()
 
     session = requests.Session()
     
@@ -192,52 +152,37 @@ def download_model_from_gdrive():
     
     # Method 1: Standard gdown with corrected URL
     try:
-        st.info("🔄 Downloading model from Google Drive (Method 1)...")
         url = f"https://drive.google.com/uc?id={file_id}&export=download"
-        
-        success = gdown.download(url, model_path, quiet=False)
+        success = gdown.download(url, model_path, quiet=True)
         
         if success and validate_downloaded_file(model_path):
-            st.success("✅ Model downloaded successfully!")
             return model_path
-            
-    except Exception as e:
-        st.warning(f"Method 1 failed: {str(e)}")
+    except:
+        pass
     
     # Method 2: gdown with fuzzy matching
     try:
-        st.info("🔄 Downloading model from Google Drive (Method 2 - Fuzzy)...")
-        
-        # Remove existing failed download
         if os.path.exists(model_path):
             os.remove(model_path)
         
-        # Try with the full shareable link
         share_url = f"https://drive.google.com/file/d/{file_id}/view?usp=sharing"
-        success = gdown.download(share_url, model_path, quiet=False, fuzzy=True)
+        success = gdown.download(share_url, model_path, quiet=True, fuzzy=True)
         
         if success and validate_downloaded_file(model_path):
-            st.success("✅ Model downloaded successfully with fuzzy matching!")
             return model_path
-            
-    except Exception as e:
-        st.warning(f"Method 2 failed: {str(e)}")
+    except:
+        pass
     
     # Method 3: Manual requests method with session handling
     try:
-        st.info("🔄 Downloading model from Google Drive (Method 3 - Manual)...")
-        
         if download_large_file_from_gdrive(file_id, model_path):
             if validate_downloaded_file(model_path):
-                st.success("✅ Model downloaded successfully with manual method!")
                 return model_path
-                
-    except Exception as e:
-        st.warning(f"Method 3 failed: {str(e)}")
+    except:
+        pass
     
     # Method 4: gdown CLI fallback
     try:
-        st.info("🔄 Downloading model from Google Drive (Method 4 - CLI)...")
         import subprocess
         
         result = subprocess.run([
@@ -245,13 +190,9 @@ def download_model_from_gdrive():
         ], capture_output=True, text=True, timeout=300)
         
         if result.returncode == 0 and validate_downloaded_file(model_path):
-            st.success("✅ Model downloaded successfully with CLI!")
             return model_path
-        else:
-            st.warning(f"CLI method failed: {result.stderr}")
-            
-    except Exception as e:
-        st.warning(f"Method 4 failed: {str(e)}")
+    except:
+        pass
     
     return None
 
@@ -273,16 +214,11 @@ def load_model():
     try:
         # Check if model already exists and is valid
         if os.path.exists(model_path):
-            if validate_downloaded_file(model_path):
-                st.success("✅ Using existing valid model file")
-            else:
-                st.warning("🗑️ Removing invalid existing file")
+            if not validate_downloaded_file(model_path):
                 os.remove(model_path)
         
         # Download if needed
         if not os.path.exists(model_path):
-            st.warning("📥 Model file not found. Downloading...")
-            
             downloaded_path = download_model_from_gdrive()
             if not downloaded_path:
                 st.error("""
@@ -293,12 +229,6 @@ def load_model():
                 2. Click "Download" (you may need to click "Download anyway" if there's a virus warning)
                 3. Save the file as `best_model.pth` in your app directory
                 4. Restart the app
-                
-                **Possible Issues:**
-                - Google Drive download quota exceeded
-                - File permissions or sharing settings
-                - Network connectivity issues
-                - File may be too large for automatic download
                 """)
                 return None
         
@@ -306,19 +236,15 @@ def load_model():
         model = ResNet18Classifier()
         
         # Load the checkpoint
-        st.info("🔄 Loading model weights...")
         checkpoint = torch.load(model_path, map_location=torch.device("cpu"))
         
         # Handle different checkpoint formats
         if isinstance(checkpoint, dict) and 'state_dict' in checkpoint:
             state_dict = checkpoint['state_dict']
-            st.info("📦 Found 'state_dict' in checkpoint")
         elif isinstance(checkpoint, dict):
             state_dict = checkpoint
-            st.info("📦 Using checkpoint as state_dict")
         else:
             state_dict = checkpoint
-            st.info("📦 Using raw checkpoint")
         
         # Clean state dict (remove 'module.' prefixes if present)
         cleaned_state_dict = _clean_state_dict(state_dict)
@@ -326,28 +252,14 @@ def load_model():
         # Load into model
         try:
             model.load_state_dict(cleaned_state_dict, strict=True)
-            st.success("✅ Model loaded successfully (strict mode)")
-        except RuntimeError as e:
-            st.warning(f"⚠️ Strict loading failed: {str(e)}")
-            try:
-                missing_keys, unexpected_keys = model.load_state_dict(cleaned_state_dict, strict=False)
-                if missing_keys:
-                    st.warning(f"Missing keys: {missing_keys}")
-                if unexpected_keys:
-                    st.warning(f"Unexpected keys: {unexpected_keys}")
-                st.success("✅ Model loaded successfully (non-strict mode)")
-            except Exception as e2:
-                st.error(f"❌ Failed to load model: {str(e2)}")
-                return None
+        except RuntimeError:
+            model.load_state_dict(cleaned_state_dict, strict=False)
         
         model.eval()
-        st.success("🎯 Model set to evaluation mode")
         return model
         
     except Exception as e:
         st.error(f"❌ Critical error loading model: {str(e)}")
-        import traceback
-        st.error(f"Traceback: {traceback.format_exc()}")
         return None
 
 # =============================
@@ -361,8 +273,7 @@ def load_image_file(image_paths, alt_text="Image"):
             if os.path.exists(path):
                 with open(path, "rb") as f:
                     return base64.b64encode(f.read()).decode()
-        except Exception as e:
-            st.warning(f"Failed to load {path}: {str(e)}")
+        except:
             continue
     return None
 
@@ -372,8 +283,7 @@ def get_thai_time():
         thai_tz = pytz.timezone(CONFIG['THAI_TIMEZONE'])
         now = datetime.now(thai_tz)
         return now.strftime("%d/%m/%Y %H:%M:%S")
-    except Exception as e:
-        st.error(f"Error getting Thai time: {str(e)}")
+    except:
         return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 def save_uploaded_file(uploaded_file):
@@ -383,8 +293,7 @@ def save_uploaded_file(uploaded_file):
             tmp.write(uploaded_file.read())
             add_temp_file(tmp.name)
             return tmp.name
-    except Exception as e:
-        st.error(f"Error saving uploaded file: {str(e)}")
+    except:
         return None
 
 def load_css():
@@ -394,7 +303,6 @@ def load_css():
         with open(css_file, 'r', encoding='utf-8') as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
     else:
-        st.warning(f"CSS file '{CONFIG['CSS_FILE']}' not found. Using minimal styling.")
         # Fallback minimal CSS
         st.markdown("""
             <style>
@@ -605,10 +513,8 @@ def convert_to_wav_if_needed(file_path):
                 return tmp.name
         return file_path
     except ImportError:
-        # Fallback: librosa can read many formats without converting
         return file_path
-    except Exception as e:
-        st.error(f"Error converting audio file: {str(e)}")
+    except:
         return None
 
 def audio_to_mel_tensor(file_path):
@@ -618,16 +524,14 @@ def audio_to_mel_tensor(file_path):
         if not wav_file:
             return None
 
-        # Match training: do NOT force-resample; use mono
         y, sr = librosa.load(wav_file, sr=None, mono=True)
 
         mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
         mel_db = librosa.power_to_db(mel, ref=np.max)
 
-        # Render to a 224x224 image exactly like training-style specshow
         fig, ax = plt.subplots(figsize=(2.24, 2.24), dpi=100)
         ax.axis('off')
-        librosa.display.specshow(mel_db, sr=sr, ax=ax)  # no cmap/fmax: keep as default
+        librosa.display.specshow(mel_db, sr=sr, ax=ax)
         buf = io.BytesIO()
         plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
         plt.close(fig)
@@ -641,9 +545,8 @@ def audio_to_mel_tensor(file_path):
             transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                  std =[0.229, 0.224, 0.225]),
         ])
-        return transform(image).unsqueeze(0)  # (1, 3, 224, 224)
-    except Exception as e:
-        st.error(f"Error creating mel tensor: {str(e)}")
+        return transform(image).unsqueeze(0)
+    except:
         return None
 
 def create_mel_spectrogram_display(file_path, title="Mel Spectrogram"):
@@ -671,8 +574,7 @@ def create_mel_spectrogram_display(file_path, title="Mel Spectrogram"):
         plt.close(fig)
         buf.seek(0)
         return Image.open(buf)
-    except Exception as e:
-        st.error(f"Error creating spectrogram: {str(e)}")
+    except:
         return None
 
 def predict_from_model(vowel_paths, pataka_path, sentence_path, model):
@@ -684,7 +586,6 @@ def predict_from_model(vowel_paths, pataka_path, sentence_path, model):
         for path in vowel_paths:
             t = audio_to_mel_tensor(path)
             if t is None:
-                st.error(f"Failed to process vowel file: {path}")
                 return None
             tensors.append(t)
 
@@ -692,7 +593,6 @@ def predict_from_model(vowel_paths, pataka_path, sentence_path, model):
         for path in [pataka_path, sentence_path]:
             t = audio_to_mel_tensor(path)
             if t is None:
-                st.error(f"Failed to process file: {path}")
                 return None
             tensors.append(t)
 
@@ -702,20 +602,18 @@ def predict_from_model(vowel_paths, pataka_path, sentence_path, model):
         with torch.no_grad():
             logits_list = []
             for t in tensors:
-                out = model(t)            # [1, 2]
+                out = model(t)
                 logits_list.append(out)
 
-            # Combine logits: [N,2] -> mean over N -> [2]
-            logits_all = torch.cat(logits_list, dim=0)      # [N, 2]
-            mean_logits = logits_all.mean(dim=0)            # [2]
-            probs = torch.softmax(mean_logits, dim=0)       # [2]
+            logits_all = torch.cat(logits_list, dim=0)
+            mean_logits = logits_all.mean(dim=0)
+            probs = torch.softmax(mean_logits, dim=0)
 
             pd_idx = CONFIG.get('PD_INDEX', 1)
             final_prob_pd = float(probs[pd_idx].item())
             return final_prob_pd
 
-    except Exception as e:
-        st.error(f"Error making predictions: {str(e)}")
+    except:
         return None
 
 # =============================
@@ -896,7 +794,7 @@ def show_guide_page():
                             <p style="color: #856404; text-align: center; font-size: 14px;">ไฟล์เสียงไม่พบ</p>
                         </div>
                     """, unsafe_allow_html=True)
-            except Exception as e:
+            except:
                 st.markdown(f"""
                     <div style="background: #f8d7da; border-radius: 15px; padding: 20px; margin: 10px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 4px solid #dc3545;">
                         <h4 style="color: #721c24; margin-bottom: 15px; font-family: 'Prompt', sans-serif; font-size: 18px; font-weight: 600; text-align: center;">{title}</h4>
@@ -1198,8 +1096,8 @@ def show_analysis_page():
                     </div>
                     """
                     st.markdown(info_html, unsafe_allow_html=True)
-                except Exception as e:
-                    st.error(f"เกิดข้อผิดพลาดในการวิเคราะห์: {str(e)}")
+                except:
+                    st.error("เกิดข้อผิดพลาดในการวิเคราะห์")
         else:
             st.warning("กรุณาอัดเสียงหรืออัปโหลดให้ครบทั้ง 7 สระ พยางค์ และประโยค", icon="⚠")
 
@@ -1222,155 +1120,11 @@ def run_desktop_app():
         show_analysis_page()
 
 # =============================
-# Debugging and Helper Functions
-# =============================
-def show_model_debug_info():
-    """Show model debugging information in sidebar"""
-    with st.sidebar:
-        st.subheader("🔧 Model Debug Info")
-        
-        if st.button("Check Model Status"):
-            model_path = CONFIG['MODEL_PATH']
-            if os.path.exists(model_path):
-                file_size = os.path.getsize(model_path)
-                st.success(f"Model file exists ({file_size / (1024*1024):.1f} MB)")
-                
-                # Try to validate
-                if validate_downloaded_file(model_path):
-                    st.success("Model is valid!")
-                else:
-                    st.error("Model is invalid!")
-            else:
-                st.error("Model file not found")
-        
-        if st.button("Force Re-download"):
-            model_path = CONFIG['MODEL_PATH']
-            if os.path.exists(model_path):
-                os.remove(model_path)
-                st.success("Model file deleted. Refresh to re-download.")
-            else:
-                st.info("No model file to delete")
-        
-        if st.button("Test gdown"):
-            try:
-                import gdown
-                st.success(f"gdown version: {gdown.__version__}")
-                
-                # Test file ID
-                file_id = CONFIG['MODEL_FILE_ID']
-                url = f"https://drive.google.com/uc?id={file_id}"
-                st.info(f"Test URL: {url}")
-                
-            except Exception as e:
-                st.error(f"gdown error: {e}")
-
-def debug_gdrive_link():
-    """Debug the Google Drive link"""
-    file_id = CONFIG['MODEL_FILE_ID']
-    
-    st.subheader("🔍 Google Drive Link Debug")
-    
-    links_to_try = [
-        f"https://drive.google.com/uc?id={file_id}",
-        f"https://drive.google.com/uc?id={file_id}&export=download",
-        f"https://drive.google.com/file/d/{file_id}/view?usp=sharing",
-        f"https://docs.google.com/uc?export=download&id={file_id}"
-    ]
-    
-    for i, link in enumerate(links_to_try):
-        st.write(f"**Link {i+1}:** `{link}`")
-        if st.button(f"Test Link {i+1}", key=f"test_link_{i}"):
-            try:
-                response = requests.head(link, allow_redirects=True, timeout=10)
-                st.write(f"Status: {response.status_code}")
-                st.write(f"Content-Type: {response.headers.get('content-type', 'Unknown')}")
-                st.write(f"Content-Length: {response.headers.get('content-length', 'Unknown')}")
-            except Exception as e:
-                st.error(f"Error: {e}")
-
-def show_model_download_page():
-    """Dedicated page for model download and debugging"""
-    st.title("🔧 Model Download & Debug")
-    
-    # Check current model status
-    model_path = CONFIG['MODEL_PATH']
-    if os.path.exists(model_path):
-        file_size = os.path.getsize(model_path)
-        st.success(f"✅ Model file exists ({file_size / (1024*1024):.1f} MB)")
-        
-        if st.button("🔍 Validate Current Model"):
-            if validate_downloaded_file(model_path):
-                st.success("Model is valid!")
-            else:
-                st.error("Model is invalid!")
-    else:
-        st.warning("❌ Model file not found")
-    
-    # Manual download button
-    if st.button("📥 Download Model Now", type="primary"):
-        with st.spinner("Downloading..."):
-            result = download_model_from_gdrive()
-            if result:
-                st.balloons()
-                st.success("Model downloaded successfully!")
-            else:
-                st.error("Download failed!")
-    
-    # Force re-download
-    if st.button("🔄 Force Re-download"):
-        if os.path.exists(model_path):
-            os.remove(model_path)
-            st.info("Existing model file removed")
-        
-        with st.spinner("Re-downloading..."):
-            result = download_model_from_gdrive()
-            if result:
-                st.balloons()
-                st.success("Model re-downloaded successfully!")
-            else:
-                st.error("Re-download failed!")
-    
-    # Debug section
-    with st.expander("🔍 Debug Information"):
-        debug_gdrive_link()
-        
-        st.subheader("🔧 System Information")
-        
-        # Check dependencies
-        deps_status = {}
-        required_deps = ['gdown', 'requests', 'torch', 'librosa', 'PIL']
-        
-        for dep in required_deps:
-            try:
-                module = __import__(dep)
-                if hasattr(module, '__version__'):
-                    deps_status[dep] = f"✅ {module.__version__}"
-                else:
-                    deps_status[dep] = "✅ Installed"
-            except ImportError:
-                deps_status[dep] = "❌ Missing"
-        
-        for dep, status in deps_status.items():
-            st.write(f"**{dep}:** {status}")
-
-# =============================
 # Entry Point
 # =============================
 if __name__ == "__main__":
-    # Add debug sidebar in development
-    if st.sidebar.button("🔧 Debug Mode"):
-        st.session_state.page = 'debug'
-    
     if 'page' not in st.session_state:
         st.session_state.page = 'home'
     
-    # Show debug page if in debug mode
-    if st.session_state.page == 'debug':
-        show_model_download_page()
-    else:
-        # Run the main app
-        run_desktop_app()
-        
-        # Show debug info in sidebar for development
-        if st.sidebar.checkbox("Show Debug Info", value=False):
-            show_model_debug_info()
+    # Run the main app
+    run_desktop_app()
