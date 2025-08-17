@@ -158,7 +158,7 @@ def show_device_info(device_type: DeviceType, detection_method: str):
     # Create the powered by section HTML
     tamdai_html = ""
     if tamdai_b64:
-        tamdai_html = f'<img src="data:image/png;base64,{tamdai_b64}" style="height: 32px; width: auto; margin-left: 12px; vertical-align: middle;" alt="TAMDAI Logo">'
+        tamdai_html = f'<img src="data:image/png;base64,{tamdai_b64}" style="height: 48px; width: auto; margin-left: 12px; vertical-align: middle;" alt="TAMDAI Logo">'
     
     # Device indicator with powered by section at the bottom
     st.markdown(f"""
