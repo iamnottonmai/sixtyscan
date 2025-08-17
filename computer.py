@@ -23,7 +23,7 @@ from pathlib import Path
 CONFIG = {
     'MODEL_PATH': "best_model.pth",
     # FIX: remove stray quotes and use direct gdown-friendly URL
-    'MODEL_URL': "https://drive.google.com/uc?id=1CrvAqTrBGvTau3vTvgac8NAspv5xFKkA",
+    'MODEL_URL': "https://drive.google.com/file/d/1CrvAqTrBGvTau3vTvgac8NAspv5xFKkA/view?usp=sharing",
     'CSS_FILE': "deskstyle.css",
     'LOGO_PATHS': ["logo.png", "./logo.png", "assets/logo.png", "images/logo.png"],
     'IMAGE_PATHS': ["insert.jpg", "./insert.jpg", "assets/insert.jpg", "images/insert.jpg"],
