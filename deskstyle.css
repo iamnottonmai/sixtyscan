@@ -1,13 +1,31 @@
 /* Import Thai font */
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Global Reset */
-.stApp {
+/* Global Reset with higher specificity */
+.stApp, .stApp * {
     background: linear-gradient(135deg, #f8f4ff 0%, #e8f4fd 100%) !important;
     margin: 0 !important;
     padding: 0 !important;
     font-family: 'Prompt', sans-serif !important;
     min-height: 100vh;
+}
+
+/* Force remove all default Streamlit styling */
+div[data-testid="stVerticalBlock"] > div.element-container > div.stButton > button,
+div[data-testid="column"] > div[data-testid="stVerticalBlock"] > div.element-container > div.stButton > button,
+.stButton > button,
+button[kind="primary"],
+button[kind="secondary"] {
+    all: unset !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: 'Prompt', sans-serif !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
 }
 
 /* Remove default Streamlit padding */
@@ -137,24 +155,20 @@ div[data-testid="main"] .block-container {
 }
 
 /* =================================
-   BUTTON STYLES - FIXED APPROACH
+   BUTTON STYLES - ULTRA HIGH SPECIFICITY
    ================================= */
 
-/* Base button styles - REMOVED broad selectors, only basic styling */
-button {
-    font-family: 'Prompt', sans-serif !important;
-    border: none !important;
-    cursor: pointer !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    text-align: center !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-/* 1. HOMEPAGE BUTTONS - Full screen width, extra large */
+/* 1. HOMEPAGE BUTTONS - Maximum specificity with multiple selectors */
 div.stButton > button[data-testid*="start_analysis"],
-div.stButton > button[data-testid*="guide_manual"] {
+div[data-testid="column"] div.stButton > button[data-testid*="start_analysis"],
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="start_analysis"],
+.stButton button[data-testid*="start_analysis"],
+button[data-testid*="start_analysis"],
+div.stButton > button[data-testid*="guide_manual"],
+div[data-testid="column"] div.stButton > button[data-testid*="guide_manual"],
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="guide_manual"],
+.stButton button[data-testid*="guide_manual"],
+button[data-testid*="guide_manual"] {
     font-size: 72px !important;
     padding: 50px 100px !important;
     border-radius: 100px !important;
@@ -167,10 +181,23 @@ div.stButton > button[data-testid*="guide_manual"] {
     position: relative !important;
     overflow: hidden !important;
     margin: 15px 0 !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: 'Prompt', sans-serif !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* เริ่มใช้งาน button - Super prominent with animated gradient and pulsing effect */
-div.stButton > button[data-testid*="start_analysis"] {
+/* เริ่มใช้งาน button - Ultra high specificity */
+div.stButton > button[data-testid*="start_analysis"],
+div[data-testid="column"] div.stButton > button[data-testid*="start_analysis"],
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="start_analysis"],
+.stButton button[data-testid*="start_analysis"],
+button[data-testid*="start_analysis"] {
     background: linear-gradient(135deg, #FF1744 0%, #FF5722 20%, #FF9800 40%, #FFC107 60%, #8BC34A 80%, #2196F3 100%) !important;
     background-size: 600% 600% !important;
     animation: gradientPulse 2s ease infinite, buttonGlow 1.5s ease-in-out infinite alternate !important;
@@ -181,14 +208,22 @@ div.stButton > button[data-testid*="start_analysis"] {
     transform: scale(1.05) !important;
 }
 
-div.stButton > button[data-testid*="start_analysis"]:hover {
+div.stButton > button[data-testid*="start_analysis"]:hover,
+div[data-testid="column"] div.stButton > button[data-testid*="start_analysis"]:hover,
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="start_analysis"]:hover,
+.stButton button[data-testid*="start_analysis"]:hover,
+button[data-testid*="start_analysis"]:hover {
     transform: translateY(-12px) scale(1.08) !important;
     box-shadow: 0 35px 100px rgba(255, 23, 68, 1), inset 0 0 40px rgba(255,255,255,0.3) !important;
     animation: gradientPulse 0.8s ease infinite, buttonGlow 0.8s ease-in-out infinite alternate !important;
 }
 
-/* คู่มือ button - Bigger and more prominent */
-div.stButton > button[data-testid*="guide_manual"] {
+/* คู่มือ button - Ultra high specificity */
+div.stButton > button[data-testid*="guide_manual"],
+div[data-testid="column"] div.stButton > button[data-testid*="guide_manual"],
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="guide_manual"],
+.stButton button[data-testid*="guide_manual"],
+button[data-testid*="guide_manual"] {
     background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 30%, #8E24AA 60%, #AB47BC 100%) !important;
     color: white !important;
     box-shadow: 0 20px 70px rgba(74, 20, 140, 0.6), inset 0 0 20px rgba(255,255,255,0.1) !important;
@@ -196,7 +231,11 @@ div.stButton > button[data-testid*="guide_manual"] {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
 }
 
-div.stButton > button[data-testid*="guide_manual"]:hover {
+div.stButton > button[data-testid*="guide_manual"]:hover,
+div[data-testid="column"] div.stButton > button[data-testid*="guide_manual"]:hover,
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="guide_manual"]:hover,
+.stButton button[data-testid*="guide_manual"]:hover,
+button[data-testid*="guide_manual"]:hover {
     transform: translateY(-10px) scale(1.06) !important;
     box-shadow: 0 30px 90px rgba(74, 20, 140, 0.8), inset 0 0 30px rgba(255,255,255,0.2) !important;
     background: linear-gradient(135deg, #3A0E6B 0%, #5A1B7A 30%, #7E1F9A 60%, #9B37BC 100%) !important;
@@ -211,16 +250,24 @@ div.stButton > button[data-testid*="guide_manual"]:hover {
 
 @keyframes buttonGlow {
     0% { 
-        box-shadow: 0 20px 80px rgba(255, 23, 68, 0.8), inset 0 0 30px rgba(255,255,255,0.2);
+        box-shadow: 0 20px 80px rgba(255, 23, 68, 0.8), inset 0 0 30px rgba(255,255,255,0.2) !important;
     }
     100% { 
-        box-shadow: 0 25px 100px rgba(255, 23, 68, 1), inset 0 0 50px rgba(255,255,255,0.4);
+        box-shadow: 0 25px 100px rgba(255, 23, 68, 1), inset 0 0 50px rgba(255,255,255,0.4) !important;
     }
 }
 
-/* 2. BACK BUTTONS - Much bigger and more prominent */
+/* 2. BACK BUTTONS - Ultra high specificity */
 div.stButton > button[data-testid*="back_to_home"],
-div.stButton > button[data-testid*="back_to_home_from_guide"] {
+div[data-testid="column"] div.stButton > button[data-testid*="back_to_home"],
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="back_to_home"],
+.stButton button[data-testid*="back_to_home"],
+button[data-testid*="back_to_home"],
+div.stButton > button[data-testid*="back_to_home_from_guide"],
+div[data-testid="column"] div.stButton > button[data-testid*="back_to_home_from_guide"],
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="back_to_home_from_guide"],
+.stButton button[data-testid*="back_to_home_from_guide"],
+button[data-testid*="back_to_home_from_guide"] {
     background: linear-gradient(135deg, #37474F 0%, #455A64 30%, #546E7A 60%, #607D8B 100%) !important;
     color: white !important;
     font-size: 36px !important;
@@ -234,17 +281,37 @@ div.stButton > button[data-testid*="back_to_home_from_guide"] {
     font-weight: 700 !important;
     border: 3px solid rgba(255,255,255,0.2) !important;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+    font-family: 'Prompt', sans-serif !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
 }
 
 div.stButton > button[data-testid*="back_to_home"]:hover,
-div.stButton > button[data-testid*="back_to_home_from_guide"]:hover {
+div[data-testid="column"] div.stButton > button[data-testid*="back_to_home"]:hover,
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="back_to_home"]:hover,
+.stButton button[data-testid*="back_to_home"]:hover,
+button[data-testid*="back_to_home"]:hover,
+div.stButton > button[data-testid*="back_to_home_from_guide"]:hover,
+div[data-testid="column"] div.stButton > button[data-testid*="back_to_home_from_guide"]:hover,
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="back_to_home_from_guide"]:hover,
+.stButton button[data-testid*="back_to_home_from_guide"]:hover,
+button[data-testid*="back_to_home_from_guide"]:hover {
     transform: translateY(-6px) scale(1.05) !important;
     box-shadow: 0 20px 50px rgba(55, 71, 79, 0.7), inset 0 0 30px rgba(255,255,255,0.2) !important;
     background: linear-gradient(135deg, #263238 0%, #37474F 30%, #455A64 60%, #546E7A 100%) !important;
 }
 
-/* 3. ANALYSIS PAGE BUTTONS - Much bigger and more prominent */
-div.stButton > button[data-testid*="predict"] {
+/* 3. ANALYSIS PAGE BUTTONS - Ultra high specificity */
+div.stButton > button[data-testid*="predict"],
+div[data-testid="column"] div.stButton > button[data-testid*="predict"],
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="predict"],
+.stButton button[data-testid*="predict"],
+button[data-testid*="predict"] {
     background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 20%, #388E3C 40%, #4CAF50 60%, #66BB6A 80%, #81C784 100%) !important;
     color: white !important;
     box-shadow: 0 18px 60px rgba(27, 94, 32, 0.6), inset 0 0 25px rgba(255,255,255,0.15) !important;
@@ -258,15 +325,31 @@ div.stButton > button[data-testid*="predict"] {
     border: 4px solid rgba(255,255,255,0.25) !important;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
     letter-spacing: 1px !important;
+    font-family: 'Prompt', sans-serif !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
 }
 
-div.stButton > button[data-testid*="predict"]:hover {
+div.stButton > button[data-testid*="predict"]:hover,
+div[data-testid="column"] div.stButton > button[data-testid*="predict"]:hover,
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="predict"]:hover,
+.stButton button[data-testid*="predict"]:hover,
+button[data-testid*="predict"]:hover {
     transform: translateY(-8px) scale(1.08) !important;
     box-shadow: 0 25px 80px rgba(27, 94, 32, 0.8), inset 0 0 35px rgba(255,255,255,0.2) !important;
     background: linear-gradient(135deg, #0D4E12 0%, #1B5E20 20%, #2E7D32 40%, #388E3C 60%, #4CAF50 80%, #66BB6A 100%) !important;
 }
 
-div.stButton > button[data-testid*="clear"] {
+div.stButton > button[data-testid*="clear"],
+div[data-testid="column"] div.stButton > button[data-testid*="clear"],
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="clear"],
+.stButton button[data-testid*="clear"],
+button[data-testid*="clear"] {
     background: linear-gradient(135deg, #BF360C 0%, #D84315 20%, #E65100 40%, #F57C00 60%, #FF9800 80%, #FFB74D 100%) !important;
     color: white !important;
     box-shadow: 0 18px 60px rgba(191, 54, 12, 0.6), inset 0 0 25px rgba(255,255,255,0.15) !important;
@@ -280,9 +363,21 @@ div.stButton > button[data-testid*="clear"] {
     border: 4px solid rgba(255,255,255,0.25) !important;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
     letter-spacing: 1px !important;
+    font-family: 'Prompt', sans-serif !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
 }
 
-div.stButton > button[data-testid*="clear"]:hover {
+div.stButton > button[data-testid*="clear"]:hover,
+div[data-testid="column"] div.stButton > button[data-testid*="clear"]:hover,
+div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="clear"]:hover,
+.stButton button[data-testid*="clear"]:hover,
+button[data-testid*="clear"]:hover {
     transform: translateY(-8px) scale(1.08) !important;
     box-shadow: 0 25px 80px rgba(191, 54, 12, 0.8), inset 0 0 35px rgba(255,255,255,0.2) !important;
     background: linear-gradient(135deg, #9C2D08 0%, #BF360C 20%, #D84315 40%, #E65100 60%, #F57C00 80%, #FF9800 100%) !important;
@@ -498,7 +593,15 @@ div.stButton > button[data-testid*="clear"]:hover {
     
     /* Responsive homepage buttons */
     div.stButton > button[data-testid*="start_analysis"],
-    div.stButton > button[data-testid*="guide_manual"] {
+    div[data-testid="column"] div.stButton > button[data-testid*="start_analysis"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="start_analysis"],
+    .stButton button[data-testid*="start_analysis"],
+    button[data-testid*="start_analysis"],
+    div.stButton > button[data-testid*="guide_manual"],
+    div[data-testid="column"] div.stButton > button[data-testid*="guide_manual"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="guide_manual"],
+    .stButton button[data-testid*="guide_manual"],
+    button[data-testid*="guide_manual"] {
         width: calc(100vw - 60px) !important;
         max-width: calc(100vw - 60px) !important;
         min-width: calc(100vw - 60px) !important;
@@ -509,7 +612,14 @@ div.stButton > button[data-testid*="clear"]:hover {
     
     /* Responsive back buttons */
     div.stButton > button[data-testid*="back_to_home"],
-    div.stButton > button[data-testid*="back_to_home_from_guide"] {
+    div[data-testid="column"] div.stButton > button[data-testid*="back_to_home"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="back_to_home"],
+    .stButton button[data-testid*="back_to_home"],
+    button[data-testid*="back_to_home"],
+    div.stButton > button[data-testid*="back_to_home_from_guide"],
+    div[data-testid="column"] div.stButton > button[data-testid*="back_to_home_from_guide"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="back_to_home_from_guide"],
+    .stButton     button[data-testid*="back_to_home_from_guide"] {
         min-width: 350px !important;
         max-width: 450px !important;
         font-size: 32px !important;
@@ -518,7 +628,15 @@ div.stButton > button[data-testid*="clear"]:hover {
     
     /* Responsive analysis buttons */
     div.stButton > button[data-testid*="predict"],
-    div.stButton > button[data-testid*="clear"] {
+    div[data-testid="column"] div.stButton > button[data-testid*="predict"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="predict"],
+    .stButton button[data-testid*="predict"],
+    button[data-testid*="predict"],
+    div.stButton > button[data-testid*="clear"],
+    div[data-testid="column"] div.stButton > button[data-testid*="clear"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="clear"],
+    .stButton button[data-testid*="clear"],
+    button[data-testid*="clear"] {
         min-width: 450px !important;
         max-width: 550px !important;
         font-size: 40px !important;
@@ -564,7 +682,15 @@ div.stButton > button[data-testid*="clear"]:hover {
     
     /* Mobile homepage buttons */
     div.stButton > button[data-testid*="start_analysis"],
-    div.stButton > button[data-testid*="guide_manual"] {
+    div[data-testid="column"] div.stButton > button[data-testid*="start_analysis"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="start_analysis"],
+    .stButton button[data-testid*="start_analysis"],
+    button[data-testid*="start_analysis"],
+    div.stButton > button[data-testid*="guide_manual"],
+    div[data-testid="column"] div.stButton > button[data-testid*="guide_manual"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="guide_manual"],
+    .stButton button[data-testid*="guide_manual"],
+    button[data-testid*="guide_manual"] {
         width: calc(100vw - 40px) !important;
         max-width: calc(100vw - 40px) !important;
         min-width: calc(100vw - 40px) !important;
@@ -575,7 +701,15 @@ div.stButton > button[data-testid*="clear"]:hover {
     
     /* Mobile back buttons */
     div.stButton > button[data-testid*="back_to_home"],
-    div.stButton > button[data-testid*="back_to_home_from_guide"] {
+    div[data-testid="column"] div.stButton > button[data-testid*="back_to_home"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="back_to_home"],
+    .stButton button[data-testid*="back_to_home"],
+    button[data-testid*="back_to_home"],
+    div.stButton > button[data-testid*="back_to_home_from_guide"],
+    div[data-testid="column"] div.stButton > button[data-testid*="back_to_home_from_guide"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="back_to_home_from_guide"],
+    .stButton button[data-testid*="back_to_home_from_guide"],
+    button[data-testid*="back_to_home_from_guide"] {
         min-width: 300px !important;
         max-width: 400px !important;
         font-size: 28px !important;
@@ -584,7 +718,15 @@ div.stButton > button[data-testid*="clear"]:hover {
     
     /* Mobile analysis buttons */
     div.stButton > button[data-testid*="predict"],
-    div.stButton > button[data-testid*="clear"] {
+    div[data-testid="column"] div.stButton > button[data-testid*="predict"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="predict"],
+    .stButton button[data-testid*="predict"],
+    button[data-testid*="predict"],
+    div.stButton > button[data-testid*="clear"],
+    div[data-testid="column"] div.stButton > button[data-testid*="clear"],
+    div[data-testid="stVerticalBlock"] div.stButton > button[data-testid*="clear"],
+    .stButton button[data-testid*="clear"],
+    button[data-testid*="clear"] {
         min-width: 350px !important;
         max-width: 450px !important;
         font-size: 36px !important;
@@ -609,11 +751,33 @@ div.stButton > button[data-testid*="clear"]:hover {
     }
 }
 
-/* Font enforcement */
-* {
+/* Font enforcement with ultra high specificity */
+.stApp *, 
+.stApp *::before, 
+.stApp *::after,
+div[data-testid="stVerticalBlock"] *,
+div[data-testid="column"] *,
+.stButton *,
+button * {
     font-family: 'Prompt', sans-serif !important;
 }
 
-h1, h2, h3, h4, h5, h6, p, div, span, label {
+h1, h2, h3, h4, h5, h6, p, div, span, label, button {
     font-family: 'Prompt', sans-serif !important;
+}
+
+/* Additional button reset - Nuclear option */
+.stButton, .stButton *, button, button * {
+    all: initial !important;
+}
+
+.stButton > button, button {
+    all: initial !important;
+    font-family: 'Prompt', sans-serif !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
 }
