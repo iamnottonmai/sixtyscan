@@ -141,9 +141,9 @@ div[data-testid="main"] .block-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    width: 1000px;
+    width: calc(100vw - 120px); /* Full width minus padding */
     margin: 20px 0 0 60px; /* Align with text section padding */
-    max-width: 1000px; /* Prevent stretching */
+    max-width: calc(100vw - 120px); /* Prevent stretching beyond viewport */
     align-items: flex-start; /* Align buttons to the left edge of text section */
 }
 
@@ -155,8 +155,8 @@ div.stButton > button,
     border-radius: 70px !important;
     font-weight: 700 !important;
     font-family: 'Prompt', sans-serif !important;
-    min-width: 1000px !important;
-    max-width: 1000px !important; /* Prevent stretching */
+    min-width: calc(100vw - 200px) !important; /* Full width minus margins */
+    max-width: calc(100vw - 200px) !important; /* Prevent stretching beyond viewport */
     height: 85px !important;
     margin: 0 !important;
     border: none !important;
@@ -178,8 +178,8 @@ div.stButton > button,
     background: linear-gradient(135deg, #1976D2 0%, #6A1B9A 50%, #8E24AA 100%) !important;
     color: white !important;
     box-shadow: 0 8px 30px rgba(25, 118, 210, 0.4) !important;
-    width: 1000px !important;
-    max-width: 1000px !important;
+    width: calc(100vw - 200px) !important; /* Full width minus margins */
+    max-width: calc(100vw - 200px) !important;
     border: none !important;
 }
 
@@ -189,32 +189,43 @@ div.stButton > button,
     background: linear-gradient(135deg, #1565C0 0%, #4A148C 50%, #6A1B9A 100%) !important;
 }
 
-/* Other pages buttons - Keep original colors */
-.button-container div.stButton > button:first-of-type,
-.button-container [data-testid="stButton"] > button:first-of-type {
-    background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 50%, #66BB6A 100%) !important;
-    color: white !important;
-    box-shadow: 0 8px 30px rgba(46, 125, 50, 0.4) !important;
+/* Analysis page buttons - Smaller to prevent overlap */
+.analysis-buttons .stButton > button,
+.analysis-buttons [data-testid="stButton"] > button,
+div[data-testid="column"]:has(.stButton) .stButton > button {
+    font-size: 20px !important;
+    padding: 12px 24px !important;
+    min-width: 160px !important;
+    max-width: 220px !important;
+    width: 100% !important;
+    height: 50px !important;
+    border-radius: 25px !important;
+    margin: 5px !important;
 }
 
-.button-container div.stButton > button:first-of-type:hover,
-.button-container [data-testid="stButton"] > button:first-of-type:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 15px 40px rgba(46, 125, 50, 0.5) !important;
+/* Predict button - Green gradient */
+div[data-testid="column"]:first-child .stButton > button {
+    background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 50%, #66BB6A 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3) !important;
+}
+
+div[data-testid="column"]:first-child .stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4) !important;
     background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #4CAF50 100%) !important;
 }
 
-.button-container div.stButton > button:last-of-type,
-.button-container [data-testid="stButton"] > button:last-of-type {
+/* Clear button - Orange gradient */
+div[data-testid="column"]:last-child .stButton > button {
     background: linear-gradient(135deg, #F57C00 0%, #FF9800 50%, #FFB74D 100%) !important;
     color: white !important;
-    box-shadow: 0 8px 30px rgba(245, 124, 0, 0.4) !important;
+    box-shadow: 0 4px 15px rgba(245, 124, 0, 0.3) !important;
 }
 
-.button-container div.stButton > button:last-of-type:hover,
-.button-container [data-testid="stButton"] > button:last-of-type:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 15px 40px rgba(245, 124, 0, 0.5) !important;
+div[data-testid="column"]:last-child .stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(245, 124, 0, 0.4) !important;
     background: linear-gradient(135deg, #E65100 0%, #F57C00 50%, #FF9800 100%) !important;
 }
 
@@ -403,11 +414,12 @@ div.stButton > button,
 .stButton[data-testid="stButton"]:has(button:contains("←")) > button {
     background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%) !important;
     color: white !important;
-    font-size: 18px !important;
-    padding: 12px 24px !important;
-    min-width: auto !important;
-    height: 45px !important;
-    border-radius: 25px !important;
+    font-size: 16px !important;
+    padding: 8px 20px !important;
+    min-width: 120px !important;
+    max-width: 120px !important;
+    height: 40px !important;
+    border-radius: 20px !important;
     margin-bottom: 16px !important; /* Reduced from 20px to 16px */
 }
 
@@ -440,13 +452,14 @@ div.stButton > button,
     
     .homepage-button-container {
         margin: 20px auto 0 auto; /* Center buttons on smaller screens */
-        width: 100%;
-        max-width: 400px;
+        width: calc(100vw - 80px); /* Full width minus padding on mobile */
+        max-width: calc(100vw - 80px);
     }
     
     .homepage-button-container div.stButton > button {
         width: 100% !important;
-        max-width: 400px !important;
+        max-width: calc(100vw - 80px) !important;
+        min-width: calc(100vw - 80px) !important;
     }
     
     .main-title {
@@ -498,13 +511,14 @@ div.stButton > button,
     
     .homepage-button-container {
         margin: 20px auto 0 auto;
-        width: 100%;
-        max-width: 320px;
+        width: calc(100vw - 40px); /* Full width minus padding on mobile */
+        max-width: calc(100vw - 40px);
     }
     
     .homepage-button-container div.stButton > button {
         width: 100% !important;
-        max-width: 320px !important;
+        max-width: calc(100vw - 40px) !important;
+        min-width: calc(100vw - 40px) !important;
     }
     
     .main-content {
