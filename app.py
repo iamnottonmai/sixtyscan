@@ -158,16 +158,16 @@ def show_device_info(device_type: DeviceType, detection_method: str):
     # Create the powered by section HTML
     tamdai_html = ""
     if tamdai_b64:
-        tamdai_html = f'<img src="data:image/png;base64,{tamdai_b64}" style="height: 16px; width: auto; margin-left: 8px; vertical-align: middle;" alt="TAMDAI Logo">'
+        tamdai_html = f'<img src="data:image/png;base64,{tamdai_b64}" style="height: 24px; width: auto; margin-left: 12px; vertical-align: middle;" alt="TAMDAI Logo">'
     
     # Device indicator with powered by section at the bottom
     st.markdown(f"""
     <div style="text-align: center; font-size: 11px; color: #999; 
                 padding: 10px; margin-top: 20px; display: flex; 
-                justify-content: center; align-items: center; gap: 12px;">
-        <span>{device_emoji} {device_name} Version</span>
-        <div style="width: 1px; height: 16px; background-color: #ccc;"></div>
-        <span>Powered by{tamdai_html}</span>
+                justify-content: center; align-items: center; gap: 20px;">
+        <span style="margin-right: 8px;">{device_emoji} {device_name} Version</span>
+        <div style="width: 1px; height: 20px; background-color: #ccc;"></div>
+        <span style="margin-left: 8px;">Powered by{tamdai_html}</span>
     </div>
     """, unsafe_allow_html=True)
 
