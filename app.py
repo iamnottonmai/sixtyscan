@@ -7,7 +7,7 @@ DeviceType = Literal['mobile', 'desktop']
 class DeviceDetector:
     """Enhanced device detection for Streamlit applications"""
     
-    @staticmethoda
+    @staticmethod
     def detect_from_headers() -> Optional[DeviceType]:
         """Try to detect device from HTTP headers (multiple methods)"""
         try:
