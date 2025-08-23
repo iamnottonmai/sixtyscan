@@ -396,10 +396,10 @@ def run_desktop_app():
         st.markdown('</div>', unsafe_allow_html=True)
 
     def show_guide_page():
-        """Display the guide/manual page with proper styling"""
+        """Display the guide/manual page with proper styling - FIXED VERSION"""
         load_css()
 
-        # FIXED: Combine header with back button and title
+    # FIXED: Combine header with back button and title
         guide_html = f"""
             {get_header_html()}
             <div class="guide-container">
@@ -409,12 +409,12 @@ def run_desktop_app():
 
         st.markdown(guide_html, unsafe_allow_html=True)
 
-        # Back button
+    # Back button
         if st.button("**← กลับหน้าแรก**", key="back_to_home_from_guide"):
             st.session_state.page = 'home'
             st.rerun()
 
-        # Guide content - Fixed version with proper HTML structure
+    # Guide content - Fixed version with proper HTML structure
         st.markdown("""
             <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
                 <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 32px;">
@@ -455,7 +455,22 @@ def run_desktop_app():
             </div>
         """, unsafe_allow_html=True)
 
-        # Sample audio section
+    # FIXED: Move the "คำแนะนำเพิ่มเติม" section BEFORE the sample audio section
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
+                <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 20px; padding: 30px; margin: 30px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border-left: 6px solid #1976d2;">
+                    <h3 style="color: #1565c0; margin-bottom: 20px; font-family: 'Prompt', sans-serif; font-size: 24px; font-weight: 600; text-align: center;">💡 คำแนะนำเพิ่มเติม</h3>
+                    <ul style="font-size: 18px; font-family: 'Prompt', sans-serif; line-height: 1.8; color: #2e7d32; margin: 0; padding-left: 24px;">
+                        <li style="margin-bottom: 8px;">ฟังตัวอย่างเสียงก่อนเริ่มการตรวจเพื่อเข้าใจรูปแบบการออกเสียงที่ถูกต้อง</li>
+                        <li style="margin-bottom: 8px;">พยายามออกเสียงให้เหมือนกับตัวอย่างให้มากที่สุด</li>
+                        <li style="margin-bottom: 8px;">หากไม่แน่ใจ สามารถฟังตัวอย่างซ้ำได้หลายครั้ง</li>
+                        <li style="margin-bottom: 8px;">ตัวอย่างเสียงเหล่านี้เป็นเสียงจากผู้ที่ไม่เป็นพาร์กินสัน</li>
+                    </ul>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+    # Sample audio section
         st.markdown("""
             <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
                 <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 20px; padding: 30px; margin: 30px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
@@ -464,7 +479,7 @@ def run_desktop_app():
             </div>
         """, unsafe_allow_html=True)
 
-        # Sample audio files in order according to analysis page
+    # Sample audio files in order according to analysis page
         sample_audio_files = [
             ("อา", "sampleaudio/no/อา 1(1) pd.m4a"),
             ("อี", "sampleaudio/no/E 1(1) pd.m4a"),
@@ -477,7 +492,7 @@ def run_desktop_app():
             ("ประโยค", "sampleaudio/no/Sentence 1(1) pd.m4a")
         ]
 
-        # Create columns for audio display
+    # Create columns for audio display
         audio_cols = st.columns(3)
 
         for i, (title, file_path) in enumerate(sample_audio_files):
@@ -507,21 +522,19 @@ def run_desktop_app():
                         </div>
                     """, unsafe_allow_html=True)
 
-        # Additional information about sample audio
+    # FIXED: Add a final summary section at the bottom for better visibility
         st.markdown("""
             <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
-                <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 20px; padding: 25px; margin: 30px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border-left: 6px solid #1976d2;">
-                    <h4 style="color: #1565c0; margin-bottom: 15px; font-family: 'Prompt', sans-serif; font-size: 20px; font-weight: 600;'>💡 คำแนะนำเพิ่มเติม</h4>
-                    <ul style="font-size: 16px; font-family: 'Prompt', sans-serif; line-height: 1.6; color: #2e7d32;">
-                        <li>ฟังตัวอย่างเสียงก่อนเริ่มการตรวจเพื่อเข้าใจรูปแบบการออกเสียงที่ถูกต้อง</li>
-                        <li>พยายามออกเสียงให้เหมือนกับตัวอย่างให้มากที่สุด</li>
-                        <li>หากไม่แน่ใจ สามารถฟังตัวอย่างซ้ำได้หลายครั้ง</li>
-                        <li>ตัวอย่างเสียงเหล่านี้เป็นเสียงจากผู้ที่ไม่เป็นพาร์กินสัน</li>
-                    </ul>
+                <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 20%, #fff3e0 100%); border-radius: 20px; padding: 30px; margin: 40px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border-left: 6px solid #f57c00; text-align: center;">
+                    <h3 style="color: #e65100; margin-bottom: 20px; font-family: 'Prompt', sans-serif; font-size: 28px; font-weight: 700;">⚡ พร้อมเริ่มการตรวจแล้ว!</h3>
+                    <p style="font-size: 20px; font-family: 'Prompt', sans-serif; line-height: 1.6; color: #bf360c; margin: 0;">
+                        เมื่อท่านเข้าใจขั้นตอนและได้ฟังตัวอย่างเสียงแล้ว<br>
+                        <strong>กลับไปที่หน้าแรกเพื่อเริ่มใช้งานระบบตรวจคัดกรอง SixtyScan</strong>
+                    </p>
                 </div>
             </div>
         """, unsafe_allow_html=True)
-
+    
     def show_analysis_page():
         """Display the analysis page"""
         load_css()
