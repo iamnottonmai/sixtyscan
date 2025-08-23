@@ -86,7 +86,7 @@ header {visibility: hidden;}
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Mobile Main Content */
+/* Mobile Main Content - FIXED SPACING */
 .mobile-main-content {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     min-height: calc(100vh - 120px);
@@ -98,7 +98,7 @@ header {visibility: hidden;}
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 16px; /* REDUCED from 24px to 16px */
     max-width: 100%;
     margin: 0 auto;
     padding: 20px 16px;
@@ -110,6 +110,7 @@ header {visibility: hidden;}
     max-width: 100%;
     text-align: center;
     padding: 0;
+    margin-bottom: 0; /* ADDED to reduce space */
 }
 
 .mobile-image-section {
@@ -117,8 +118,8 @@ header {visibility: hidden;}
     display: flex;
     justify-content: center;
     max-width: 100%;
-    margin-top: 0;
-    padding-top: 0;
+    margin-top: 0; /* KEPT as 0 */
+    padding-top: 0; /* KEPT as 0 */
 }
 
 /* Mobile Title - NOW BOLD */
@@ -128,7 +129,7 @@ h1.mobile-main-title {
     font-weight: 700 !important;
     color: #2d2d2d !important;
     line-height: 1.2 !important;
-    margin-bottom: 24px !important;
+    margin-bottom: 16px !important; /* REDUCED from 24px to 16px */
     margin-top: 0 !important;
     letter-spacing: -0.5px !important;
 }
@@ -145,7 +146,7 @@ h1.mobile-main-title {
     gap: 16px;
     width: 100%;
     max-width: 100%;
-    margin: 20px auto 0 auto;
+    margin: 12px auto 0 auto; /* REDUCED top margin from 20px to 12px */
     align-items: center;
     justify-content: center;
 }
@@ -542,6 +543,7 @@ div.stButton > button,
 @media (max-width: 480px) {
     h1.mobile-main-title {
         font-size: 28px !important;
+        margin-bottom: 12px !important; /* FURTHER REDUCED for small screens */
     }
     
     .mobile-logo-text {
@@ -563,10 +565,16 @@ div.stButton > button,
     
     .mobile-homepage-buttons-wrapper {
         max-width: 100%;
+        margin-top: 8px; /* FURTHER REDUCED for small screens */
     }
     
     .mobile-homepage-buttons-wrapper div.stButton > button {
         max-width: 100% !important;
+    }
+    
+    .mobile-content-wrapper {
+        gap: 12px; /* REDUCED gap for smaller screens */
+        padding: 16px 12px; /* REDUCED padding */
     }
 }
 
