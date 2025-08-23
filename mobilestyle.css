@@ -120,15 +120,15 @@ header {visibility: hidden;}
 }
 
 /* Mobile Title */
-.mobile-main-title {
-    font-family: 'Prompt', sans-serif;
-    font-size: 10px;
-    font-weight: 400;
-    color: #2d2d2d;
-    line-height: 1.2;
-    margin-bottom: 24px;
+h1.mobile-main-title {
+    font-family: 'Prompt', sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    color: #2d2d2d !important;
+    line-height: 1.2 !important;
+    margin-bottom: 24px !important;
     margin-top: 0 !important;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.5px !important;
 }
 
 .mobile-highlight {
@@ -536,8 +536,8 @@ div.stButton > button,
 
 /* Mobile Responsive Design */
 @media (max-width: 480px) {
-    .mobile-main-title {
-        font-size: 18px;
+    h1.mobile-main-title {
+        font-size: 16px !important;
     }
     
     .mobile-logo-text {
