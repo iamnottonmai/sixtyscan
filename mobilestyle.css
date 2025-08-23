@@ -86,7 +86,7 @@ header {visibility: hidden;}
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Mobile Main Content - FIXED SPACING */
+/* Mobile Main Content - MINIMIZED SPACING */
 .mobile-main-content {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     min-height: calc(100vh - 120px);
@@ -98,10 +98,10 @@ header {visibility: hidden;}
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px; /* REDUCED from 24px to 16px */
+    gap: 8px; /* REDUCED from 16px to 8px */
     max-width: 100%;
     margin: 0 auto;
-    padding: 20px 16px;
+    padding: 16px 16px 20px 16px; /* REDUCED top padding from 20px to 16px */
     min-height: 75vh;
 }
 
@@ -110,7 +110,8 @@ header {visibility: hidden;}
     max-width: 100%;
     text-align: center;
     padding: 0;
-    margin-bottom: 0; /* ADDED to reduce space */
+    margin-bottom: 0;
+    margin-top: 0; /* ADDED to eliminate any top margin */
 }
 
 .mobile-image-section {
@@ -118,18 +119,20 @@ header {visibility: hidden;}
     display: flex;
     justify-content: center;
     max-width: 100%;
-    margin-top: 0; /* KEPT as 0 */
-    padding-top: 0; /* KEPT as 0 */
+    margin-top: 0;
+    margin-bottom: 0; /* ADDED to eliminate bottom margin */
+    padding-top: 0;
+    padding-bottom: 0; /* ADDED to eliminate bottom padding */
 }
 
-/* Mobile Title - NOW BOLD */
+/* Mobile Title - REDUCED MARGINS */
 h1.mobile-main-title {
     font-family: 'Prompt', sans-serif !important;
     font-size: 32px !important;
     font-weight: 700 !important;
     color: #2d2d2d !important;
     line-height: 1.2 !important;
-    margin-bottom: 16px !important; /* REDUCED from 24px to 16px */
+    margin-bottom: 8px !important; /* REDUCED from 16px to 8px */
     margin-top: 0 !important;
     letter-spacing: -0.5px !important;
 }
@@ -139,14 +142,14 @@ h1.mobile-main-title {
     font-weight: 800;
 }
 
-/* Mobile Homepage Buttons */
+/* Mobile Homepage Buttons - REDUCED TOP MARGIN */
 .mobile-homepage-buttons-wrapper {
     display: flex;
     flex-direction: column;
     gap: 16px;
     width: 100%;
     max-width: 100%;
-    margin: 12px auto 0 auto; /* REDUCED top margin from 20px to 12px */
+    margin: 8px auto 0 auto; /* REDUCED top margin from 12px to 8px */
     align-items: center;
     justify-content: center;
 }
@@ -190,7 +193,7 @@ div.stButton > button,
     background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%) !important;
 }
 
-/* Mobile Images - FIXED SPACING AND ASPECT RATIO */
+/* Mobile Images - MINIMIZED SPACING */
 .mobile-main-image {
     width: 100%;
     max-width: 320px;
@@ -200,6 +203,8 @@ div.stButton > button,
     transition: transform 0.3s ease;
     object-fit: contain;
     aspect-ratio: auto;
+    margin: 0; /* ADDED to remove any default margins */
+    padding: 0; /* ADDED to remove any default padding */
 }
 
 .mobile-main-image:hover {
@@ -218,6 +223,8 @@ div.stButton > button,
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease;
     border: 2px dashed rgba(106, 27, 154, 0.3);
+    margin: 0; /* ADDED to remove any default margins */
+    padding: 0; /* ADDED to remove any default padding */
 }
 
 .mobile-image-placeholder:hover {
@@ -539,11 +546,11 @@ div.stButton > button,
     margin-bottom: 12px !important;
 }
 
-/* Mobile Responsive Design */
+/* Mobile Responsive Design - FURTHER REDUCED SPACING */
 @media (max-width: 480px) {
     h1.mobile-main-title {
         font-size: 28px !important;
-        margin-bottom: 12px !important; /* FURTHER REDUCED for small screens */
+        margin-bottom: 6px !important; /* REDUCED from 12px to 6px */
     }
     
     .mobile-logo-text {
@@ -565,7 +572,7 @@ div.stButton > button,
     
     .mobile-homepage-buttons-wrapper {
         max-width: 100%;
-        margin-top: 8px; /* FURTHER REDUCED for small screens */
+        margin-top: 6px; /* REDUCED from 8px to 6px */
     }
     
     .mobile-homepage-buttons-wrapper div.stButton > button {
@@ -573,8 +580,8 @@ div.stButton > button,
     }
     
     .mobile-content-wrapper {
-        gap: 12px; /* REDUCED gap for smaller screens */
-        padding: 16px 12px; /* REDUCED padding */
+        gap: 6px; /* REDUCED from 12px to 6px */
+        padding: 12px 12px 16px 12px; /* REDUCED top padding further */
     }
 }
 
