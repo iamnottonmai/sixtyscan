@@ -419,10 +419,10 @@ def run_desktop_app():
             <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
                 <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 32px;">
                     <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 24px; margin-top: 0; font-family: 'Prompt', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
-                    <ol style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
-                        <li style="margin-bottom: 8px;"><strong>1.</strong> พักผ่อนเพียงพอก่อนการตรวจ</li>
-                        <li style="margin-bottom: 8px;"><strong>2.</strong> หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
-                        <li style="margin-bottom: 8px;"><strong>3.</strong> นั่งหรือยืนในท่าที่สบาย</li>
+                    <ol style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px; font-weight: bold;">
+                        <li style="margin-bottom: 12px; font-weight: normal;"><strong style="font-weight: bold;">พักผ่อนเพียงพอก่อนการตรวจ</strong></li>
+                        <li style="margin-bottom: 12px; font-weight: normal;"><strong style="font-weight: bold;">หาสถานที่เงียบ ปราศจากเสียงรบกวน</strong></li>
+                        <li style="margin-bottom: 12px; font-weight: normal;"><strong style="font-weight: bold;">นั่งหรือยืนในท่าที่สบาย</strong></li>
                     </ol>
                 </div>
             </div>
