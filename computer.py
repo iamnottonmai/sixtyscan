@@ -419,12 +419,11 @@ def run_desktop_app():
             <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
                 <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-bottom: 32px;">
                     <h2 style="color: #4A148C; font-size: 36px; margin-bottom: 24px; margin-top: 0; font-family: 'Prompt', sans-serif;">การเตรียมตัวก่อนการตรวจ</h2>
-                    <ul style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
-                        <li style="margin-bottom: 8px;">หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
-                        <li style="margin-bottom: 8px;">ใช้ไมโครโฟนหรืออุปกรณ์บันทึกเสียงที่มีคุณภาพ</li>
-                        <li style="margin-bottom: 8px;">นั่งหรือยืนในท่าที่สบาย</li>
+                    <ol style="font-size: 22px; line-height: 1.7; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 24px;">
                         <li style="margin-bottom: 8px;">พักผ่อนเพียงพอก่อนการตรวจ</li>
-                    </ul>
+                        <li style="margin-bottom: 8px;">หาสถานที่เงียบ ปราศจากเสียงรบกวน</li>
+                        <li style="margin-bottom: 8px;">นั่งหรือยืนในท่าที่สบาย</li>
+                    </ol>
                 </div>
             </div>
         """, unsafe_allow_html=True)
