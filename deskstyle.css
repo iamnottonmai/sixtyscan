@@ -1,0 +1,534 @@
+/* Import Thai font */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Global Reset */
+.stApp {
+    background: linear-gradient(135deg, #f8f4ff 0%, #e8f4fd 100%) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Prompt', sans-serif !important;
+    min-height: 100vh;
+}
+
+/* Remove default Streamlit padding */
+.main .block-container {
+    padding-top: 0 !important;
+    padding-bottom: 1rem !important;
+    max-width: none !important;
+}
+
+/* Hide Streamlit elements */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+.stApp > div:first-child {
+    padding-top: 0;
+}
+
+/* TARGETED FIX: Remove space between header and main content only */
+div[data-testid="main"] .block-container {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Force main content to start immediately after header */
+.main-content {
+    margin-top: -1rem !important;
+}
+
+/* Header Styles - RESTORED original size */
+.header-container {
+    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%);
+    padding: 30px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 0 !important; /* Remove any margin below header */
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-text {
+    font-family: 'Prompt', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+}
+
+.header-divider {
+    width: 2px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 0 20px;
+}
+
+.tagline {
+    font-family: 'Prompt', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+}
+
+.datetime-display {
+    font-family: 'Prompt', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    background: rgba(255, 255, 255, 0.9);
+    color: #666;
+    padding: 12px 24px;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Main Content Area - Fixed spacing */
+.main-content {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: calc(100vh - 100px);
+    padding: 0px 0px 0px 0px; /* Reduced top padding from 30px to 20px */
+    margin-top: 0 !important; /* Ensure no top margin */
+}
+
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 75vh;
+    padding-top: 0 !important; /* Remove any top padding */
+}
+
+.text-section {
+    flex: 1;
+    max-width: 600px;
+    padding-left: 60px; /* Move text to the right to center between left edge and image */
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+}
+
+/* Main Title - Fixed spacing */
+.main-title {
+    font-family: 'Prompt', sans-serif;
+    font-size: 64px;
+    font-weight: 400;
+    color: #2d2d2d;
+    line-height: 1.2;
+    margin-bottom: 40px; /* Reduced from 50px to 40px */
+    margin-top: 0 !important; /* Ensure no top margin */
+    letter-spacing: -1px;
+}
+
+.highlight {
+    color: #8b5cf6;
+    font-weight: 700;
+}
+
+/* Homepage Button Container - Positioned below text */
+.homepage-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 1000px;
+    margin: 20px 0 0 60px; /* Align with text section padding */
+    max-width: 1000px; /* Prevent stretching */
+    align-items: flex-start; /* Align buttons to the left edge of text section */
+}
+
+/* Button Styles - Updated for vertical stack */
+div.stButton > button, 
+[data-testid="stButton"] > button {
+    font-size: 36px !important;
+    padding: 25px 70px !important;
+    border-radius: 70px !important;
+    font-weight: 700 !important;
+    font-family: 'Prompt', sans-serif !important;
+    min-width: 1000px !important;
+    max-width: 1000px !important; /* Prevent stretching */
+    height: 85px !important;
+    margin: 0 !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    letter-spacing: 0.5px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    line-height: 1.2 !important;
+}
+
+/* Homepage Buttons - Blue-Purple gradient for both */
+.homepage-button-container div.stButton > button {
+    font-size: 42px !important; /* Bigger text for homepage buttons */
+    background: linear-gradient(135deg, #1976D2 0%, #6A1B9A 50%, #8E24AA 100%) !important;
+    color: white !important;
+    box-shadow: 0 8px 30px rgba(25, 118, 210, 0.4) !important;
+    width: 1000px !important;
+    max-width: 1000px !important;
+    border: none !important;
+}
+
+.homepage-button-container div.stButton > button:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 15px 40px rgba(25, 118, 210, 0.5) !important;
+    background: linear-gradient(135deg, #1565C0 0%, #4A148C 50%, #6A1B9A 100%) !important;
+}
+
+/* Other pages buttons - Keep original colors */
+.button-container div.stButton > button:first-of-type,
+.button-container [data-testid="stButton"] > button:first-of-type {
+    background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 50%, #66BB6A 100%) !important;
+    color: white !important;
+    box-shadow: 0 8px 30px rgba(46, 125, 50, 0.4) !important;
+}
+
+.button-container div.stButton > button:first-of-type:hover,
+.button-container [data-testid="stButton"] > button:first-of-type:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 15px 40px rgba(46, 125, 50, 0.5) !important;
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #4CAF50 100%) !important;
+}
+
+.button-container div.stButton > button:last-of-type,
+.button-container [data-testid="stButton"] > button:last-of-type {
+    background: linear-gradient(135deg, #F57C00 0%, #FF9800 50%, #FFB74D 100%) !important;
+    color: white !important;
+    box-shadow: 0 8px 30px rgba(245, 124, 0, 0.4) !important;
+}
+
+.button-container div.stButton > button:last-of-type:hover,
+.button-container [data-testid="stButton"] > button:last-of-type:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 15px 40px rgba(245, 124, 0, 0.5) !important;
+    background: linear-gradient(135deg, #E65100 0%, #F57C00 50%, #FF9800 100%) !important;
+}
+
+/* Images */
+.main-image {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.main-image:hover {
+    transform: translateY(-5px);
+}
+
+.image-placeholder {
+    width: 100%;
+    max-width: 520px;
+    height: 400px;
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 50%, #e8f5e8 100%);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    border: 2px dashed rgba(106, 27, 154, 0.3);
+}
+
+.image-placeholder:hover {
+    transform: translateY(-5px);
+}
+
+.placeholder-content {
+    text-align: center;
+    color: #666;
+}
+
+.placeholder-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.7;
+}
+
+.placeholder-text {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Prompt', sans-serif;
+}
+
+/* Analysis page styles */
+.card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    margin-bottom: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.card h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #222;
+    font-weight: 600;
+    font-family: 'Prompt', sans-serif;
+}
+
+.instructions {
+    font-size: 26px !important;
+    color: #444;
+    margin-bottom: 24px;
+    font-weight: 400;
+    font-family: 'Prompt', sans-serif;
+    line-height: 1.5;
+}
+
+.pronounce {
+    font-size: 24px !important;
+    color: #000;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-family: 'Prompt', sans-serif;
+}
+
+.sentence-instruction {
+    font-size: 26px !important;
+    font-weight: 400 !important;
+    color: #444 !important;
+    margin-bottom: 24px !important;
+    font-family: 'Prompt', sans-serif !important;
+    display: block !important;
+    line-height: 1.5 !important;
+}
+
+/* Guide page styles - NEW */
+.guide-container {
+    max-width: 1000px;
+    margin: 20px auto 40px auto; /* Reduced top margin from 40px to 20px */
+    padding: 0 40px;
+}
+
+.guide-title {
+    text-align: center;
+    color: #4A148C;
+    font-size: 56px;
+    margin-bottom: 40px; /* Reduced from 50px to 40px */
+    margin-top: 0 !important; /* Remove any top margin */
+    font-family: 'Prompt', sans-serif;
+    font-weight: 700;
+}
+
+.guide-section {
+    background: white;
+    padding: 40px; /* Reduced from 50px to 40px */
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    margin-bottom: 32px; /* Reduced from 40px to 32px */
+}
+
+.guide-section h2 {
+    color: #4A148C;
+    font-size: 36px;
+    margin-bottom: 24px; /* Reduced from 30px to 24px */
+    margin-top: 0 !important; /* Remove any top margin */
+    font-family: 'Prompt', sans-serif;
+}
+
+.guide-section h3 {
+    color: #666;
+    font-size: 28px;
+    margin-top: 24px; /* Reduced from 30px to 24px */
+    margin-bottom: 16px;
+    font-family: 'Prompt', sans-serif;
+}
+
+.guide-section ul {
+    font-size: 22px;
+    line-height: 1.7;
+    font-family: 'Prompt', sans-serif;
+    margin-top: 0;
+    padding-left: 24px;
+}
+
+.guide-section li {
+    margin-bottom: 8px;
+}
+
+.guide-warning {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+
+.guide-warning h2 {
+    color: #4A148C;
+    font-size: 36px;
+    margin-bottom: 24px;
+    margin-top: 0 !important;
+    font-family: 'Prompt', sans-serif;
+}
+
+.guide-warning ul {
+    font-size: 22px;
+    line-height: 1.7;
+    color: #d32f2f;
+    font-family: 'Prompt', sans-serif;
+    margin-top: 0;
+    padding-left: 24px;
+}
+
+.guide-warning li {
+    margin-bottom: 12px;
+}
+
+.guide-warning strong {
+    font-weight: 600;
+}
+
+/* Back button styling */
+.stButton[data-testid="stButton"]:has(button:contains("←")) > button {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%) !important;
+    color: white !important;
+    font-size: 18px !important;
+    padding: 12px 24px !important;
+    min-width: auto !important;
+    height: 45px !important;
+    border-radius: 25px !important;
+    margin-bottom: 16px !important; /* Reduced from 20px to 16px */
+}
+
+/* Analysis page title - Fixed spacing */
+.analysis-title {
+    text-align: center;
+    font-size: 56px;
+    color: #4A148C;
+    margin: 20px 0 30px 0 !important; /* Reduced top margin from 30px to 20px */
+    font-family: 'Prompt', sans-serif;
+    font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .content-wrapper {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 40px 50px 40px; /* Reduced top padding from 40px to 30px */
+        gap: 50px;
+    }
+    
+    .text-section, .image-section {
+        max-width: none;
+    }
+    
+    .text-section {
+        padding-left: 0; /* Remove left padding on smaller screens */
+    }
+    
+    .homepage-button-container {
+        margin: 20px auto 0 auto; /* Center buttons on smaller screens */
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .homepage-button-container div.stButton > button {
+        width: 100% !important;
+        max-width: 400px !important;
+    }
+    
+    .main-title {
+        font-size: 48px;
+        white-space: normal;
+    }
+    
+    .button-container {
+        align-items: center;
+        width: 100%;
+    }
+    
+    .header-container {
+        padding: 16px 40px;
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+    
+    .logo-section {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .header-divider {
+        display: none;
+    }
+
+    .guide-container {
+        padding: 0 20px;
+        margin-top: 16px; /* Reduced from default */
+    }
+
+    .guide-title {
+        font-size: 44px;
+        margin-bottom: 32px; /* Reduced */
+    }
+}
+
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 40px;
+    }
+    
+    .stButton > button {
+        min-width: 280px !important;
+        font-size: 24px !important;
+    }
+    
+    .homepage-button-container {
+        margin: 20px auto 0 auto;
+        width: 100%;
+        max-width: 320px;
+    }
+    
+    .homepage-button-container div.stButton > button {
+        width: 100% !important;
+        max-width: 320px !important;
+    }
+    
+    .main-content {
+        padding: 20px 20px 40px 20px; /* Reduced top padding from 30px to 20px */
+    }
+
+    .guide-title {
+        font-size: 36px;
+    }
+
+    .guide-section {
+        padding: 30px; /* Reduced from 40px */
+    }
+
+    .guide-warning {
+        padding: 30px; /* Reduced from 40px */
+    }
+}
+
+/* Font enforcement */
+* {
+    font-family: 'Prompt', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, div, span, label {
+    font-family: 'Prompt', sans-serif !important;
+}
