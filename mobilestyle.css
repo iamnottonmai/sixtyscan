@@ -100,6 +100,7 @@ header {visibility: hidden;}
     margin: 0 auto;
     padding: 12px 16px 20px 16px; /* REDUCED top padding to 12px */
     text-align: center; /* CENTER everything */
+    min-height: auto; /* REMOVED min-height constraint */
 }
 
 .mobile-text-section {
@@ -134,14 +135,14 @@ h1.mobile-main-title {
     font-weight: 800;
 }
 
-/* Mobile Homepage Buttons - REDUCED TOP MARGIN */
+/* Mobile Homepage Buttons - MINIMAL TOP MARGIN */
 .mobile-homepage-buttons-wrapper {
     display: flex;
     flex-direction: column;
     gap: 16px;
     width: 100%;
     max-width: 100%;
-    margin: 8px auto 0 auto; /* REDUCED top margin from 12px to 8px */
+    margin: 0 auto; /* REMOVED top margin completely */
     align-items: center;
     justify-content: center;
 }
@@ -564,7 +565,7 @@ div.stButton > button,
     
     .mobile-homepage-buttons-wrapper {
         max-width: 100%;
-        margin-top: 6px; /* REDUCED from 8px to 6px */
+        margin: 0; /* REMOVED all margins */
     }
     
     .mobile-homepage-buttons-wrapper div.stButton > button {
