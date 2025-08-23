@@ -95,27 +95,27 @@ header {visibility: hidden;}
 }
 
 .mobile-content-wrapper {
-    display: block; /* CHANGED from flex to block to eliminate flex spacing */
+    display: block;
     max-width: 100%;
     margin: 0 auto;
-    padding: 12px 16px 20px 16px; /* REDUCED top padding to 12px */
-    text-align: center; /* CENTER everything */
-    min-height: auto; /* REMOVED min-height constraint */
+    padding: 8px 16px 20px 16px; /* REDUCED top padding from 12px to 8px */
+    text-align: center;
+    min-height: auto;
 }
 
 .mobile-text-section {
     max-width: 100%;
     text-align: center;
     padding: 0;
-    margin: 0; /* RESET all margins */
+    margin: 0;
 }
 
 .mobile-image-section {
-    display: block; /* CHANGED from flex to block */
+    display: block;
     text-align: center;
     max-width: 100%;
-    margin: 0; /* RESET all margins */
-    padding: 0; /* RESET all padding */
+    margin: 0 0 -10px 0; /* ADDED negative bottom margin to pull content closer */
+    padding: 0;
 }
 
 /* Mobile Title - REDUCED MARGINS */
@@ -125,7 +125,7 @@ h1.mobile-main-title {
     font-weight: 700 !important;
     color: #2d2d2d !important;
     line-height: 1.2 !important;
-    margin-bottom: 8px !important; /* REDUCED from 16px to 8px */
+    margin-bottom: 4px !important; /* REDUCED from 8px to 4px */
     margin-top: 0 !important;
     letter-spacing: -0.5px !important;
 }
@@ -142,7 +142,7 @@ h1.mobile-main-title {
     gap: 16px;
     width: 100%;
     max-width: 100%;
-    margin: 0 auto; /* REMOVED top margin completely */
+    margin: -8px auto 0 auto; /* ADDED negative top margin to reduce space */
     align-items: center;
     justify-content: center;
 }
@@ -186,18 +186,19 @@ div.stButton > button,
     background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%) !important;
 }
 
-/* Mobile Images - MINIMIZED SPACING */
+/* Mobile Images - REDUCED SIZE AND ELIMINATED SPACING */
 .mobile-main-image {
     width: 100%;
-    max-width: 320px;
+    max-width: 260px; /* REDUCED from 320px to 260px */
     height: auto;
     border-radius: 16px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease;
     object-fit: contain;
     aspect-ratio: auto;
-    margin: 0; /* ADDED to remove any default margins */
-    padding: 0; /* ADDED to remove any default padding */
+    margin: 0;
+    padding: 0;
+    display: block; /* ADDED to ensure proper display */
 }
 
 .mobile-main-image:hover {
@@ -206,8 +207,8 @@ div.stButton > button,
 
 .mobile-image-placeholder {
     width: 100%;
-    max-width: 320px;
-    height: 240px;
+    max-width: 260px; /* REDUCED from 320px to 260px */
+    height: 200px; /* REDUCED from 240px to 200px */
     background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 50%, #e8f5e8 100%);
     border-radius: 16px;
     display: flex;
@@ -216,8 +217,8 @@ div.stButton > button,
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease;
     border: 2px dashed rgba(106, 27, 154, 0.3);
-    margin: 0; /* ADDED to remove any default margins */
-    padding: 0; /* ADDED to remove any default padding */
+    margin: 0;
+    padding: 0;
 }
 
 .mobile-image-placeholder:hover {
@@ -543,7 +544,7 @@ div.stButton > button,
 @media (max-width: 480px) {
     h1.mobile-main-title {
         font-size: 28px !important;
-        margin-bottom: 6px !important; /* REDUCED from 12px to 6px */
+        margin-bottom: 2px !important; /* REDUCED from 6px to 2px */
     }
     
     .mobile-logo-text {
@@ -555,17 +556,17 @@ div.stButton > button,
     }
     
     .mobile-main-image {
-        max-width: 280px;
+        max-width: 220px; /* REDUCED from 280px to 220px */
     }
     
     .mobile-image-placeholder {
-        max-width: 280px;
-        height: 200px;
+        max-width: 220px; /* REDUCED from 280px to 220px */
+        height: 160px; /* REDUCED from 200px to 160px */
     }
     
     .mobile-homepage-buttons-wrapper {
         max-width: 100%;
-        margin: 0; /* REMOVED all margins */
+        margin: -12px auto 0 auto; /* INCREASED negative margin to -12px */
     }
     
     .mobile-homepage-buttons-wrapper div.stButton > button {
@@ -573,8 +574,11 @@ div.stButton > button,
     }
     
     .mobile-content-wrapper {
-        gap: 6px; /* REDUCED from 12px to 6px */
-        padding: 12px 12px 16px 12px; /* REDUCED top padding further */
+        padding: 6px 12px 16px 12px; /* REDUCED top padding to 6px */
+    }
+    
+    .mobile-image-section {
+        margin: 0 0 -15px 0; /* INCREASED negative bottom margin */
     }
 }
 
