@@ -293,8 +293,8 @@ def main():
     
     # Initial page config - will be updated based on device detection
     st.set_page_config(
-        page_title="Device-Aware App",
-        page_icon="📱",
+        page_title="SixtyScan - Parkinson Detection",
+        page_icon="🎤",
         layout="centered"  # Default to centered, will change to wide for desktop
     )
     
