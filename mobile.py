@@ -516,7 +516,17 @@ def run_mobile_app():
                         """, unsafe_allow_html=True)
                         st.audio(audio_bytes, format="audio/m4a")
                 else:
-                    
+                    st.markdown(f"""
+                        <div class="audio-item" style="background: #ffebee; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 3px solid #f44336;">
+                            <h4 style="color: #d32f2f; margin-bottom: 12px; font-family: 'Prompt', sans-serif; font-size: clamp(16px, 3.5vw, 18px); font-weight: 600; text-align: center; line-height: 1.2;">{title}</h4>
+                            <p style="text-align: center; color: #666; font-size: 14px;">ไฟล์ไม่พบ: {file_path}</p>
+                        </div>
+                    """, unsafe_allow_html=True)
+            except Exception as e:
+                st.error(f"Error loading audio file {file_path}: {str(e)}")
+
+        st.markdown('</div></div>', unsafe_allow_html=True)
+        
     def show_analysis_page():
         """Display the mobile-optimized analysis page"""
         load_css()
