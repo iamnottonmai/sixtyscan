@@ -24,6 +24,9 @@ CONFIG = {
     'CSS_FILE': "mobilestyle.css",
     'LOGO_PATHS': ["logo.png", "./logo.png", "assets/logo.png", "images/logo.png"],
     'IMAGE_PATHS': ["insert.jpg", "./insert.jpg", "assets/insert.jpg", "images/insert.jpg"],
+    'DOCTOR_PATHS' : ["doctor.jpg", "./doctor.jpg", "assets/doctor.jpg", "images/doctor.jpg"],
+    'REWARD_PATHS' : ["reward.jpg", "./reward.jpg", "assets/reward.jpg", "images/reward.jpg"],
+    'PRESENT_PATHS' : ["present.jpg", "./present.jpg", "assets/present.jpg", "images/present.jpg"],
     'THAI_TIMEZONE': 'Asia/Bangkok'
 }
 
@@ -399,7 +402,7 @@ def run_mobile_app():
 
         # Doctor section with error handling
         try:
-            doctor_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "doctor")
+            doctor_image_b64 = load_image_file(CONFIG['DOCTOR_PATHS'], "doctor")
             if doctor_image_b64:
                 st.markdown(f"""
                     <div style="text-align:center; margin:20px 0; padding:0 20px;">
@@ -424,8 +427,8 @@ def run_mobile_app():
 
         # Award images with error handling
         try:
-            reward_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "reward")
-            present_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "present")
+            reward_image_b64 = load_image_file(CONFIG['REWARD_PATHS'], "reward")
+            present_image_b64 = load_image_file(CONFIG['PRESENT_PATHS'], "present")
             
             images_html = '<div style="display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:15px; padding:0 20px;">'
             
