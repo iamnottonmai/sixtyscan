@@ -131,7 +131,7 @@ h1.mobile-main-title {
     font-weight: 700 !important;
     color: #2d2d2d !important;
     line-height: 1.2 !important;
-    margin-bottom: 4px !important; /* REDUCED from 8px to 4px */
+    margin-bottom: 16px !important; /* REDUCED from 8px to 4px */
     margin-top: 0 !important;
     letter-spacing: -0.5px !important;
 }
