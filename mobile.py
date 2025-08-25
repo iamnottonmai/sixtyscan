@@ -337,10 +337,10 @@ def run_mobile_app():
     def show_home_page():
         """Display the mobile-optimized home page"""
         load_css()
-    
+
         woman_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "Woman using phone")
-    
-    #     Mobile-optimized layout
+
+        # Mobile-optimized layout
         combined_html = f"""
             {get_header_html()}
             <div class="mobile-main-content">
@@ -365,61 +365,88 @@ def run_mobile_app():
                 </div>
             </div>
         """
-    
+
         st.markdown(combined_html, unsafe_allow_html=True)
-    
-    # Mobile-optimized buttons
+
+        # Mobile-optimized buttons
         st.markdown('<div class="mobile-homepage-buttons-wrapper">', unsafe_allow_html=True)
-    
+
         if st.button("**เริ่มใช้งาน**", key="mobile_start_analysis"):
             st.session_state.page = 'analysis'
             st.rerun()
-    
+
         if st.button("**คู่มือ**", key="mobile_guide_manual"):
             st.session_state.page = 'guide'
             st.rerun()
-    
+
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # ============ NEW: About Us Section ============
+        # ============ About Us Section ============
         st.markdown("""
             <div style="margin-top:40px; padding:20px; background:white; border-radius:20px; box-shadow:0 4px 16px rgba(0,0,0,0.1);">
-                <h2 style="text-align:center; color:#4A148C; font-family:'Prompt',sans-serif;">เกี่ยวกับเรา</h2>
-                <p style="font-size:16px; line-height:1.7; text-align:justify; font-family:'Prompt',sans-serif;">
-                    แรงบันดาลใจของ <b>SixtyScan.life</b> เริ่มจากคนใกล้ตัวที่บ้านของเรา ที่เป็นผู้ป่วยโรคพาร์กินสัน 
+                <h2 style="text-align:center; color:#4A148C; font-family:'Prompt',sans-serif; margin-bottom:16px;">เกี่ยวกับเรา</h2>
+                <p style="font-size:16px; line-height:1.7; text-align:justify; font-family:'Prompt',sans-serif; margin-bottom:16px;">
+                    แรงบันดาลใจของ <strong>SixtyScan.life</strong> เริ่มจากคนใกล้ตัวที่บ้านของเรา ที่เป็นผู้ป่วยโรคพาร์กินสัน 
                     ได้เห็นถึงความยากลำบากของท่านและผู้ที่เกี่ยวข้องทุกคน จึงเกิดคำถามว่า 
-                    “ถ้าช่วยผู้คนเข้าถึงการรักษาได้เร็ว จะช่วยสังคมได้มาก”
+                    "ถ้าช่วยผู้คนเข้าถึงการรักษาได้เร็ว จะช่วยสังคมได้มาก"
                 </p>
-                <p style="font-size:16px; line-height:1.7; text-align:justify; font-family:'Prompt',sans-serif;">
+                <p style="font-size:16px; line-height:1.7; text-align:justify; font-family:'Prompt',sans-serif; margin-bottom:20px;">
                     ด้วยความตั้งใจนั้น จึงนำความคิดไปปรึกษาคุณครู จนได้รวมทีมกัน 
-                    ใช้เทคโนโลยีพัฒนาเป็น <b>SixtyScan.life</b>
+                    ใช้เทคโนโลยีพัฒนาเป็น <strong>SixtyScan.life</strong>
                 </p>
-            
-                <div style="text-align:center; margin:20px 0;">
-                    <img src="doctor.jpg" alt="Doctor Support" style="max-width:90%; border-radius:15px; margin-bottom:12px;">
-                    <p style="font-size:14px; color:#666;">ได้รับคำแนะนำจาก นพ.ณัฐฏ์ กล้าผจญ</p>
-                </div>
-
-                <p style="font-size:16px; line-height:1.7; text-align:justify; font-family:'Prompt',sans-serif;">
-                    จากแนวคิดนี้ เราได้รับรางวัลจาก <b>AI Builder 2025</b> 
-                    และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา 
-                    ได้แก่ นพ.ณัฐฏ์ กล้าผจญ และ ผศ.นพ.สุรัตน์ ตันประเวช 
-                    จาก <b>MED CMU Health Innovation Center (MedCHIC) มหาวิทยาลัยเชียงใหม่</b>
-                </p>
-
-                <div style="display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:15px;">
-                    <img src="reward.jpg" alt="AI Builder Award" style="max-width:90%; border-radius:15px;">
-                    <img src="present.jpg" alt="Award Presentation" style="max-width:90%; border-radius:15px;">
-                    <p style="font-size:14px; color:#666;">ภาพจากการได้รับรางวัล AI Builder 2025</p>
-                </div>
             </div>
         """, unsafe_allow_html=True)
 
-    # ============ NEW: Contact Section ============
+        # Doctor section with error handling
+        try:
+            doctor_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "doctor")
+            if doctor_image_b64:
+                st.markdown(f"""
+                    <div style="text-align:center; margin:20px 0; padding:0 20px;">
+                        <img src="data:image/jpg;base64,{doctor_image_b64}" alt="Doctor Support" style="max-width:90%; border-radius:15px; margin-bottom:12px;">
+                        <p style="font-size:14px; color:#666; font-family:'Prompt',sans-serif;">ได้รับคำแนะนำจาก นพ.ณัฐฏ์ กล้าผจญ</p>
+                    </div>
+                """, unsafe_allow_html=True)
+        except Exception as e:
+            st.warning(f"Could not load doctor image: {e}")
+
+        # Continuation of about section
+        st.markdown("""
+            <div style="padding:0 20px; background:white; margin-top:-20px; border-radius:0 0 20px 20px;">
+                <p style="font-size:16px; line-height:1.7; text-align:justify; font-family:'Prompt',sans-serif; margin-bottom:20px;">
+                    จากแนวคิดนี้ เราได้รับรางวัลจาก <strong>AI Builder 2025</strong> 
+                    และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา 
+                    ได้แก่ นพ.ณัฐฏ์ กล้าผจญ และ ผศ.นพ.สุรัตน์ ตันประเวช 
+                    จาก <strong>MED CMU Health Innovation Center (MedCHIC) มหาวิทยาลัยเชียงใหม่</strong>
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+
+        # Award images with error handling
+        try:
+            reward_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "reward")
+            present_image_b64 = load_image_file(CONFIG['IMAGE_PATHS'], "present")
+            
+            images_html = '<div style="display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:15px; padding:0 20px;">'
+            
+            if reward_image_b64:
+                images_html += f'<img src="data:image/jpg;base64,{reward_image_b64}" alt="AI Builder Award" style="max-width:90%; border-radius:15px;">'
+            
+            if present_image_b64:
+                images_html += f'<img src="data:image/jpg;base64,{present_image_b64}" alt="Award Presentation" style="max-width:90%; border-radius:15px;">'
+            
+            images_html += '<p style="font-size:14px; color:#666; font-family:\'Prompt\',sans-serif;">ภาพจากการได้รับรางวัล AI Builder 2025</p></div>'
+            
+            st.markdown(images_html, unsafe_allow_html=True)
+            
+        except Exception as e:
+            st.warning(f"Could not load award images: {e}")
+
+        # ============ Contact Section ============
         st.markdown("""
             <div style="margin-top:20px; padding:20px; background:#f8f9fa; border-radius:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-                <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif;">ติดต่อเรา</h2>
-                <p style="font-size:15px; line-height:1.6; font-family:'Prompt',sans-serif; text-align:center;">
+                <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:16px;">ติดต่อเรา</h2>
+                <p style="font-size:15px; line-height:1.6; font-family:'Prompt',sans-serif; text-align:center; margin-bottom:12px;">
                     121/11 อาคารอีคิวสแควร์<br>
                     ถนนเชียงใหม่-ฮอด ตำบลป่าแดด อำเภอเมืองเชียงใหม่<br>
                     จังหวัดเชียงใหม่ 50100
@@ -429,7 +456,6 @@ def run_mobile_app():
                 </p>
             </div>
         """, unsafe_allow_html=True)
-
 
     def show_guide_page():
         """Display the guide/manual page with mobile-responsive styling"""
