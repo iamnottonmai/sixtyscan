@@ -525,7 +525,12 @@ def run_mobile_app():
             except Exception as e:
                 st.error(f"Error loading audio file {file_path}: {str(e)}")
 
-        st.markdown(("""
+        st.markdown("""
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
             <div style="max-width: 1000px; margin: 0 auto; padding: 0 40px;">
                 <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 20%, #fff3e0 100%); border-radius: 20px; padding: 30px; margin: 40px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border-left: 6px solid #f57c00; text-align: center;">
                     <h3 style="color: #e65100; margin-bottom: 20px; font-family: 'Prompt', sans-serif; font-size: 28px; font-weight: 700;">⚡ พร้อมเริ่มการตรวจแล้ว!</h3>
