@@ -382,6 +382,69 @@ def run_mobile_app():
             st.rerun()
         
         st.markdown('</div>', unsafe_allow_html=True)
+        
+        # About Us Section
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+                    <h2 style="color: #4A148C; font-size: clamp(24px, 5vw, 32px); margin-bottom: 20px; margin-top: 0; font-family: 'Prompt', sans-serif; line-height: 1.2; text-align: center;">เกี่ยวกับเรา</h2>
+                    
+                    <div style="font-size: clamp(16px, 4vw, 20px); line-height: 1.7; font-family: 'Prompt', sans-serif; color: #333; margin-bottom: 20px;">
+                        <p style="margin-bottom: 16px;">แรงบันดาลใจของ <strong>SixtyScan.life</strong> เริ่มจากคนใกล้ตัวที่บ้านของเรา ที่เป็นผู้ป่วยโรคพาร์กินสัน ได้เห็นถึงความยากลำบากของท่านและผู้ที่เกี่ยวข้องทุกคน จึงเกิดคำถามว่า <em>"ถ้าเช่วยผู้คนเข้าถึง การรักษาได้เร็ว จะช่วยสังคมได้มาก"</em></p>
+                        
+                        <p style="margin-bottom: 16px;">ด้วยความตั้งใจนั้น จึงนำความคิดไปปรึกษาคุณครู จนได้รวมทีมกัน ใช้เทคโนโลยีพัฒนา เป็น <strong>SixtyScan.life</strong></p>
+                        
+                        <p style="margin-bottom: 20px;">จากแนวคิดจนได้ครว้ารางวัลจาก <strong>AI Builder 2025</strong> และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา <strong>นพ.ณัฐฏ์ กล้าผจญ</strong> และ <strong>ผศ.นพ.สุรัตน์ ตันประเวช</strong> จาก <strong>MED CMU Health Innovation Center (MedCHIC)</strong> มหาวิทยาลัยเชียงใหม่</p>
+                    </div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Contact Information Section
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-left: 4px solid #4A148C;">
+                    <h3 style="color: #4A148C; font-size: clamp(20px, 4.5vw, 24px); margin-bottom: 16px; margin-top: 0; font-family: 'Prompt', sans-serif; line-height: 1.2;">ติดต่อเรา</h3>
+                    
+                    <div style="font-size: clamp(16px, 4vw, 18px); line-height: 1.6; font-family: 'Prompt', sans-serif; color: #555;">
+                        <div style="margin-bottom: 12px;">
+                            <strong>ที่อยู่:</strong><br>
+                            121/11 อาคารอีคิวสแควร์ ถนนเชียงใหม่-ฮอด<br>
+                            ตำบลป่าแดด อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50100
+                        </div>
+                        <div style="margin-bottom: 8px;">
+                            <strong>โทรศัพท์:</strong> 064-9506228
+                        </div>
+                    </div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Images Section with doctor.jpg, reward.jpg, and present.jpg
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+                <div style="background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%); border-radius: 15px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+                    <h3 style="color: #2e7d32; font-size: clamp(20px, 4.5vw, 24px); margin-bottom: 20px; margin-top: 0; font-family: 'Prompt', sans-serif; line-height: 1.2; text-align: center;">ความสำเร็จของเรา</h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+                        <div style="text-align: center; max-width: 300px;">
+                            <img src="data:image/jpg;base64,""" + load_image_file(["doctor.jpg"], "Doctor") + """" alt="นพ.ณัฐฏ์ กล้าผจญ" style="width: 100%; max-width: 250px; height: auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                            <p style="margin-top: 12px; font-size: clamp(14px, 3.5vw, 16px); font-family: 'Prompt', sans-serif; color: #2e7d32; font-weight: 500;">คำแนะนำจาก นพ.ณัฐฏ์ กล้าผจญ</p>
+                        </div>
+                        
+                        <div style="text-align: center; max-width: 300px;">
+                            <img src="data:image/jpg;base64,""" + load_image_file(["reward.jpg"], "Reward") + """" alt="รางวัล AI Builder 2025" style="width: 100%; max-width: 250px; height: auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                            <p style="margin-top: 12px; font-size: clamp(14px, 3.5vw, 16px); font-family: 'Prompt', sans-serif; color: #2e7d32; font-weight: 500;">รางวัลจาก AI Builder 2025</p>
+                        </div>
+                        
+                        <div style="text-align: center; max-width: 300px;">
+                            <img src="data:image/jpg;base64,""" + load_image_file(["present.jpg"], "Present") + """" alt="การสนับสนุน" style="width: 100%; max-width: 250px; height: auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                            <p style="margin-top: 12px; font-size: clamp(14px, 3.5vw, 16px); font-family: 'Prompt', sans-serif; color: #2e7d32; font-weight: 500;">การสนับสนุนจาก MedCHIC</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
     def show_guide_page():
         """Display the guide/manual page with mobile-responsive styling"""
