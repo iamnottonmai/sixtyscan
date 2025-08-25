@@ -384,166 +384,139 @@ def run_mobile_app():
         st.markdown('</div>', unsafe_allow_html=True)
 
     def show_guide_page():
-    """Display the guide/manual page with mobile-responsive styling"""
-    load_css()
+        """Display the guide/manual page with mobile-responsive styling"""
+        load_css()
 
-    # Mobile-responsive header with back button and title
-    guide_html = f"""
-        {get_header_html()}
-        <div class="guide-container">
-            <h1 class="guide-title">คู่มือการใช้งาน SixtyScan</h1>
-        </div>
-    """
-
-    st.markdown(guide_html, unsafe_allow_html=True)
-
-    # Back button
-    if st.button("**← กลับหน้าแรก**", key="back_to_home_from_guide"):
-        st.session_state.page = 'home'
-        st.rerun()
-
-    # Guide content - Mobile-optimized version
-    st.markdown("""
-        <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
-            <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 20px;">
-                <h2 style="color: #4A148C; font-size: clamp(24px, 5vw, 36px); margin-bottom: 16px; margin-top: 0; font-family: 'Prompt', sans-serif; line-height: 1.2;">การเตรียมตัวก่อนการตรวจ</h2>
-                <div style="font-size: clamp(16px, 4vw, 22px); line-height: 1.6; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 16px;">
-                    <div style="margin-bottom: 12px;"><strong>1.</strong> พักผ่อนเพียงพอก่อนการตรวจ</div>
-                    <div style="margin-bottom: 12px;"><strong>2.</strong> หาสถานที่เงียบ ปราศจากเสียงรบกวน</div>
-                    <div style="margin-bottom: 12px;"><strong>3.</strong> นั่งหรือยืนในท่าที่สบาย</div>
-                </div>
+        # Mobile-responsive header with back button and title
+        guide_html = f"""
+            {get_header_html()}
+            <div class="guide-container">
+                <h1 class="guide-title">คู่มือการใช้งาน SixtyScan</h1>
             </div>
-        </div>
-    """, unsafe_allow_html=True)
+        """
 
-    st.markdown("""
-        <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
-            <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 20px;">
-                <h2 style="color: #4A148C; font-size: clamp(24px, 5vw, 36px); margin-bottom: 16px; margin-top: 0; font-family: 'Prompt', sans-serif; line-height: 1.2;">ขั้นตอนการตรวจ</h2>
-                <ul style="font-size: clamp(16px, 4vw, 22px); line-height: 1.6; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 16px; list-style-position: outside;">
-                    <li style="margin-bottom: 16px; padding-left: 4px;"><strong>การออกเสียงสระ:</strong> ออกเสียงสระแต่ละตัว 5-8 วินาที ให้ชัดเจนและคงที่</li>
-                    <li style="margin-bottom: 16px; padding-left: 4px;"><strong>การออกเสียงพยางค์:</strong> ออกเสียง "พา-ทา-คา" ซ้ำๆ ประมาณ 6 วินาที</li>
-                    <li style="margin-bottom: 16px; padding-left: 4px;"><strong>การอ่านประโยค:</strong> อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติและชัดเจน</li>
-                </ul>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
+        st.markdown(guide_html, unsafe_allow_html=True)
 
-    st.markdown("""
-        <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
-            <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 20px;">
-                <h2 style="color: #4A148C; font-size: clamp(24px, 5vw, 36px); margin-bottom: 16px; margin-top: 0; font-family: 'Prompt', sans-serif; line-height: 1.2;">ข้อควรระวัง</h2>
-                <ul style="font-size: clamp(16px, 4vw, 22px); line-height: 1.6; color: #d32f2f; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 16px; list-style-position: outside;">
-                    <li style="margin-bottom: 12px; padding-left: 4px;"><strong style="font-weight: 600;">ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
-                    <li style="margin-bottom: 12px; padding-left: 4px;"><strong style="font-weight: 600;">ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
-                    <li style="margin-bottom: 12px; padding-left: 4px;"><strong style="font-weight: 600;">หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
-                </ul>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
+        # Back button
+        if st.button("**← กลับหน้าแรก**", key="back_to_home_from_guide"):
+            st.session_state.page = 'home'
+            st.rerun()
 
-    # Additional tips section - Mobile optimized
-    st.markdown("""
-        <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
-            <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 15px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 4px solid #1976d2;">
-                <h3 style="color: #1565c0; margin-bottom: 16px; font-family: 'Prompt', sans-serif; font-size: clamp(20px, 4.5vw, 24px); font-weight: 600; text-align: center; line-height: 1.2;">💡 คำแนะนำเพิ่มเติม</h3>
-                <ul style="font-size: clamp(16px, 4vw, 22px); font-family: 'Prompt', sans-serif; line-height: 1.7; color: #2e7d32; margin: 0; padding-left: 16px; list-style-position: outside;">
-                    <li style="margin-bottom: 12px; padding-left: 4px;">ฟังตัวอย่างเสียงก่อนเริ่มการตรวจเพื่อเข้าใจรูปแบบการออกเสียงที่ถูกต้อง</li>
-                    <li style="margin-bottom: 12px; padding-left: 4px;">พยายามออกเสียงให้เหมือนกับตัวอย่างให้มากที่สุด</li>
-                    <li style="margin-bottom: 12px; padding-left: 4px;">หากไม่แน่ใจ สามารถฟังตัวอย่างซ้ำได้หลายครั้ง</li>
-                    <li style="margin-bottom: 12px; padding-left: 4px;">ตัวอย่างเสียงเหล่านี้เป็นเสียงจากผู้ที่ไม่เป็นพาร์กินสัน</li>
-                </ul>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-
-    # Sample audio section - Mobile optimized
-    st.markdown("""
-        <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
-            <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
-                <h3 style="color: #495057; margin-bottom: 20px; font-family: 'Prompt', sans-serif; font-size: clamp(20px, 4.5vw, 24px); font-weight: 600; text-align: center; line-height: 1.2;">🎵 ตัวอย่างเสียงที่ถูกต้อง</h3>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-
-    # Sample audio files in order according to analysis page
-    sample_audio_files = [
-        ("อา", "sampleaudio/no/อา 1(1) pd.m4a"),
-        ("อี", "sampleaudio/no/E 1(1) pd.m4a"),
-        ("อือ", "sampleaudio/no/อือ 1(1) pd.m4a"),
-        ("อู", "sampleaudio/no/อู 1(1) pd.m4a"),
-        ("ไอ", "sampleaudio/no/ไอ 1(1) pd.m4a"),
-        ("อำ", "sampleaudio/no/อำ 1(1) pd.m4a"),
-        ("เอา", "sampleaudio/no/เอา 1(1) pd.m4a"),
-        ("พยางค์ (พา-ทา-คา)", "sampleaudio/no/Pa-ta-ka 1(1) pd.m4a"),
-        ("ประโยค", "sampleaudio/no/Sentence 1(1) pd.m4a")
-    ]
-
-    # Create responsive audio display - single column on mobile, multiple on desktop
-    st.markdown("""
-        <style>
-        @media (max-width: 768px) {
-            .audio-grid {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 12px;
-            }
-            .audio-item {
-                width: 100% !important;
-            }
-        }
-        @media (min-width: 769px) {
-            .audio-grid {
-                display: grid !important;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-                gap: 16px;
-            }
-        }
-        </style>
-        <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
-            <div class="audio-grid">
-    """, unsafe_allow_html=True)
-
-    for i, (title, file_path) in enumerate(sample_audio_files):
-        try:
-            if os.path.exists(file_path):
-                with open(file_path, "rb") as audio_file:
-                    audio_bytes = audio_file.read()
-                    st.markdown(f"""
-                        <div class="audio-item" style="background: white; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 3px solid #6A1B9A;">
-                            <h4 style="color: #4A148C; margin-bottom: 12px; font-family: 'Prompt', sans-serif; font-size: clamp(16px, 3.5vw, 18px); font-weight: 600; text-align: center; line-height: 1.2;">{title}</h4>
-                        </div>
-                    """, unsafe_allow_html=True)
-                    st.audio(audio_bytes, format="audio/m4a")
-            else:
-                st.markdown(f"""
-                    <div class="audio-item" style="background: #fff3cd; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 3px solid #ffc107;">
-                        <h4 style="color: #856404; margin-bottom: 12px; font-family: 'Prompt', sans-serif; font-size: clamp(16px, 3.5vw, 18px); font-weight: 600; text-align: center; line-height: 1.2;">{title}</h4>
-                        <p style="color: #856404; text-align: center; font-size: 14px; margin: 0;">ไฟล์เสียงไม่พบ</p>
+        # Guide content - Mobile-optimized version
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+                <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 20px;">
+                    <h2 style="color: #4A148C; font-size: clamp(24px, 5vw, 36px); margin-bottom: 16px; margin-top: 0; font-family: 'Prompt', sans-serif; line-height: 1.2;">การเตรียมตัวก่อนการตรวจ</h2>
+                    <div style="font-size: clamp(16px, 4vw, 22px); line-height: 1.6; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 16px;">
+                        <div style="margin-bottom: 12px;"><strong>1.</strong> พักผ่อนเพียงพอก่อนการตรวจ</div>
+                        <div style="margin-bottom: 12px;"><strong>2.</strong> หาสถานที่เงียบ ปราศจากเสียงรบกวน</div>
+                        <div style="margin-bottom: 12px;"><strong>3.</strong> นั่งหรือยืนในท่าที่สบาย</div>
                     </div>
-                """, unsafe_allow_html=True)
-        except Exception as e:
-            st.markdown(f"""
-                <div class="audio-item" style="background: #f8d7da; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 3px solid #dc3545;">
-                    <h4 style="color: #721c24; margin-bottom: 12px; font-family: 'Prompt', sans-serif; font-size: clamp(16px, 3.5vw, 18px); font-weight: 600; text-align: center; line-height: 1.2;">{title}</h4>
-                    <p style="color: #721c24; text-align: center; font-size: 14px; margin: 0;">เกิดข้อผิดพลาดในการโหลดไฟล์</p>
                 </div>
-            """, unsafe_allow_html=True)
-
-    st.markdown("</div></div>", unsafe_allow_html=True)
-
-    # Final summary section - Mobile optimized
-    st.markdown("""
-        <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
-            <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 20%, #fff3e0 100%); border-radius: 15px; padding: 20px; margin: 24px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 4px solid #f57c00; text-align: center;">
-                <h3 style="color: #e65100; margin-bottom: 16px; font-family: 'Prompt', sans-serif; font-size: clamp(22px, 5vw, 28px); font-weight: 700; line-height: 1.2;">⚡ พร้อมเริ่มการตรวจแล้ว!</h3>
-                <p style="font-size: clamp(16px, 4vw, 20px); font-family: 'Prompt', sans-serif; line-height: 1.5; color: #bf360c; margin: 0;">
-                    เมื่อท่านเข้าใจขั้นตอนและได้ฟังตัวอย่างเสียงแล้ว<br>
-                    <strong>กลับไปที่หน้าแรกเพื่อเริ่มใช้งานระบบตรวจคัดกรอง SixtyScan</strong>
-                </p>
             </div>
-        </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+                <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 20px;">
+                    <h2 style="color: #4A148C; font-size: clamp(24px, 5vw, 36px); margin-bottom: 16px; margin-top: 0; font-family: 'Prompt', sans-serif; line-height: 1.2;">ขั้นตอนการตรวจ</h2>
+                    <ul style="font-size: clamp(16px, 4vw, 22px); line-height: 1.6; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 16px; list-style-position: outside;">
+                        <li style="margin-bottom: 16px; padding-left: 4px;"><strong>การออกเสียงสระ:</strong> ออกเสียงสระแต่ละตัว 5-8 วินาที ให้ชัดเจนและคงที่</li>
+                        <li style="margin-bottom: 16px; padding-left: 4px;"><strong>การออกเสียงพยางค์:</strong> ออกเสียง "พา-ทา-คา" ซ้ำๆ ประมาณ 6 วินาที</li>
+                        <li style="margin-bottom: 16px; padding-left: 4px;"><strong>การอ่านประโยค:</strong> อ่านประโยคที่กำหนดให้อย่างเป็นธรรมชาติและชัดเจน</li>
+                    </ul>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+                <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 20px;">
+                    <h2 style="color: #4A148C; font-size: clamp(24px, 5vw, 36px); margin-bottom: 16px; margin-top: 0; font-family: 'Prompt', sans-serif; line-height: 1.2;">ข้อควรระวัง</h2>
+                    <ul style="font-size: clamp(16px, 4vw, 22px); line-height: 1.6; color: #d32f2f; font-family: 'Prompt', sans-serif; margin-top: 0; padding-left: 16px; list-style-position: outside;">
+                        <li style="margin-bottom: 12px; padding-left: 4px;"><strong style="font-weight: 600;">ระบบนี้เป็นเพียงการตรวจคัดกรองเบื้องต้น</strong></li>
+                        <li style="margin-bottom: 12px; padding-left: 4px;"><strong style="font-weight: 600;">ไม่สามารถทดแทนการวินิจฉัยโดยแพทย์ได้</strong></li>
+                        <li style="margin-bottom: 12px; padding-left: 4px;"><strong style="font-weight: 600;">หากมีข้อสงสัยควรปรึกษาแพทย์เฉพาะทาง</strong></li>
+                    </ul>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        # Additional tips section - Mobile optimized
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+                <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 15px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 4px solid #1976d2;">
+                    <h3 style="color: #1565c0; margin-bottom: 16px; font-family: 'Prompt', sans-serif; font-size: clamp(20px, 4.5vw, 24px); font-weight: 600; text-align: center; line-height: 1.2;">💡 คำแนะนำเพิ่มเติม</h3>
+                    <ul style="font-size: clamp(16px, 4vw, 22px); font-family: 'Prompt', sans-serif; line-height: 1.7; color: #2e7d32; margin: 0; padding-left: 16px; list-style-position: outside;">
+                        <li style="margin-bottom: 12px; padding-left: 4px;">ฟังตัวอย่างเสียงก่อนเริ่มการตรวจเพื่อเข้าใจรูปแบบการออกเสียงที่ถูกต้อง</li>
+                        <li style="margin-bottom: 12px; padding-left: 4px;">พยายามออกเสียงให้เหมือนกับตัวอย่างให้มากที่สุด</li>
+                        <li style="margin-bottom: 12px; padding-left: 4px;">หากไม่แน่ใจ สามารถฟังตัวอย่างซ้ำได้หลายครั้ง</li>
+                        <li style="margin-bottom: 12px; padding-left: 4px;">ตัวอย่างเสียงเหล่านี้เป็นเสียงจากผู้ที่ไม่เป็นพาร์กินสัน</li>
+                    </ul>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        # Sample audio section - Mobile optimized
+        st.markdown("""
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+                    <h3 style="color: #495057; margin-bottom: 20px; font-family: 'Prompt', sans-serif; font-size: clamp(20px, 4.5vw, 24px); font-weight: 600; text-align: center; line-height: 1.2;">🎵 ตัวอย่างเสียงที่ถูกต้อง</h3>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        # Sample audio files in order according to analysis page
+        sample_audio_files = [
+            ("อา", "sampleaudio/no/อา 1(1) pd.m4a"),
+            ("อี", "sampleaudio/no/E 1(1) pd.m4a"),
+            ("อือ", "sampleaudio/no/อือ 1(1) pd.m4a"),
+            ("อู", "sampleaudio/no/อู 1(1) pd.m4a"),
+            ("ไอ", "sampleaudio/no/ไอ 1(1) pd.m4a"),
+            ("อำ", "sampleaudio/no/อำ 1(1) pd.m4a"),
+            ("เอา", "sampleaudio/no/เอา 1(1) pd.m4a"),
+            ("พยางค์ (พา-ทา-คา)", "sampleaudio/no/Pa-ta-ka 1(1) pd.m4a"),
+            ("ประโยค", "sampleaudio/no/Sentence 1(1) pd.m4a")
+        ]
+
+        # Create responsive audio display - single column on mobile, multiple on desktop
+        st.markdown("""
+            <style>
+            @media (max-width: 768px) {
+                .audio-grid {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    gap: 12px;
+                }
+                .audio-item {
+                    width: 100% !important;
+                }
+            }
+            @media (min-width: 769px) {
+                .audio-grid {
+                    display: grid !important;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+                    gap: 16px;
+                }
+            }
+            </style>
+            <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+                <div class="audio-grid">
+        """, unsafe_allow_html=True)
+
+        for i, (title, file_path) in enumerate(sample_audio_files):
+            try:
+                if os.path.exists(file_path):
+                    with open(file_path, "rb") as audio_file:
+                        audio_bytes = audio_file.read()
+                        st.markdown(f"""
+                            <div class="audio-item" style="background: white; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 3px solid #6A1B9A;">
+                                <h4 style="color: #4A148C; margin-bottom: 12px; font-family: 'Prompt', sans-serif; font-size: clamp(16px, 3.5vw, 18px); font-weight: 600; text-align: center; line-height: 1.2;">{title}</h4>
+                            </div>
+                        """, unsafe_allow_html=True)
+                        st.audio(audio_bytes, format="audio/m4a")
+                else:
+                    
     def show_analysis_page():
         """Display the mobile-optimized analysis page"""
         load_css()
