@@ -404,7 +404,7 @@ def run_mobile_app():
             # Doctor section with error handling - Updated to show both doctors
             try:
                 doctor_image_b64 = load_image_file(CONFIG['DOCTOR_PATHS'], "doctor")
-                doctor2_image_b64 = load_image_file(CONFIG['DOCTOR_PATHS'], "doctor2")
+                doctor2_image_b64 = load_image_file(CONFIG['DOCTOR2_PATHS'], "doctor2")
                 
                 doctors_html = '<div style="text-align:center; margin:25px 0; padding:0 20px;">'
                 
