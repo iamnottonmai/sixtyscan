@@ -27,6 +27,7 @@ CONFIG = {
     'DOCTOR_PATHS' : ["doctor.jpg", "./doctor.jpg", "assets/doctor.jpg", "images/doctor.jpg"],
     'REWARD_PATHS' : ["reward.jpg", "./reward.jpg", "assets/reward.jpg", "images/reward.jpg"],
     'PRESENT_PATHS' : ["present.jpg", "./present.jpg", "assets/present.jpg", "images/present.jpg"],
+    'DOCTOR2_PATHS' : ["doctor2.jpg", "./doctor2.jpg", "assets/doctor2.jpg", "images/doctor2.jpg"],
     'THAI_TIMEZONE': 'Asia/Bangkok'
 }
 
