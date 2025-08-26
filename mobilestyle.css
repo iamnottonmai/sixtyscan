@@ -130,7 +130,9 @@ h1.mobile-main-title,
 .mobile-main-title,
 [data-testid="stMarkdownContainer"] h1,
 .stMarkdown h1,
-div[data-testid="stMarkdownContainer"] > div > h1 {
+div[data-testid="stMarkdownContainer"] > div > h1,
+.mobile-content-wrapper h1,
+.mobile-text-section h1 {
     font-family: 'Prompt', sans-serif !important;
     font-size: 50px !important;
     font-weight: 700 !important;
@@ -152,6 +154,15 @@ div[data-testid="stMarkdownContainer"] > div > h1 {
     line-height: 1.3 !important;
     text-align: center !important;
 }
+
+/* Nuclear option - override ALL h1 elements on mobile pages */
+.stApp h1 {
+    font-size: 50px !important;
+    font-family: 'Prompt', sans-serif !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+}
+
 .mobile-highlight {
     color: #8b5cf6;
     font-weight: 800;
