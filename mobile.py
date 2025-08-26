@@ -390,7 +390,7 @@ def run_mobile_app():
             <div style="margin-top:40px; padding:25px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
                 <div style="text-align:center; margin-bottom:20px;">
                     <h2 style="color:#4A148C; font-family:'Prompt',sans-serif; font-size:28px; font-weight:700; margin:0;">
-                          เกี่ยวกับเรา
+                        <br>เกี่ยวกับเรา
                     </h2>
                     <div style="width: 60px; height: 3px; background: linear-gradient(135deg, #4A148C, #7B1FA2); margin: 8px auto; border-radius: 2px;"></div>
                 </div>
@@ -457,7 +457,7 @@ def run_mobile_app():
                 <p style="font-size:16px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
                     จากแนวคิดนี้ เราได้รับรางวัลจาก <strong style="color:#4A148C;">AI Builder 2025</strong> 
                     และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา<br><br>
-                    ได้แก่ <strong>นพ.ณัฐฏ์ กล้าผจญ</strong> และ <strong>ผศ.นพ.สุรัตน์ ตันประเวช</strong><br>
+                    ได้แก่ <strong>นพ.ณัฐฏ์ กล้าผจญ</strong> และ<br><strong>ผศ.นพ.สุรัตน์ ตันประเวช</strong><br>
                     จาก <strong style="color:#4A148C;">MED CMU Health Innovation Center (MedCHIC) มหาวิทยาลัยเชียงใหม่</strong>
                 </p>
             </div>
