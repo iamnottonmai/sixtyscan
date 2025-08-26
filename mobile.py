@@ -390,7 +390,7 @@ def run_mobile_app():
             <div style="margin-top:40px; padding:25px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
                 <div style="text-align:center; margin-bottom:20px;">
                     <h2 style="color:#4A148C; font-family:'Prompt',sans-serif; font-size:28px; font-weight:700; margin:0;">
-                        เกี่ยวกับเรา
+                          เกี่ยวกับเรา
                     </h2>
                     <div style="width: 60px; height: 3px; background: linear-gradient(135deg, #4A148C, #7B1FA2); margin: 8px auto; border-radius: 2px;"></div>
                 </div>
@@ -486,7 +486,7 @@ def run_mobile_app():
         # ============ Contact Section ============ (Fixed address line breaks)
         st.markdown("""
             <div style="margin-top:25px; padding:25px; background:linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(21, 101, 192, 0.1); border:1px solid rgba(21, 101, 192, 0.1);">
-                <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:20px; font-size:24px; font-weight:600;">ติดต่อเรา</h2>
+                <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:20px; font-size:24px; font-weight:600;"> ติดต่อเรา</h2>
                 <div style="background:rgba(255,255,255,0.7); padding:20px; border-radius:15px; margin-bottom:15px;">
                     <p style="font-size:15px; line-height:1.6; font-family:'Prompt',sans-serif; text-align:center; margin-bottom:0; color:#2c2c2c;">
                         📍 121/11 อาคารอีคิวสแควร์<br>
