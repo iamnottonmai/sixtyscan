@@ -385,11 +385,11 @@ def run_mobile_app():
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-        # ============ About Us Section ============ (Improved "เกี่ยวกับเรา" heading)
+        # ============ About Us Section ============ (Improved "เกี่ยวกับเรา" heading with better spacing)
         st.markdown("""
             <div style="margin-top:40px; padding:25px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
                 <div style="text-align:center; margin-bottom:20px;">
-                    <h2 style="color:#4A148C; font-family:'Prompt',sans-serif; font-size:28px; font-weight:700; margin:0;">
+                    <h2 style="color:#4A148C; font-family:'Prompt',sans-serif; font-size:28px; font-weight:700; margin:0; padding-left: 10px;">
                         <br>เกี่ยวกับเรา
                     </h2>
                     <div style="width: 60px; height: 3px; background: linear-gradient(135deg, #4A148C, #7B1FA2); margin: 8px auto; border-radius: 2px;"></div>
@@ -502,7 +502,6 @@ def run_mobile_app():
                 </div>
             </div>
         """, unsafe_allow_html=True)
-        
 
     def show_guide_page():
         """Display the guide/manual page with mobile-responsive styling"""
