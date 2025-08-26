@@ -394,12 +394,12 @@ def run_mobile_app():
                     </h2>
                     <div style="width: 60px; height: 3px; background: linear-gradient(135deg, #4A148C, #7B1FA2); margin: 8px auto; border-radius: 2px;"></div>
                 </div>
-                <p style="font-size:16px; line-height:1.8; text-align:justify; font-family:'Prompt',sans-serif; margin-bottom:18px; color:#2c2c2c;">
+                <p style="font-size:16px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:18px; color:#2c2c2c;">
                     แรงบันดาลใจของ <strong style="color:#4A148C;">SixtyScan.life</strong> เริ่มจากคนใกล้ตัวที่บ้านของเรา ที่เป็นผู้ป่วยโรคพาร์กินสัน 
                     ได้เห็นถึงความยากลำบากของท่านและผู้ที่เกี่ยวข้องทุกคน จึงเกิดคำถามว่า 
                     <em>"ถ้าช่วยผู้คนเข้าถึงการรักษาได้เร็ว จะช่วยสังคมได้มาก"</em>
                 </p>
-                <p style="font-size:16px; line-height:1.8; text-align:justify; font-family:'Prompt',sans-serif; margin-bottom:20px; color:#2c2c2c;">
+                <p style="font-size:16px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:20px; color:#2c2c2c;">
                     ด้วยความตั้งใจนั้น จึงนำความคิดไปปรึกษาคุณครู จนได้รวมทีมกัน 
                     ใช้เทคโนโลยีพัฒนาเป็น <strong style="color:#4A148C;">SixtyScan.life</strong>
                 </p>
@@ -451,10 +451,10 @@ def run_mobile_app():
         except Exception as e:
             st.warning(f"Could not load doctor image: {e}")
 
-        # Continuation of about section with improved spacing
+        # Continuation of about section with improved spacing and left-aligned text
         st.markdown("""
             <div style="padding:25px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); margin-top:10px; border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
-                <p style="font-size:16px; line-height:1.8; text-align:justify; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
+                <p style="font-size:16px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
                     จากแนวคิดนี้ เราได้รับรางวัลจาก <strong style="color:#4A148C;">AI Builder 2025</strong> 
                     และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา<br><br>
                     ได้แก่ <strong>นพ.ณัฐฏ์ กล้าผจญ</strong> และ <strong>ผศ.นพ.สุรัตน์ ตันประเวช</strong><br>
