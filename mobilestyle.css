@@ -124,15 +124,15 @@ header {visibility: hidden;}
     transform: translateY(-8px); /* PULL IMAGE UP to overlap any spacing */
 }
 
-/* Mobile Title - REDUCED MARGINS */
-/* Mobile Title - INCREASED SIZE AND UPDATED LAYOUT - FORCE OVERRIDE */
+/* Mobile Title - LARGE SIZE - FORCE OVERRIDE ALL SELECTORS */
 h1.mobile-main-title,
 .mobile-main-title,
 [data-testid="stMarkdownContainer"] h1,
 .stMarkdown h1,
 div[data-testid="stMarkdownContainer"] > div > h1,
 .mobile-content-wrapper h1,
-.mobile-text-section h1 {
+.mobile-text-section h1,
+.stApp h1 {
     font-family: 'Prompt', sans-serif !important;
     font-size: 50px !important;
     font-weight: 700 !important;
@@ -142,25 +142,6 @@ div[data-testid="stMarkdownContainer"] > div > h1,
     margin-top: 0 !important;
     letter-spacing: -0.5px !important;
     text-align: center !important;
-}
-
-/* Additional force override for any h1 in main content */
-.mobile-content-wrapper h1,
-.mobile-text-section h1 {
-    font-size: 50px !important;
-    font-family: 'Prompt', sans-serif !important;
-    font-weight: 700 !important;
-    color: #2d2d2d !important;
-    line-height: 1.3 !important;
-    text-align: center !important;
-}
-
-/* Nuclear option - override ALL h1 elements on mobile pages */
-.stApp h1 {
-    font-size: 50px !important;
-    font-family: 'Prompt', sans-serif !important;
-    font-weight: 700 !important;
-    line-height: 1.3 !important;
 }
 
 .mobile-highlight {
@@ -575,11 +556,24 @@ div.stButton > button,
     margin-bottom: 12px !important;
 }
 
-/* Mobile Responsive Design - FURTHER REDUCED SPACING */
+/* Mobile Responsive Design - MAINTAIN LARGE TITLE SIZE ON MOBILE */
 @media (max-width: 480px) {
-    h1.mobile-main-title {
-        font-size: 28px !important;
-        margin-bottom: 2px !important; /* REDUCED from 6px to 2px */
+    /* Keep title large even on mobile - DO NOT OVERRIDE */
+    h1.mobile-main-title,
+    .mobile-main-title,
+    [data-testid="stMarkdownContainer"] h1,
+    .stMarkdown h1,
+    div[data-testid="stMarkdownContainer"] > div > h1,
+    .mobile-content-wrapper h1,
+    .mobile-text-section h1,
+    .stApp h1 {
+        font-size: 44px !important; /* Slightly smaller than desktop but still large */
+        margin-bottom: 2px !important;
+        line-height: 1.3 !important;
+        font-family: 'Prompt', sans-serif !important;
+        font-weight: 700 !important;
+        color: #2d2d2d !important;
+        text-align: center !important;
     }
     
     .mobile-logo-text {
