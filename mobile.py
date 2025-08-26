@@ -350,7 +350,7 @@ def run_mobile_app():
                 <div class="mobile-content-wrapper">
                     <div class="mobile-text-section">
                         <h1 class="mobile-main-title">
-                            ตรวจเช็คโรคพาร์กินสัน<br>ทันทีด้วย <span class="mobile-highlight">SixtyScan</span>
+                            ตรวจเช็คโรค<br>พาร์กินสันทันที<br>ด้วย <span class="mobile-highlight">SixtyScan</span>
                         </h1>
                     </div>
                     <div class="mobile-image-section">
