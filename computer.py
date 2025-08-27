@@ -409,12 +409,12 @@ def run_desktop_app():
                     <div style="width: 80px; height: 4px; background: linear-gradient(135deg, #4A148C, #7B1FA2); margin: 12px auto; border-radius: 2px;"></div>
                 </div>
                 <div style="max-width:900px; margin:0 auto; padding:0 20px;">
-                    <p style="font-size:20px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:24px; color:#2c2c2c;">
+                    <p style="font-size:24px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:24px; color:#2c2c2c;">
                         แรงบันดาลใจของ <strong style="color:#4A148C;">SixtyScan.life</strong> เริ่มจากคนใกล้ตัวที่บ้านของเรา ที่เป็นผู้ป่วยโรคพาร์กินสัน 
                         ได้เห็นถึงความยากลำบากของท่านและผู้ที่เกี่ยวข้องทุกคน จึงเกิดคำถามว่า 
                         <em>"ถ้าช่วยผู้คนเข้าถึงการรักษาได้เร็ว จะช่วยสังคมได้มาก"</em>
                     </p>
-                    <p style="font-size:20px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:30px; color:#2c2c2c;">
+                    <p style="font-size:24px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:30px; color:#2c2c2c;">
                         ด้วยความตั้งใจนั้น จึงนำความคิดไปปรึกษาคุณครู จนได้รวมทีมกัน 
                         ใช้เทคโนโลยีพัฒนาเป็น <strong style="color:#4A148C;">SixtyScan.life</strong>
                     </p>
@@ -468,7 +468,7 @@ def run_desktop_app():
         st.markdown("""
         <div style="max-width:1200px; margin:20px auto; padding:40px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
             <div style="max-width:900px; margin:0 auto;">
-                <p style="font-size:18px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
+                <p style="font-size:22px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
                     จากแนวคิดนี้ เราได้รับรางวัลจาก <strong style="color:#4A148C;">AI Builder 2025</strong> 
                     และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา<br><br>
                     ได้แก่ <strong>นพ.ณัฐฏ์ กล้าผจญ</strong> และ<br><strong>ผศ.นพ.สุรัตน์ ตันประเวช</strong><br>
@@ -478,34 +478,68 @@ def run_desktop_app():
         </div>
         """, unsafe_allow_html=True)
 
-        # Contact section
+        # Contact section - Enhanced and prettier version
         st.markdown("""
-        <div style="max-width:800px; margin:40px auto; padding:40px; background:#e3f2fd; border-radius:20px;">
-            <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:30px; font-size:28px;">ติดต่อเรา</h2>
+        <div style="max-width:1200px; margin:60px auto; padding:60px 40px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:30px; box-shadow:0 20px 60px rgba(102, 126, 234, 0.4); position:relative; overflow:hidden;">
+            <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"grain\" width=\"100\" height=\"100\" patternUnits=\"userSpaceOnUse\"><circle cx=\"50\" cy=\"50\" r=\"0.5\" fill=\"white\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23grain)\"/></svg>'); pointer-events:none;"></div>
+            <div style="position:relative; z-index:1;">
+                <div style="text-align:center; margin-bottom:50px;">
+                    <h2 style="color:white; font-family:'Prompt',sans-serif; font-size:42px; font-weight:700; margin:0; text-shadow:0 2px 10px rgba(0,0,0,0.3); letter-spacing:1px;">
+                        ✨ ติดต่อเรา ✨
+                    </h2>
+                    <div style="width:120px; height:4px; background:linear-gradient(90deg, #FFD700, #FFA500); margin:20px auto; border-radius:2px; box-shadow:0 2px 10px rgba(255,215,0,0.5);"></div>
+                    <p style="color:rgba(255,255,255,0.9); font-size:18px; font-family:'Prompt',sans-serif; margin-top:20px; font-weight:300;">
+                        เราพร้อมให้บริการและตอบคำถามของคุณ
+                    </p>
+                </div>
+                
+                <div style="display:flex; flex-wrap:wrap; gap:40px; justify-content:center; align-items:stretch;">
+                    <!-- Address Card -->
+                    <div style="flex:1; min-width:300px; max-width:450px; padding:40px 30px; background:rgba(255,255,255,0.95); border-radius:20px; text-align:center; box-shadow:0 15px 35px rgba(0,0,0,0.2); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.3); transition:transform 0.3s ease;">
+                        <div style="width:80px; height:80px; background:linear-gradient(135deg, #667eea, #764ba2); border-radius:50%; margin:0 auto 25px; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 25px rgba(102,126,234,0.4);">
+                            <span style="font-size:32px; color:white;">📍</span>
+                        </div>
+                        <h3 style="color:#333; font-family:'Prompt',sans-serif; font-size:24px; font-weight:600; margin-bottom:20px;">ที่อยู่</h3>
+                        <p style="font-size:18px; font-family:'Prompt',sans-serif; color:#555; line-height:1.7; margin:0;">
+                            121/11 อาคารอีคิวสแควร์<br>
+                            ถนนเชียงใหม่-ฮอด ตำบลป่าแดด<br>
+                            อำเภอเมืองเชียงใหม่<br>
+                            จังหวัดเชียงใหม่ 50100
+                        </p>
+                    </div>
+                    
+                    <!-- Phone Card -->
+                    <div style="flex:1; min-width:300px; max-width:450px; padding:40px 30px; background:rgba(255,255,255,0.95); border-radius:20px; text-align:center; box-shadow:0 15px 35px rgba(0,0,0,0.2); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.3); transition:transform 0.3s ease;">
+                        <div style="width:80px; height:80px; background:linear-gradient(135deg, #2e7d32, #4caf50); border-radius:50%; margin:0 auto 25px; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 25px rgba(76,175,80,0.4);">
+                            <span style="font-size:32px; color:white;">📞</span>
+                        </div>
+                        <h3 style="color:#333; font-family:'Prompt',sans-serif; font-size:24px; font-weight:600; margin-bottom:20px;">โทรศัพท์</h3>
+                        <p style="font-size:28px; font-weight:700; color:#2e7d32; font-family:'Prompt',sans-serif; margin:0; text-shadow:0 2px 4px rgba(46,125,50,0.2);">
+                            064-9506228
+                        </p>
+                        <p style="font-size:16px; color:#666; font-family:'Prompt',sans-serif; margin-top:15px; font-style:italic;">
+                            พร้อมให้บริการทุกวัน
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Bottom decorative element -->
+                <div style="text-align:center; margin-top:50px;">
+                    <div style="display:inline-flex; gap:15px;">
+                        <div style="width:12px; height:12px; background:#FFD700; border-radius:50%; animation:pulse 2s infinite;"></div>
+                        <div style="width:12px; height:12px; background:#FFA500; border-radius:50%; animation:pulse 2s infinite 0.5s;"></div>
+                        <div style="width:12px; height:12px; background:#FF6B35; border-radius:50%; animation:pulse 2s infinite 1s;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        """, unsafe_allow_html=True)
         
-        # Address section
-        st.markdown("""
-        <div style="max-width:600px; margin:20px auto; padding:25px; background:white; border-radius:15px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
-            <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:15px;">📍 ที่อยู่</h3>
-            <p style="font-size:16px; font-family:'Prompt',sans-serif; color:#2c2c2c; line-height:1.6; margin:0;">
-                121/11 อาคารอีคิวสแควร์<br>
-                ถนนเชียงใหม่-ฮอด ตำบลป่าแดด<br>
-                อำเภอเมืองเชียงใหม่<br>
-                จังหวัดเชียงใหม่ 50100
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Phone section
-        st.markdown("""
-        <div style="max-width:400px; margin:20px auto; padding:25px; background:white; border-radius:15px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
-            <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:15px;">📞 โทรศัพท์</h3>
-            <p style="font-size:22px; font-weight:600; color:#2e7d32; font-family:'Prompt',sans-serif; margin:0;">
-                064-9506228
-            </p>
-        </div>
+        <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        </style>
         """, unsafe_allow_html=True)
 
     def show_guide_page():
