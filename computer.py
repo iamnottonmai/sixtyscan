@@ -422,87 +422,87 @@ def run_desktop_app():
             </div>
             """, unsafe_allow_html=True)
 
-            # Doctor section - simplified version first
-            try:
-                doctor_image_b64 = load_image_file(CONFIG['DOCTOR_PATHS'], "doctor")
-                doctor2_image_b64 = load_image_file(CONFIG['DOCTOR2_PATHS'], "doctor2")
-            
-                if doctor_image_b64 and doctor2_image_b64:
-                    st.markdown(f"""
-                    <div style="max-width:1200px; margin:30px auto; padding:0 40px;">
-                        <div style="display:flex; flex-wrap:wrap; gap:60px; align-items:center; justify-content:center;">
-                            <div style="text-align:center; flex:1; min-width:300px; max-width:400px;">
-                                <img src="data:image/jpg;base64,{doctor_image_b64}" alt="นพ.ณัฐฏ์ กล้าผจญ" style="width:100%; max-width:350px; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);">
-                                <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; line-height:1.5; margin-top:16px; font-weight:600;">
-                                    นพ.ณัฐฏ์ กล้าผจญ
-                                </p>
-                            </div>
-                            <div style="text-align:center; flex:1; min-width:300px; max-width:400px;">
-                                <img src="data:image/jpg;base64,{doctor2_image_b64}" alt="ผศ.นพ.สุรัตน์ ตันประเวช" style="width:100%; max-width:350px; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);">
-                                <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; line-height:1.5; margin-top:16px; font-weight:600;">
-                                    ผศ.นพ.สุรัตน์ ตันประเวช
-                                </p>
-                            </div>
+        # Doctor section - simplified version first
+        try:
+            doctor_image_b64 = load_image_file(CONFIG['DOCTOR_PATHS'], "doctor")
+            doctor2_image_b64 = load_image_file(CONFIG['DOCTOR2_PATHS'], "doctor2")
+        
+            if doctor_image_b64 and doctor2_image_b64:
+                st.markdown(f"""
+                <div style="max-width:1200px; margin:30px auto; padding:0 40px;">
+                    <div style="display:flex; flex-wrap:wrap; gap:60px; align-items:center; justify-content:center;">
+                        <div style="text-align:center; flex:1; min-width:300px; max-width:400px;">
+                            <img src="data:image/jpg;base64,{doctor_image_b64}" alt="นพ.ณัฐฏ์ กล้าผจญ" style="width:100%; max-width:350px; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);">
+                            <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; line-height:1.5; margin-top:16px; font-weight:600;">
+                                นพ.ณัฐฏ์ กล้าผจญ
+                            </p>
+                        </div>
+                        <div style="text-align:center; flex:1; min-width:300px; max-width:400px;">
+                            <img src="data:image/jpg;base64,{doctor2_image_b64}" alt="ผศ.นพ.สุรัตน์ ตันประเวช" style="width:100%; max-width:350px; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);">
+                            <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; line-height:1.5; margin-top:16px; font-weight:600;">
+                                ผศ.นพ.สุรัตน์ ตันประเวช
+                            </p>
                         </div>
                     </div>
-                    """, unsafe_allow_html=True)
-                elif doctor_image_b64:
-                    st.markdown(f"""
-                    <div style="max-width:1200px; margin:30px auto; padding:0 40px; text-align:center;">
-                        <img src="data:image/jpg;base64,{doctor_image_b64}" alt="นพ.ณัฐฏ์ กล้าผจญ" style="max-width:400px; width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); margin-bottom:16px;">
-                        <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; font-weight:600;">นพ.ณัฐฏ์ กล้าผจญ</p>
-                    </div>
-                    """, unsafe_allow_html=True)
-                elif doctor2_image_b64:
-                    st.markdown(f"""
-                    <div style="max-width:1200px; margin:30px auto; padding:0 40px; text-align:center;">
-                        <img src="data:image/jpg;base64,{doctor2_image_b64}" alt="ผศ.นพ.สุรัตน์ ตันประเวช" style="max-width:400px; width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); margin-bottom:16px;">
-                        <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; font-weight:600;">ผศ.นพ.สุรัตน์ ตันประเวช</p>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-            except Exception as e:
-                st.warning(f"Could not load doctor image: {e}")
+                </div>
+                """, unsafe_allow_html=True)
+            elif doctor_image_b64:
+                st.markdown(f"""
+                <div style="max-width:1200px; margin:30px auto; padding:0 40px; text-align:center;">
+                    <img src="data:image/jpg;base64,{doctor_image_b64}" alt="นพ.ณัฐฏ์ กล้าผจญ" style="max-width:400px; width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); margin-bottom:16px;">
+                    <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; font-weight:600;">นพ.ณัฐฏ์ กล้าผจญ</p>
+                </div>
+                """, unsafe_allow_html=True)
+            elif doctor2_image_b64:
+                st.markdown(f"""
+                <div style="max-width:1200px; margin:30px auto; padding:0 40px; text-align:center;">
+                    <img src="data:image/jpg;base64,{doctor2_image_b64}" alt="ผศ.นพ.สุรัตน์ ตันประเวช" style="max-width:400px; width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); margin-bottom:16px;">
+                    <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; font-weight:600;">ผศ.นพ.สุรัตน์ ตันประเวช</p>
+                </div>
+                """, unsafe_allow_html=True)
+            
+        except Exception as e:
+            st.warning(f"Could not load doctor image: {e}")
 
         # Continuation section
-            st.markdown("""
-            <div style="max-width:1200px; margin:20px auto; padding:40px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
-                <div style="max-width:900px; margin:0 auto;">
-                    <p style="font-size:18px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
-                        จากแนวคิดนี้ เราได้รับรางวัลจาก <strong style="color:#4A148C;">AI Builder 2025</strong> 
-                        และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา<br><br>
-                        ได้แก่ <strong>นพ.ณัฐฏ์ กล้าผจญ</strong> และ<br><strong>ผศ.นพ.สุรัตน์ ตันประเวช</strong><br>
-                        จาก <strong style="color:#4A148C;">MED CMU Health Innovation Center (MedCHIC) มหาวิทยาลัยเชียงใหม่</strong>
+        st.markdown("""
+        <div style="max-width:1200px; margin:20px auto; padding:40px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
+            <div style="max-width:900px; margin:0 auto;">
+                <p style="font-size:18px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
+                    จากแนวคิดนี้ เราได้รับรางวัลจาก <strong style="color:#4A148C;">AI Builder 2025</strong> 
+                    และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา<br><br>
+                    ได้แก่ <strong>นพ.ณัฐฏ์ กล้าผจญ</strong> และ<br><strong>ผศ.นพ.สุรัตน์ ตันประเวช</strong><br>
+                    จาก <strong style="color:#4A148C;">MED CMU Health Innovation Center (MedCHIC) มหาวิทยาลัยเชียงใหม่</strong>
+                </p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Contact section
+        st.markdown("""
+        <div style="max-width:1000px; margin:40px auto; padding:40px; background:linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(21, 101, 192, 0.1); border:1px solid rgba(21, 101, 192, 0.1);">
+            <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:30px; font-size:32px; font-weight:600;">ติดต่อเรา</h2>
+            
+            <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center; align-items:stretch;">
+                <div style="background:rgba(255,255,255,0.8); padding:30px; border-radius:20px; flex:1; min-width:300px; max-width:450px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                    <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📍 ที่อยู่</h3>
+                    <p style="font-size:16px; line-height:1.7; font-family:'Prompt',sans-serif; text-align:center; margin:0; color:#2c2c2c;">
+                        121/11 อาคารอีคิวสแควร์<br>
+                        ถนนเชียงใหม่-ฮอด ตำบลป่าแดด<br>
+                        อำเภอเมืองเชียงใหม่<br>
+                        จังหวัดเชียงใหม่ 50100
+                    </p>
+                </div>
+            
+                <div style="background:rgba(255,255,255,0.8); padding:30px; border-radius:20px; flex:1; min-width:300px; max-width:450px; box-shadow:0 4px 15px rgba(0,0,0,0.1); display:flex; flex-direction:column; justify-content:center;">
+                    <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📞 โทรศัพท์</h3>
+                    <p style="font-size:24px; font-weight:600; color:#2e7d32; font-family:'Prompt',sans-serif; margin:0; text-align:center;">
+                        064-9506228
                     </p>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
-
-            # Contact section
-            st.markdown("""
-            <div style="max-width:1000px; margin:40px auto; padding:40px; background:linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(21, 101, 192, 0.1); border:1px solid rgba(21, 101, 192, 0.1);">
-                <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:30px; font-size:32px; font-weight:600;">ติดต่อเรา</h2>
-                
-                <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center; align-items:stretch;">
-                    <div style="background:rgba(255,255,255,0.8); padding:30px; border-radius:20px; flex:1; min-width:300px; max-width:450px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
-                        <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📍 ที่อยู่</h3>
-                        <p style="font-size:16px; line-height:1.7; font-family:'Prompt',sans-serif; text-align:center; margin:0; color:#2c2c2c;">
-                            121/11 อาคารอีคิวสแควร์<br>
-                            ถนนเชียงใหม่-ฮอด ตำบลป่าแดด<br>
-                            อำเภอเมืองเชียงใหม่<br>
-                            จังหวัดเชียงใหม่ 50100
-                        </p>
-                    </div>
-                
-                    <div style="background:rgba(255,255,255,0.8); padding:30px; border-radius:20px; flex:1; min-width:300px; max-width:450px; box-shadow:0 4px 15px rgba(0,0,0,0.1); display:flex; flex-direction:column; justify-content:center;">
-                        <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📞 โทรศัพท์</h3>
-                        <p style="font-size:24px; font-weight:600; color:#2e7d32; font-family:'Prompt',sans-serif; margin:0; text-align:center;">
-                            064-9506228
-                        </p>
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        </div>
+        """, unsafe_allow_html=True)
 
     def show_guide_page():
         """Display the guide/manual page with proper styling - FIXED VERSION"""
