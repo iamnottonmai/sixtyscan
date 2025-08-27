@@ -403,18 +403,18 @@ def run_desktop_app():
         st.markdown("""
             <div style="margin:40px auto; max-width:1200px; padding:40px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
                 <div style="text-align:center; margin-bottom:30px;">
-                    <h2 style="color:#4A148C; font-family:'Prompt',sans-serif; font-size:36px; font-weight:700; margin:0; padding-top: 15px;">
+                    <h2 style="color:#4A148C; font-family:'Prompt',sans-serif; font-size:36px; font-weight:700; margin:0; padding-top: 15px; text-align:left; padding-left: 40px;">
                         เกี่ยวกับเรา
                     </h2>
-                    <div style="width: 80px; height: 4px; background: linear-gradient(135deg, #4A148C, #7B1FA2); margin: 12px auto; border-radius: 2px;"></div>
+                    <div style="width: 80px; height: 4px; background: linear-gradient(135deg, #4A148C, #7B1FA2); margin: 12px 0 12px 40px; border-radius: 2px;"></div>
                 </div>
                 <div style="max-width:900px; margin:0 auto;">
-                    <p style="font-size:18px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:24px; color:#2c2c2c;">
+                    <p style="font-size:18px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:24px; color:#2c2c2c;">
                         แรงบันดาลใจของ <strong style="color:#4A148C;">SixtyScan.life</strong> เริ่มจากคนใกล้ตัวที่บ้านของเรา ที่เป็นผู้ป่วยโรคพาร์กินสัน 
                         ได้เห็นถึงความยากลำบากของท่านและผู้ที่เกี่ยวข้องทุกคน จึงเกิดคำถามว่า 
                         <em>"ถ้าช่วยผู้คนเข้าถึงการรักษาได้เร็ว จะช่วยสังคมได้มาก"</em>
                     </p>
-                    <p style="font-size:18px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:30px; color:#2c2c2c;">
+                    <p style="font-size:18px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:30px; color:#2c2c2c;">
                         ด้วยความตั้งใจนั้น จึงนำความคิดไปปรึกษาคุณครู จนได้รวมทีมกัน 
                         ใช้เทคโนโลยีพัฒนาเป็น <strong style="color:#4A148C;">SixtyScan.life</strong>
                     </p>
@@ -471,7 +471,7 @@ def run_desktop_app():
         st.markdown("""
             <div style="max-width:1200px; margin:20px auto; padding:40px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
                 <div style="max-width:900px; margin:0 auto;">
-                    <p style="font-size:18px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
+                    <p style="font-size:18px; line-height:1.8; text-align:center; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
                         จากแนวคิดนี้ เราได้รับรางวัลจาก <strong style="color:#4A148C;">AI Builder 2025</strong> 
                         และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา<br><br>
                         ได้แก่ <strong>นพ.ณัฐฏ์ กล้าผจญ</strong> และ<br><strong>ผศ.นพ.สุรัตน์ ตันประเวช</strong><br>
@@ -519,7 +519,7 @@ def run_desktop_app():
             <div style="max-width:1000px; margin:40px auto; padding:40px; background:linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(21, 101, 192, 0.1); border:1px solid rgba(21, 101, 192, 0.1);">
                 <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:30px; font-size:32px; font-weight:600;">ติดต่อเรา</h2>
                 
-                <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center; align-items:stretch;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:stretch;">
                     <div style="background:rgba(255,255,255,0.8); padding:30px; border-radius:20px; flex:1; min-width:300px; max-width:450px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
                         <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📍 ที่อยู่</h3>
                         <p style="font-size:16px; line-height:1.7; font-family:'Prompt',sans-serif; text-align:center; margin:0; color:#2c2c2c;">
@@ -677,6 +677,17 @@ def run_desktop_app():
                     </p>
                 </div>
             </div>
+
+            <!-- Fallback for mobile devices -->
+            <style>
+                @media (max-width: 768px) {
+                    div[style*="display:grid; grid-template-columns:1fr 1fr"] {
+                        display: flex !important;
+                        flex-direction: column !important;
+                    }
+                }
+            </style>
+        </div>
         """, unsafe_allow_html=True)
     
     def show_analysis_page():
