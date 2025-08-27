@@ -30,6 +30,10 @@ CONFIG = {
     'LOGO_PATHS': ["logo.png", "./logo.png", "assets/logo.png", "images/logo.png"],
     'IMAGE_PATHS': ["insert.jpg", "./insert.jpg", "assets/insert.jpg", "images/insert.jpg"],
     'THAI_TIMEZONE': 'Asia/Bangkok',
+    'DOCTOR_PATHS' : ["doctor.jpg", "./doctor.jpg", "assets/doctor.jpg", "images/doctor.jpg"],
+    'REWARD_PATHS' : ["reward.jpg", "./reward.jpg", "assets/reward.jpg", "images/reward.jpg"],
+    'PRESENT_PATHS' : ["present.jpg", "./present.jpg", "assets/present.jpg", "images/present.jpg"],
+    'DOCTOR2_PATHS' : ["doctor2.jpg", "./doctor2.jpg", "assets/doctor2.jpg", "images/doctor2.jpg"],
     # Control which class index is PD in your training (0 or 1)
     'PD_INDEX': 1,
 }
@@ -394,6 +398,147 @@ def run_desktop_app():
             st.rerun()
 
         st.markdown('</div>', unsafe_allow_html=True)
+
+        # ============ About Us Section ============ (Desktop optimized for 1920x1080)
+        st.markdown("""
+            <div style="margin:40px auto; max-width:1200px; padding:40px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
+                <div style="text-align:center; margin-bottom:30px;">
+                    <h2 style="color:#4A148C; font-family:'Prompt',sans-serif; font-size:36px; font-weight:700; margin:0; padding-top: 15px;">
+                        เกี่ยวกับเรา
+                    </h2>
+                    <div style="width: 80px; height: 4px; background: linear-gradient(135deg, #4A148C, #7B1FA2); margin: 12px auto; border-radius: 2px;"></div>
+                </div>
+                <div style="max-width:900px; margin:0 auto;">
+                    <p style="font-size:18px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:24px; color:#2c2c2c;">
+                        แรงบันดาลใจของ <strong style="color:#4A148C;">SixtyScan.life</strong> เริ่มจากคนใกล้ตัวที่บ้านของเรา ที่เป็นผู้ป่วยโรคพาร์กินสัน 
+                        ได้เห็นถึงความยากลำบากของท่านและผู้ที่เกี่ยวข้องทุกคน จึงเกิดคำถามว่า 
+                        <em>"ถ้าช่วยผู้คนเข้าถึงการรักษาได้เร็ว จะช่วยสังคมได้มาก"</em>
+                    </p>
+                    <p style="font-size:18px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:30px; color:#2c2c2c;">
+                        ด้วยความตั้งใจนั้น จึงนำความคิดไปปรึกษาคุณครู จนได้รวมทีมกัน 
+                        ใช้เทคโนโลยีพัฒนาเป็น <strong style="color:#4A148C;">SixtyScan.life</strong>
+                    </p>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        # Doctor section with side-by-side layout for desktop
+        try:
+            doctor_image_b64 = load_image_file(CONFIG['DOCTOR_PATHS'], "doctor")
+            doctor2_image_b64 = load_image_file(CONFIG['DOCTOR2_PATHS'], "doctor2")
+            
+            doctors_html = '<div style="max-width:1200px; margin:30px auto; padding:0 40px;">'
+            
+            if doctor_image_b64 and doctor2_image_b64:
+                doctors_html += f"""
+                    <div style="display:flex; flex-wrap:wrap; gap:60px; align-items:center; justify-content:center;">
+                        <div style="text-align:center; flex:1; min-width:300px; max-width:400px;">
+                            <img src="data:image/jpg;base64,{doctor_image_b64}" alt="นพ.ณัฐฏ์ กล้าผจญ" style="width:100%; max-width:350px; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);">
+                            <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; line-height:1.5; margin-top:16px; font-weight:600;">
+                                นพ.ณัฐฏ์ กล้าผจญ
+                            </p>
+                        </div>
+                        <div style="text-align:center; flex:1; min-width:300px; max-width:400px;">
+                            <img src="data:image/jpg;base64,{doctor2_image_b64}" alt="ผศ.นพ.สุรัตน์ ตันประเวช" style="width:100%; max-width:350px; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);">
+                            <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; line-height:1.5; margin-top:16px; font-weight:600;">
+                                ผศ.นพ.สุรัตน์ ตันประเวช
+                            </p>
+                        </div>
+                    </div>
+                """
+            elif doctor_image_b64:
+                doctors_html += f"""
+                    <div style="text-align:center;">
+                        <img src="data:image/jpg;base64,{doctor_image_b64}" alt="นพ.ณัฐฏ์ กล้าผจญ" style="max-width:400px; width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); margin-bottom:16px;">
+                        <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; font-weight:600;">นพ.ณัฐฏ์ กล้าผจญ</p>
+                    </div>
+                """
+            elif doctor2_image_b64:
+                doctors_html += f"""
+                    <div style="text-align:center;">
+                        <img src="data:image/jpg;base64,{doctor2_image_b64}" alt="ผศ.นพ.สุรัตน์ ตันประเวช" style="max-width:400px; width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); margin-bottom:16px;">
+                        <p style="font-size:18px; color:#4A148C; font-family:'Prompt',sans-serif; font-weight:600;">ผศ.นพ.สุรัตน์ ตันประเวช</p>
+                    </div>
+                """
+            
+            doctors_html += '</div>'
+            st.markdown(doctors_html, unsafe_allow_html=True)
+            
+        except Exception as e:
+            st.warning(f"Could not load doctor image: {e}")
+
+        # Continuation of about section with desktop optimization
+        st.markdown("""
+            <div style="max-width:1200px; margin:20px auto; padding:40px; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(74, 20, 140, 0.1); border:1px solid rgba(74, 20, 140, 0.05);">
+                <div style="max-width:900px; margin:0 auto;">
+                    <p style="font-size:18px; line-height:1.8; text-align:left; font-family:'Prompt',sans-serif; margin-bottom:0; color:#2c2c2c;">
+                        จากแนวคิดนี้ เราได้รับรางวัลจาก <strong style="color:#4A148C;">AI Builder 2025</strong> 
+                        และปัจจุบันพวกเรามีโอกาสทำงานร่วมกับแพทย์ผู้เชี่ยวชาญด้านประสาทวิทยา<br><br>
+                        ได้แก่ <strong>นพ.ณัฐฏ์ กล้าผจญ</strong> และ<br><strong>ผศ.นพ.สุรัตน์ ตันประเวช</strong><br>
+                        จาก <strong style="color:#4A148C;">MED CMU Health Innovation Center (MedCHIC) มหาวิทยาลัยเชียงใหม่</strong>
+                    </p>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        # Award images with desktop layout - side by side
+        try:
+            reward_image_b64 = load_image_file(CONFIG['REWARD_PATHS'], "reward")
+            present_image_b64 = load_image_file(CONFIG['PRESENT_PATHS'], "present")
+            
+            images_html = '<div style="max-width:1200px; margin:30px auto; padding:0 40px;">'
+            
+            if reward_image_b64 and present_image_b64:
+                images_html += f"""
+                    <div style="display:flex; flex-wrap:wrap; gap:40px; align-items:flex-start; justify-content:center; margin-bottom:20px;">
+                        <div style="flex:1; min-width:400px; max-width:550px; text-align:center;">
+                            <img src="data:image/jpg;base64,{reward_image_b64}" alt="AI Builder Award" style="width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);">
+                        </div>
+                        <div style="flex:1; min-width:400px; max-width:550px; text-align:center;">
+                            <img src="data:image/jpg;base64,{present_image_b64}" alt="Award Presentation" style="width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);">
+                        </div>
+                    </div>
+                """
+            elif reward_image_b64:
+                images_html += f'<div style="text-align:center; margin-bottom:20px;"><img src="data:image/jpg;base64,{reward_image_b64}" alt="AI Builder Award" style="max-width:600px; width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);"></div>'
+            elif present_image_b64:
+                images_html += f'<div style="text-align:center; margin-bottom:20px;"><img src="data:image/jpg;base64,{present_image_b64}" alt="Award Presentation" style="max-width:600px; width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15);"></div>'
+            
+            if reward_image_b64 or present_image_b64:
+                images_html += '<p style="font-size:16px; color:#666; font-family:\'Prompt\',sans-serif; margin-top:20px; text-align:center;">ภาพจากการได้รับรางวัล AI Builder 2025</p>'
+            
+            images_html += '</div>'
+            
+            st.markdown(images_html, unsafe_allow_html=True)
+            
+        except Exception as e:
+            st.warning(f"Could not load award images: {e}")
+
+        # ============ Contact Section ============ (Desktop optimized with better layout)
+        st.markdown("""
+            <div style="max-width:1000px; margin:40px auto; padding:40px; background:linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(21, 101, 192, 0.1); border:1px solid rgba(21, 101, 192, 0.1);">
+                <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:30px; font-size:32px; font-weight:600;">ติดต่อเรา</h2>
+                
+                <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center; align-items:stretch;">
+                    <div style="background:rgba(255,255,255,0.8); padding:30px; border-radius:20px; flex:1; min-width:300px; max-width:450px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                        <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📍 ที่อยู่</h3>
+                        <p style="font-size:16px; line-height:1.7; font-family:'Prompt',sans-serif; text-align:center; margin:0; color:#2c2c2c;">
+                            121/11 อาคารอีคิวสแควร์<br>
+                            ถนนเชียงใหม่-ฮอด ตำบลป่าแดด<br>
+                            อำเภอเมืองเชียงใหม่<br>
+                            จังหวัดเชียงใหม่ 50100
+                        </p>
+                    </div>
+                    
+                    <div style="background:rgba(255,255,255,0.8); padding:30px; border-radius:20px; flex:1; min-width:300px; max-width:450px; box-shadow:0 4px 15px rgba(0,0,0,0.1); display:flex; flex-direction:column; justify-content:center;">
+                        <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📞 โทรศัพท์</h3>
+                        <p style="font-size:24px; font-weight:600; color:#2e7d32; font-family:'Prompt',sans-serif; margin:0; text-align:center;">
+                            064-9506228
+                        </p>
+                    </div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
     def show_guide_page():
         """Display the guide/manual page with proper styling - FIXED VERSION"""
