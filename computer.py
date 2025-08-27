@@ -483,23 +483,23 @@ def run_desktop_app():
         <div style="max-width:1000px; margin:40px auto; padding:40px; background:linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%); border-radius:25px; box-shadow:0 8px 32px rgba(21, 101, 192, 0.1); border:1px solid rgba(21, 101, 192, 0.1);">
             <h2 style="text-align:center; color:#1565C0; font-family:'Prompt',sans-serif; margin-bottom:30px; font-size:32px; font-weight:600;">ติดต่อเรา</h2>
             
-            <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center; align-items:stretch;">
-                <div style="background:rgba(255,255,255,0.8); padding:30px; border-radius:20px; flex:1; min-width:300px; max-width:450px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
-                    <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📍 ที่อยู่</h3>
-                    <p style="font-size:16px; line-height:1.7; font-family:'Prompt',sans-serif; text-align:center; margin:0; color:#2c2c2c;">
-                        121/11 อาคารอีคิวสแควร์<br>
-                        ถนนเชียงใหม่-ฮอด ตำบลป่าแดด<br>
-                        อำเภอเมืองเชียงใหม่<br>
-                        จังหวัดเชียงใหม่ 50100
-                    </p>
-                </div>
+            <!-- Address Section -->
+            <div style="background:rgba(255,255,255,0.9); padding:30px; border-radius:20px; margin-bottom:30px; box-shadow:0 4px 15px rgba(0,0,0,0.1); max-width:600px; margin-left:auto; margin-right:auto;">
+                <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📍 ที่อยู่</h3>
+                <p style="font-size:16px; line-height:1.7; font-family:'Prompt',sans-serif; text-align:center; margin:0; color:#2c2c2c;">
+                    121/11 อาคารอีคิวสแควร์<br>
+                    ถนนเชียงใหม่-ฮอด ตำบลป่าแดด<br>
+                    อำเภอเมืองเชียงใหม่<br>
+                    จังหวัดเชียงใหม่ 50100
+                </p>
+            </div>
             
-                <div style="background:rgba(255,255,255,0.8); padding:30px; border-radius:20px; flex:1; min-width:300px; max-width:450px; box-shadow:0 4px 15px rgba(0,0,0,0.1); display:flex; flex-direction:column; justify-content:center;">
-                    <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📞 โทรศัพท์</h3>
-                    <p style="font-size:24px; font-weight:600; color:#2e7d32; font-family:'Prompt',sans-serif; margin:0; text-align:center;">
-                        064-9506228
-                    </p>
-                </div>
+            <!-- Phone Section -->
+            <div style="background:rgba(255,255,255,0.9); padding:30px; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1); max-width:400px; margin-left:auto; margin-right:auto;">
+                <h3 style="color:#1565C0; font-family:'Prompt',sans-serif; font-size:20px; margin-bottom:15px; text-align:center;">📞 โทรศัพท์</h3>
+                <p style="font-size:24px; font-weight:600; color:#2e7d32; font-family:'Prompt',sans-serif; margin:0; text-align:center;">
+                    064-9506228
+                </p>
             </div>
         </div>
         """, unsafe_allow_html=True)
